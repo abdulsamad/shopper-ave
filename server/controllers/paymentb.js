@@ -1,10 +1,10 @@
-var braintree = require('braintree');
+const braintree = require("braintree");
 
-var gateway = braintree.connect({
+const gateway = braintree.connect({
   environment: braintree.Environment.Sandbox,
-  merchantId: 'm9wfn8ffzvvt9fkk',
-  publicKey: '3xw62bftj6sb8kyr',
-  privateKey: 'ae104c798d5e5e61fa47c20d63c05ead',
+  merchantId: "m9wfn8ffzvvt9fkk",
+  publicKey: "3xw62bftj6sb8kyr",
+  privateKey: "ae104c798d5e5e61fa47c20d63c05ead",
 });
 
 exports.getToken = (req, res) => {
@@ -36,6 +36,6 @@ exports.processPayment = (req, res) => {
       } else {
         return res.send(result);
       }
-    },
+    }
   );
 };

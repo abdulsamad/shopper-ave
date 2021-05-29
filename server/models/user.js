@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
-const crypto = require('crypto');
-const uuidv1 = require('uuid/v1');
+const mongoose = require("mongoose");
+const crypto = require("crypto");
+const uuidv1 = require("uuid/v1");
 
 var userSchema = new mongoose.Schema(
   {
@@ -39,11 +39,11 @@ var userSchema = new mongoose.Schema(
       default: [],
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 userSchema
-  .virtual('password')
+  .virtual("password")
   .set(function (password) {
     this._password = password;
     this.salt = uuidv1();
@@ -59,13 +59,16 @@ userSchema.methods = {
   },
 
   securePassword: function (plainpassword) {
-    if (!plainpassword) return '';
+    if (!plainpassword) return "";
     try {
-      return crypto.createHmac('sha256', this.salt).update(plainpassword).digest('hex');
+      return crypto
+        .createHmac("sha256", this.salt)
+        .update(plainpassword)
+        .digest("hex");
     } catch (err) {
-      return '';
+      return "";
     }
   },
 };
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model("User", userSchema);

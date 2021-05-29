@@ -1,11 +1,11 @@
-const User = require('../models/user');
-const Order = require('../models/order');
+const User = require("../models/user");
+const Order = require("../models/order");
 
 exports.getUserById = (req, res, next, id) => {
   User.findById(id).exec((err, user) => {
     if (err || !user) {
       return res.status(400).json({
-        error: 'No user was found in DB',
+        err: "No user was found in DB",
       });
     }
     req.profile = user;
@@ -27,23 +27,23 @@ exports.updateUser = (req, res) => {
     (err, user) => {
       if (err) {
         return res.status(400).json({
-          error: 'You are not authorized to update this user',
+          err: "You are not authorized to update this user",
         });
       }
       user.salt = undefined;
       user.encry_password = undefined;
       res.json(user);
-    },
+    }
   );
 };
 
 exports.userPurchaseList = (req, res) => {
   Order.find({ user: req.profile._id })
-    .populate('user', '_id name')
+    .populate("user", "_id name")
     .exec((err, order) => {
       if (err) {
         return res.status(400).json({
-          error: 'No Order in this account',
+          err: "No Order in this account",
         });
       }
       return res.json(order);
@@ -72,10 +72,10 @@ exports.pushOrderInPurchaseList = (req, res, next) => {
     (err, purchases) => {
       if (err) {
         return res.status(400).json({
-          error: 'Unable to save purchase list',
+          err: "Unable to save purchase list",
         });
       }
       next();
-    },
+    }
   );
 };
