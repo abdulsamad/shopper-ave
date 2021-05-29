@@ -1,2 +1,6 @@
-@import "./variables";
-@import "bootstrap";
+@use "bootstrap" with (
+	$primary: #ffc107,
+	$secondary: #ff9800,
+	$danger: #f44336,
+	$info: #2196f3,
+);
