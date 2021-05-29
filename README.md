@@ -1,1 +1,3 @@
-## MERN E-Commerce Project
+## FaShop
+
+### An E-Commerce Store
