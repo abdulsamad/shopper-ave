@@ -31,5 +31,24 @@ module.exports = {
     "gatsby-plugin-gatsby-cloud",
     "gatsby-plugin-offline",
     "gatsby-plugin-sass",
+    {
+      resolve: "gatsby-plugin-webfonts",
+      options: {
+        fonts: {
+          google: [
+            {
+              family: "Montserrat",
+              variants: ["700"],
+              fontDisplay: "swap",
+            },
+            {
+              family: "Open Sans",
+              variants: ["400", "700"],
+              fontDisplay: "swap",
+            },
+          ],
+        },
+      },
+    },
   ],
 };
