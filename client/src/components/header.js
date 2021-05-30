@@ -5,7 +5,7 @@ import { StaticImage } from "gatsby-plugin-image";
 const Header = ({ siteTitle }) => (
   <nav className="navbar navbar-expand-lg navbar-light bg-primary">
     <div className="container-fluid">
-      <button className="navbar-brand btn btn-link d-flex align-items-center brand-logo-font fw-bold">
+      <button className="navbar-brand btn btn-link d-inline-flex align-items-center fw-bold fs-4 brand-logo-font">
         <StaticImage
           src="../images/icon.png"
           alt="FaShop"
