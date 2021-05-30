@@ -1,5 +1,6 @@
 import * as React from "react";
 import PropTypes from "prop-types";
+import { Link } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
 
 const Header = ({ siteTitle }) => (
@@ -15,52 +16,56 @@ const Header = ({ siteTitle }) => (
         {siteTitle}
       </button>
       <button
-        class="navbar-toggler"
+        className="navbar-toggler"
         type="button"
         data-bs-toggle="collapse"
         data-bs-target="#navbar"
         aria-controls="navbar"
         aria-expanded="false"
         aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon" />
+        <span className="navbar-toggler-icon" />
       </button>
-      <div class="collapse navbar-collapse" id="navbar">
-        <ul class="navbar-nav ms-auto align-items-center">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">
+      <div className="collapse navbar-collapse" id="navbar">
+        <ul className="navbar-nav ms-auto align-items-center">
+          <li className="nav-item">
+            <Link
+              className="nav-link"
+              activeClassName="active"
+              aria-current="page"
+              to="/">
               Home
-            </a>
+            </Link>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
+          <li className="nav-item">
+            <Link className="nav-link" activeClassName="active" to="/">
               Dashboard
-            </a>
+            </Link>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
+          <li className="nav-item">
+            <Link className="nav-link" activeClassName="active" to="/">
               Admin Dashboard
-            </a>
+            </Link>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
+          <li className="nav-item">
+            <Link className="nav-link" activeClassName="active" to="/">
               LogIn
-            </a>
+            </Link>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
+          <li className="nav-item">
+            <Link className="nav-link" activeClassName="active" to="/">
               SignUp
-            </a>
+            </Link>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
+          <li className="nav-item">
+            <Link className="nav-link" activeClassName="active" to="/">
               SignOut
-            </a>
+            </Link>
           </li>
-          <li class="nav-item">
+          <li className="nav-item mx-3">
             <button
               type="button"
-              class="nav-link btn btn-sm btn-outline-primary">
-              <i class="bi bi-cart4 fs-5"></i>
+              className="nav-link btn btn-sm btn-outline-primary">
+              <i className="bi bi-cart4 fs-4"></i>
             </button>
           </li>
         </ul>
