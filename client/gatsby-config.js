@@ -28,7 +28,6 @@ module.exports = {
         icon: "src/images/icon.png",
       },
     },
-    "gatsby-plugin-gatsby-cloud",
     "gatsby-plugin-offline",
     "gatsby-plugin-sass",
     {
