@@ -25,7 +25,7 @@ const Header = ({ siteTitle }) => (
         <span class="navbar-toggler-icon" />
       </button>
       <div class="collapse navbar-collapse" id="navbar">
-        <ul class="navbar-nav ms-auto">
+        <ul class="navbar-nav ms-auto align-items-center">
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#">
               Home
@@ -57,9 +57,11 @@ const Header = ({ siteTitle }) => (
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
-              Cart
-            </a>
+            <button
+              type="button"
+              class="nav-link btn btn-sm btn-outline-primary">
+              <i class="bi bi-cart4 fs-5"></i>
+            </button>
           </li>
         </ul>
       </div>
