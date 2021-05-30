@@ -1,6 +1,6 @@
 const braintree = require("braintree");
 
-const gateway = braintree.connect({
+const gateway = new braintree.BraintreeGateway({
   environment: braintree.Environment.Sandbox,
   merchantId: "m9wfn8ffzvvt9fkk",
   publicKey: "3xw62bftj6sb8kyr",
