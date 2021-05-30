@@ -1,68 +1,79 @@
+###
+# This file will run with VS Code REST Client Extension
+#
+# Environment Variables
+# "API_BASE": API_ENDPOINT,
+# "token": AUTH_TOKEN,
+# "userId": USER_ID,
+# "categoryId": CATEGORY_ID,
+# "productId": PRODUCT_ID
+####
+
 ### Sign Up
-POST http://localhost:8000/api/signup HTTP/1.1
+POST {{API_BASE}}/signup HTTP/1.1
 Content-Type: application/json
 
 {
-  "name": "Zayn",
-  "email": "quiker@zayn.com",
+  "name": "John Doe",
+  "email": "john@email.com",
   "password": "1234567890" 
 }
 
 ### Sign In (Admin)
-POST http://localhost:8000/api/signin HTTP/1.1
+POST {{API_BASE}}/signin HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "john@gmail.com",
+  "email": "john@email.com",
   "password": "1234567890"
 }
 
 
 ### Sign In 2 (Not Admin)
-POST http://localhost:8000/api/signin HTTP/1.1
+POST {{API_BASE}}/signin HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "jane@gmail.com",
+  "email": "sam@gmail.com",
   "password": "1234567890"
 }
 
 ### Get User
-GET http://localhost:8000/api/user/5f25188c09ca0ebda66264f1 HTTP/1.1
+GET {{API_BASE}}/user/{{userId}} HTTP/1.1
 Content-Type: application/json
-Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjI1MTg4YzA5Y2EwZWJkYTY2MjY0ZjEiLCJpYXQiOjE1OTYyNjY2NjN9.aUyZNa9du4wBxWz5Qb44nywjF2tJ8v_8m8dQqHP7Duo
+Authorization : Bearer {{token}}
 
 ### Update User
-PUT http://localhost:8000/api/user/5f25188c09ca0ebda66264f1 HTTP/1.1
+PUT {{API_BASE}}/user/{{userId}} HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjI1MTg4YzA5Y2EwZWJkYTY2MjY0ZjEiLCJpYXQiOjE1OTYyNjY2NjN9.aUyZNa9du4wBxWz5Qb44nywjF2tJ8v_8m8dQqHP7Duo
+Authorization: Bearer {{token}}
 
 {
   "lastname": "Doe"
 }
 
 ### Create Category
-POST http://localhost:8000/api/category/create/5f25ca6c34e2e56d48e2b25b HTTP/1.1
+POST {{API_BASE}}/category/create/{{userId}} HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjI1Y2E2YzM0ZTJlNTZkNDhlMmIyNWIiLCJpYXQiOjE1OTY2NjE5NTl9.5D53uGSOecaC_xVTEA0Woi2H8hCax2E7WuKWaiowUqQ
+Authorization: Bearer {{token}}
 
 {
   "name": "Rainy"
 }
 
 ### Update Category
-PUt http://localhost:8000/api/category/5f2b1ef53ad7a94f6c851cfa/5f25188c09ca0ebda66264f1 HTTP/1.1
+PUT {{API_BASE}}/category/{{categoryId}}/{{userId}} HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjI1MTg4YzA5Y2EwZWJkYTY2MjY0ZjEiLCJpYXQiOjE1OTY2NjEyMDB9.juqL7_Jlr36j6aYb7gYKGOTst64EltkDmaXonUg_CKI
+Authorization: Bearer {{token}}
 
 {
   "name": "Rainy is awesome"
 }
 
 ### Delete Category
-DELETE  http://localhost:8000/api/category/5f2b205e29a4155c722abbdc/5f25188c09ca0ebda66264f1 HTTP/1.1
+DELETE  {{API_BASE}}/category/{{categoryId}}/{{userId}} HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjI1MTg4YzA5Y2EwZWJkYTY2MjY0ZjEiLCJpYXQiOjE1OTY2NjEyMDB9.juqL7_Jlr36j6aYb7gYKGOTst64EltkDmaXonUg_CKI
+Authorization: Bearer {{token}}
 
 {
   "name": "Rainy is awesome"
@@ -70,9 +81,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjI1MTg4Y
 
 
 ### Create Product
-POST http://localhost:8000/api/product/create/5f25188c09ca0ebda66264f1 HTTP/1.1
+POST {{API_BASE}}/product/create/{{userId}} HTTP/1.1
 Content-Type: multipart/form-data
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjI1MTg4YzA5Y2EwZWJkYTY2MjY0ZjEiLCJpYXQiOjE1OTY4NzU1Nzh9.HYDT1ohqZ8WQWQsiWPR0IXx-DkUaxltBKdaFktwd9Zw
+Authorization: Bearer {{token}}
 
 {
   "name": "I love code! T-Shirt",
@@ -84,16 +95,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjI1MTg4Y
 }
 
 ### Braintree Generate Token
-GET http://localhost:8000/api/payment/getToken/5f25188c09ca0ebda66264f1 HTTP/1.1
+GET {{API_BASE}}/payment/getToken/{{userId}} HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjI1MTg4YzA5Y2EwZWJkYTY2MjY0ZjEiLCJpYXQiOjE1OTc3Nzk0MTF9.0SH984hiuYmQOgJI-FnNed5NyUEyefOqo63EtCzqIKU
+Authorization: Bearer {{token}}
 
 ### Braintree Process Payment
-POST http://localhost:8000/api/payment/braintree/5f25188c09ca0ebda66264f1 HTTP/1.1
+POST {{API_BASE}}/payment/braintree/{{userId}} HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjNkMWE4YmZjMDlhNGJhOWE0YzRmOTUiLCJpYXQiOjE1OTc4NDk5NTN9.1cE7_jcj_HLCA7fc90GzVUaz5OVjM06rzd6rDYclY64
+Authorization: Bearer {{token}}
 
 {	
-  "paymentMethodNonce": "jlkfsjdlkfs",
+  "paymentMethodNonce": "thisisweirdnonce",
   "amount": "200.00"
 }
