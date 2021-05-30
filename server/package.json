@@ -4,9 +4,9 @@
   "description": "A few clicks is all it takes.",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
-  "keywords": [],
   "author": "AbdulSamad",
   "dependencies": {
     "body-parser": "^1.19.0",
@@ -21,9 +21,9 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.19",
     "mongoose": "^5.7.7",
-    "morgan": "^1.9.1",
-    "nodemon": "^2.0.4",
-    "npm": "^7.15.0",
     "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
   }
 }
