@@ -10,11 +10,6 @@ var userSchema = new mongoose.Schema(
       maxlength: 32,
       trim: true,
     },
-    lastname: {
-      type: String,
-      maxlength: 32,
-      trim: true,
-    },
     email: {
       type: String,
       trim: true,
@@ -54,12 +49,13 @@ userSchema
   });
 
 userSchema.methods = {
-  autheticate: function (plainpassword) {
+  authenticate: function (plainpassword) {
     return this.securePassword(plainpassword) === this.encry_password;
   },
 
   securePassword: function (plainpassword) {
     if (!plainpassword) return "";
+
     try {
       return crypto
         .createHmac("sha256", this.salt)
