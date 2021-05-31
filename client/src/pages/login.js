@@ -4,7 +4,7 @@ import { navigate } from "gatsby";
 
 import Layout from "../components/layout";
 import Seo from "../components/SEO";
-import { signIn, authenticate } from "../auth";
+import { signIn } from "../auth";
 
 const LogInPage = () => {
   const [submitSuccess, setSubmitSuccess] = useState(false);
@@ -17,7 +17,9 @@ const LogInPage = () => {
   } = useForm();
 
   const redirect = (res) => {
-    res.user.role === 0 ? navigate("/dashboard") : navigate("/admin");
+    setTimeout(() => {
+      res.user.role === 0 ? navigate("/dashboard") : navigate("/admin");
+    }, 2000);
   };
 
   const onSubmit = (data) => {
@@ -28,7 +30,6 @@ const LogInPage = () => {
     signIn(data)
       .then((res) => {
         setSubmitSuccess(true);
-        authenticate(res);
         redirect(res);
       })
       .catch(() => {
