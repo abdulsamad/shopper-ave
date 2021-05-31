@@ -20,7 +20,7 @@ const Layout = ({ children }) => {
       <Header siteTitle={data.site.siteMetadata?.title} />
       <main>{children}</main>
       <footer className="mt-4 text-center">
-        &copy; {new Date().getFullYear()}, Created by{" "}
+        &copy; {new Date().getFullYear()} FaShop, Created by{" "}
         <a href="https://abdulsamad.dev" className="text-decoration-none">
           AbdulSamad
         </a>
