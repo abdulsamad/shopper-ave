@@ -7,6 +7,7 @@
 # "userId": USER_ID,
 # "categoryId": CATEGORY_ID,
 # "productId": PRODUCT_ID
+#
 ####
 
 ### Sign Up
@@ -15,16 +16,26 @@ Content-Type: application/json
 
 {
   "name": "John Doe",
-  "email": "john@email.com",
+  "email": "john@example.com",
   "password": "1234567890" 
 }
 
-### Sign In (Admin)
+### Sign Up 2
+POST {{API_BASE}}/signup HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "Sam Smith",
+  "email": "sam@example.com",
+  "password": "1234567890" 
+}
+
+### Sign In (Admin) Manually create admin by changing user role in DB to 1
 POST {{API_BASE}}/signin HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "john@email.com",
+  "email": "john@example.com",
   "password": "1234567890"
 }
 
@@ -34,7 +45,7 @@ POST {{API_BASE}}/signin HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "sam@gmail.com",
+  "email": "sam@example.com",
   "password": "1234567890"
 }
 
@@ -49,7 +60,7 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "lastname": "Doe"
+  "name": "John William Doe"
 }
 
 ### Create Category
