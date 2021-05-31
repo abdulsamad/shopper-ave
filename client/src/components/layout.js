@@ -27,11 +27,12 @@ const Layout = ({ children }) => {
         <main>{children}</main>
         <footer
           style={{
-            marginTop: `2rem`,
+            marginTop: `1rem`,
           }}>
-          © {new Date().getFullYear()}, Built with
-          {` `}
-          <a href="https://www.gatsbyjs.com">Gatsby</a>
+          &copy; {new Date().getFullYear()}, Created by{" "}
+          <a href="https://www.gatsbyjs.com" className="text-decoration-none">
+            AbdulSamad
+          </a>
         </footer>
       </div>
     </>
