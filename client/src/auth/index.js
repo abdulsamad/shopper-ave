@@ -9,38 +9,33 @@ const signUp = (user) => {
   return axios
     .post("/signup", user, { headers: contentType })
     .then(({ data }) => {
-      const { token } = data;
-
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-      console.log(data);
+      return data;
     });
 };
 
 const signIn = (user) => {
-  axios.post("/signin", user, { headers: contentType }).then(({ data }) => {
-    const { token } = data;
+  return axios
+    .post("/signin", user, { headers: contentType })
+    .then(({ data }) => {
+      const { token } = data;
 
-    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-    console.log(data);
-  });
+      if (typeof window !== undefined) {
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        localStorage.setItem("jwt", JSON.stringify(data));
+      }
+
+      return data;
+    });
 };
 
 const signOut = (next) => {
   if (typeof window !== undefined) {
     localStorage.removeItem("jwt");
     delete axios.defaults.headers.common["Authorization"];
-    next();
 
     return axios.get("/signout").then(({ data }) => {
-      console.log(data);
+      return data;
     });
-  }
-};
-
-const authenticate = (data, next) => {
-  if (typeof window !== undefined) {
-    localStorage.setItem("jwt", JSON.stringify(data));
-    next();
   }
 };
 
@@ -56,4 +51,4 @@ const isAuthenticated = () => {
   }
 };
 
-export { signUp, signIn, authenticate, signOut, isAuthenticated };
+export { signUp, signIn, signOut, isAuthenticated };
