@@ -1,11 +1,13 @@
 /* Bootstrap */
-@use "bootstrap" with (
-	$primary: #ffc107,
+@use "bootstrap"with ($primary: #ffc107,
 	$secondary: #9E9E9E,
 	$danger: #f44336,
 	$info: #2196f3,
 	$dark: #0D0D14,
 	$component-active-color: #0D0D14,
+	$box-shadow: #{0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)},
+	$box-shadow-sm: #{0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)},
+	$box-shadow-lg: #{0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)},
 );
 
 /* Custom */
