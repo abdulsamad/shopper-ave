@@ -21,7 +21,9 @@ const AdminDashboardPage = () => (
           </aside>
         </section>
         <section className="col admin-right">
-          <h1 className="display-4 text-center my-2">Welcome to Admin Area</h1>
+          <h1 className="text-center my-4">
+            Welcome to <span className="text-primary">Admin Area</span>
+          </h1>
           <div className="container">
             <div className="tab-content">
               <Home />
