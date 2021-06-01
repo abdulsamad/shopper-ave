@@ -1,4 +1,27 @@
+$navbar-height: 70px;
+
 .brand-logo-font {
-  font-family: Montserrat, Verdana, Geneva, Tahoma, sans-serif;
+  font-family: Montserrat, Verdana, Tahoma, sans-serif;
   font-style: italic;
+}
+
+.main {
+  margin-top: $navbar-height;
+}
+
+.banner {
+  height: calc(80vh - #{$navbar-height});
+
+  .img-fluid {
+    background-position: bottom;
+    background-size: cover !important;
+  }
+}
+
+.admin-left {
+  height: calc(100vh - #{$navbar-height});
+}
+
+.admin-right {
+  height: 100vh;
 }
