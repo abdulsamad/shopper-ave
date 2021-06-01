@@ -30,7 +30,7 @@ const Header = ({ siteTitle }) => {
   );
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-primary shadow-sm">
+    <nav className="navbar navbar-expand-lg navbar-light bg-primary shadow-sm fixed-top">
       <div className="container-fluid">
         <button className="navbar-brand btn btn-link d-inline-flex align-items-center fw-bold fs-4 brand-logo-font">
           <StaticImage
