@@ -2,13 +2,22 @@ import * as React from "react";
 import PropTypes from "prop-types";
 import { Link } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
+import { navigate } from "gatsby";
 
 import { isAuthenticated, signOut } from "../../auth";
 
 const Header = ({ siteTitle }) => {
+  const { user } = isAuthenticated();
+
   const isLoggedIn = (
     <li className="nav-item">
-      <button type="button" className="nav-link btn" onClick={signOut}>
+      <button
+        type="button"
+        className="nav-link btn"
+        onClick={() => {
+          signOut();
+          navigate("/");
+        }}>
         LogOut
       </button>
     </li>
@@ -62,25 +71,26 @@ const Header = ({ siteTitle }) => {
                 Home
               </Link>
             </li>
-            {isAuthenticated()?.user?.role === 0 && (
+            {(user?.role === 0 || user?.role === 1) && (
               <li className="nav-item">
                 <Link
                   className="nav-link"
                   activeClassName="active"
                   to="/dashboard">
+                  {user?.role === 1 && <span>User&nbsp;</span>}
                   Dashboard
                 </Link>
               </li>
             )}
-            {isAuthenticated()?.user?.role === 1 && (
+            {user?.role === 1 && (
               <li className="nav-item">
                 <Link className="nav-link" activeClassName="active" to="/admin">
                   Admin Dashboard
                 </Link>
               </li>
             )}
-            {!isAuthenticated() && isNotLoggedIn}
-            {isAuthenticated() && isLoggedIn}
+            {!user && isNotLoggedIn}
+            {user && isLoggedIn}
             <li className="nav-item ms-2">
               <button type="button" className="nav-link btn">
                 <span className="d-lg-none">Cart</span>{" "}
