@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { useStaticQuery, graphql } from "gatsby";
 
 import Header from "./header";
+import Footer from "./footer";
 
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
@@ -18,13 +19,8 @@ const Layout = ({ children }) => {
   return (
     <>
       <Header siteTitle={data.site.siteMetadata?.title} />
-      <main>{children}</main>
-      <footer className="mt-4 text-center">
-        &copy; {new Date().getFullYear()} FaShop, Created by{" "}
-        <a href="https://abdulsamad.dev" className="text-decoration-none">
-          AbdulSamad
-        </a>
-      </footer>
+      <main className="main">{children}</main>
+      <Footer />
     </>
   );
 };
