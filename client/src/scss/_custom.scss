@@ -1,3 +1,5 @@
+@use "bootstrap";
+
 $navbar-height: 70px;
 
 .brand-logo-font {
@@ -11,11 +13,6 @@ $navbar-height: 70px;
 
 .banner {
   height: calc(80vh - #{$navbar-height});
-
-  .img-fluid {
-    background-position: bottom;
-    background-size: cover !important;
-  }
 }
 
 .admin-left {
