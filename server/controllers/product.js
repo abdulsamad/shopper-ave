@@ -27,6 +27,7 @@ exports.createProduct = (req, res) => {
         err: "problem with image",
       });
     }
+
     //destructure the fields
     const { name, description, price, category, stock } = fields;
 
@@ -36,7 +37,7 @@ exports.createProduct = (req, res) => {
       });
     }
 
-    let product = new Product(fields);
+    const product = new Product(fields);
 
     //handle file here
     if (file.photo) {
@@ -45,10 +46,10 @@ exports.createProduct = (req, res) => {
           err: "File size too big!",
         });
       }
+
       product.photo.data = fs.readFileSync(file.photo.path);
       product.photo.contentType = file.photo.type;
     }
-    // console.log(product);
 
     //save to the DB
     product.save((err, product) => {
@@ -57,6 +58,7 @@ exports.createProduct = (req, res) => {
           err: "Saving tshirt in DB failed",
         });
       }
+
       res.json(product);
     });
   });
@@ -73,18 +75,21 @@ exports.photo = (req, res, next) => {
     res.set("Content-Type", req.product.photo.contentType);
     return res.send(req.product.photo.data);
   }
+
   next();
 };
 
 // delete controllers
 exports.deleteProduct = (req, res) => {
-  let product = req.product;
+  const product = req.product;
+
   product.remove((err, deletedProduct) => {
     if (err) {
       return res.status(400).json({
         err: "Failed to delete the product",
       });
     }
+
     res.json({
       message: "Deletion was a success",
       deletedProduct,
@@ -105,7 +110,7 @@ exports.updateProduct = (req, res) => {
     }
 
     //updation code
-    let product = req.product;
+    const product = req.product;
     product = _.extend(product, fields);
 
     //handle file here
@@ -115,10 +120,10 @@ exports.updateProduct = (req, res) => {
           err: "File size too big!",
         });
       }
+
       product.photo.data = fs.readFileSync(file.photo.path);
       product.photo.contentType = file.photo.type;
     }
-    // console.log(product);
 
     //save to the DB
     product.save((err, product) => {
@@ -127,16 +132,16 @@ exports.updateProduct = (req, res) => {
           err: "Updation of product failed",
         });
       }
+
       res.json(product);
     });
   });
 };
 
 //product listing
-
 exports.getAllProducts = (req, res) => {
-  let limit = req.query.limit ? parseInt(req.query.limit) : 8;
-  let sortBy = req.query.sortBy ? req.query.sortBy : "_id";
+  const limit = req.query.limit ? parseInt(req.query.limit) : 8;
+  const sortBy = req.query.sortBy ? req.query.sortBy : "_id";
 
   Product.find()
     .select("-photo")
@@ -149,6 +154,7 @@ exports.getAllProducts = (req, res) => {
           error: "NO product FOUND",
         });
       }
+
       res.json(products);
     });
 };
@@ -157,15 +163,16 @@ exports.getAllUniqueCategories = (req, res) => {
   Product.distinct("category", {}, (err, category) => {
     if (err) {
       return res.status(400).json({
-        error: "NO category found",
+        error: "No category found",
       });
     }
+
     res.json(category);
   });
 };
 
 exports.updateStock = (req, res, next) => {
-  let myOperations = req.body.order.products.map((prod) => {
+  const myOperations = req.body.order.products.map((prod) => {
     return {
       updateOne: {
         filter: { _id: prod._id },
@@ -180,6 +187,7 @@ exports.updateStock = (req, res, next) => {
         err: "Bulk operation failed",
       });
     }
+
     next();
   });
 };

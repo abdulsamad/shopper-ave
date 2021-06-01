@@ -8,6 +8,7 @@ exports.getUserById = (req, res, next, id) => {
         err: "No user was found in DB",
       });
     }
+
     req.profile = user;
     next();
   });
@@ -30,6 +31,7 @@ exports.updateUser = (req, res) => {
           err: "You are not authorized to update this user",
         });
       }
+
       user.salt = undefined;
       user.encry_password = undefined;
       res.json(user);
@@ -43,15 +45,17 @@ exports.userPurchaseList = (req, res) => {
     .exec((err, order) => {
       if (err) {
         return res.status(400).json({
-          err: "No Order in this account",
+          err: "No order in this account",
         });
       }
+
       return res.json(order);
     });
 };
 
 exports.pushOrderInPurchaseList = (req, res, next) => {
-  let purchases = [];
+  const purchases = [];
+
   req.body.order.products.forEach((product) => {
     purchases.push({
       _id: product._id,
@@ -75,6 +79,7 @@ exports.pushOrderInPurchaseList = (req, res, next) => {
           err: "Unable to save purchase list",
         });
       }
+
       next();
     }
   );
