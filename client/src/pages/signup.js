@@ -49,7 +49,7 @@ const SignUpPage = () => {
           {submitSuccess && (
             <div className="alert alert-success" role="alert">
               <i className="bi bi-check-lg me-2" />
-              Login successful. You&apos;ll be redirected in a moment.
+              SignUp successful. You&apos;ll be redirected in a moment.
             </div>
           )}
           {submitError && (
