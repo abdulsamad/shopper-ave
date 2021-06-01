@@ -44,8 +44,8 @@ const SignUpPage = () => {
   return (
     <Layout>
       <Seo title="SignUp - FaShop" />
-      <section className="container">
-        <form onSubmit={handleSubmit(onSubmit)} className="w-50 mx-auto my-4">
+      <section className="container py-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="w-50 mx-auto">
           {submitSuccess && (
             <div className="alert alert-success" role="alert">
               <i className="bi bi-check-lg me-2" />
