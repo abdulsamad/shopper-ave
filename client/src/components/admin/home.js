@@ -26,31 +26,101 @@ const home = () => {
     </div>
   );
 
-  const recentUsers = (
+  const recentlyJointUsers = (
     <div className="col">
-      <table className="table table-striped table-hoverable table-bordered text-center">
+      <table className="table table-striped table-hoverable table-bordered text-center caption-top">
+        <caption>Recently Joined users</caption>
         <thead className="table-dark">
           <tr>
             <th scope="col">#</th>
             <th scope="col">Name</th>
-            <th scope="col">Handle</th>
+            <th scope="col">Email</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <th scope="row">1</th>
-            <td>Mark</td>
-            <td>@mdo</td>
+            <td>John Doe</td>
+            <td>john@example.com</td>
           </tr>
           <tr>
             <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>@fat</td>
+            <td>Sam Smith</td>
+            <td>sam@example.com</td>
           </tr>
           <tr>
             <th scope="row">3</th>
             <td>Larry the Bird</td>
             <td>@twitter</td>
+          </tr>
+          <tr>
+            <th scope="row">4</th>
+            <td>Larry the Bird</td>
+            <td>@twitter</td>
+          </tr>
+          <tr>
+            <th scope="row">5</th>
+            <td>Larry the Bird</td>
+            <td>@twitter</td>
+          </tr>
+          <tr>
+            <th scope="row">6</th>
+            <td>Larry the Bird</td>
+            <td>@twitter</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  );
+
+  const topRatedProduct = (
+    <div className="col">
+      <table className="table table-striped table-hoverable table-bordered text-center caption-top">
+        <caption>Top Rated Products</caption>
+        <thead className="table-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Product Name</th>
+            <th scope="col">Category</th>
+            <th scope="col">Ratings</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>MKBHD Hoodie</td>
+            <td>Jacket</td>
+            <td>4.5</td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>MKBHD Hoodie</td>
+            <td>Jacket</td>
+            <td>4.5</td>
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+            <td>MKBHD Hoodie</td>
+            <td>Jacket</td>
+            <td>4.5</td>
+          </tr>
+          <tr>
+            <th scope="row">4</th>
+            <td>MKBHD Hoodie</td>
+            <td>Jacket</td>
+            <td>4.5</td>
+          </tr>
+          <tr>
+            <th scope="row">5</th>
+            <td>MKBHD Hoodie</td>
+            <td>Jacket</td>
+            <td>4.5</td>
+          </tr>
+          <tr>
+            <th scope="row">6</th>
+            <td>MKBHD Hoodie</td>
+            <td>Jacket</td>
+            <td>4.5</td>
           </tr>
         </tbody>
       </table>
@@ -65,8 +135,9 @@ const home = () => {
       aria-labelledby="home-tab">
       {topStats}
       <div className="row my-5">
-        {recentUsers}
-        <div className="col"></div>
+        {recentlyJointUsers}
+
+        {topRatedProduct}
       </div>
     </div>
   );
