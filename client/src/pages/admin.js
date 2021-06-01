@@ -11,7 +11,7 @@ import ManageProducts from "../components/admin/manageProducts";
 import ManageOrders from "../components/admin/manageOrders";
 
 const AdminDashboardPage = () => (
-  <Layout>
+  <Layout sidebar={true}>
     <Seo title="Admin Dashboard - FaShop" />
     <div className="admin-dashboard">
       <div className="row gx-0">
