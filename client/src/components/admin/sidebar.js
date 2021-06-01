@@ -1,6 +1,6 @@
 import React from "react";
 
-const sidebar = () => (
+const Sidebar = () => (
   <ul
     className="nav nav-pills nav-justified flex-lg-column border-0 py-2"
     role="tablist">
@@ -68,4 +68,4 @@ const sidebar = () => (
   </ul>
 );
 
-export default sidebar;
+export default Sidebar;

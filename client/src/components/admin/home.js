@@ -1,6 +1,6 @@
 import React from "react";
 
-const home = () => {
+const Home = () => {
   const topStats = (
     <div className="row">
       <div className="col">
@@ -143,4 +143,4 @@ const home = () => {
   );
 };
 
-export default home;
+export default Home;

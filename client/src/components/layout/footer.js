@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const footer = ({ sidebar }) => {
+const Footer = ({ sidebar }) => {
   if (sidebar) {
     return (
       <div className="row mx-0">
@@ -37,8 +37,8 @@ const footer = ({ sidebar }) => {
   );
 };
 
-footer.propTypes = {
+Footer.propTypes = {
   sidebar: PropTypes.bool.isRequired,
 };
 
-export default footer;
+export default Footer;

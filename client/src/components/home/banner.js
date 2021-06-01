@@ -1,7 +1,7 @@
 import React from "react";
 import { StaticImage } from "gatsby-plugin-image";
 
-const banner = () => (
+const Banner = () => (
   <section className="banner-section">
     <div
       id="banner-carousel"
@@ -53,4 +53,4 @@ const banner = () => (
   </section>
 );
 
-export default banner;
+export default Banner;
