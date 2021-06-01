@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { navigate } from "gatsby";
 
-import Layout from "../components/layout";
-import Seo from "../components/SEO";
+import Layout from "../components/layout/layout";
+import Seo from "../components/utils/SEO";
 import { signIn } from "../auth";
 
 const LogInPage = () => {

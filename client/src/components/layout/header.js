@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Link } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
 
-import { isAuthenticated, signOut } from "../auth";
+import { isAuthenticated, signOut } from "../../auth";
 
 const Header = ({ siteTitle }) => {
   const isLoggedIn = (

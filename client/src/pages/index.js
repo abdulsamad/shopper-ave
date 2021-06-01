@@ -1,14 +1,36 @@
 import React from "react";
 
-import Layout from "../components/layout";
-import Seo from "../components/SEO";
+import Layout from "../components/layout/layout";
+import Seo from "../components/utils/SEO";
+import Banner from "../components/home/banner";
 
 const IndexPage = () => (
   <Layout>
     <Seo title="Home" />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
+    <Banner />
+    <div className="container my-4 home-collection">
+      <div className="row">
+        <div className="col">
+          <div className="card" style={{ width: "18rem" }}>
+            <img
+              src="https://picsum.photos/720"
+              className="card-img-top"
+              alt="..."
+            />
+            <div className="card-body">
+              <h5 className="card-title">Card title</h5>
+              <p className="card-text">
+                Some quick example text to build on the card title and make up
+                the bulk of the card's content.
+              </p>
+              <a href="#" className="btn btn-primary">
+                Go somewhere
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </Layout>
 );
 

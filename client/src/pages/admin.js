@@ -1,7 +1,7 @@
 import React from "react";
 
-import Layout from "../components/layout";
-import Seo from "../components/SEO";
+import Layout from "../components/layout/layout";
+import Seo from "../components/utils/SEO";
 
 const AdminDashboardPage = () => (
   <Layout>
