@@ -4,12 +4,41 @@ const ManageProducts = () => {
   return (
     <div
       className="tab-pane fade"
-      id="create-product"
+      id="manage-products"
       role="tabpanel"
-      aria-labelledby="create-product-tab">
-      Manage. Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum,
-      nobis? Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente,
-      quod.
+      aria-labelledby="manage-product-tab">
+      <div className="text-center">
+        <h3>All Products</h3>
+        <table className="table">
+          <thead className="align-middle">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Stock</th>
+              <th colSpan={2}>Actions</th>
+            </tr>
+          </thead>
+          <tbody className="align-middle">
+            <tr>
+              <th scope="row">1</th>
+              <td>Mens Wear Jacket Large</td>
+              <td>5</td>
+              <td>
+                <button type="button" className="btn btn-info text-white w-100">
+                  Update
+                </button>
+              </td>
+              <td>
+                <button
+                  type="button"
+                  className="btn btn-danger text-white w-100">
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
