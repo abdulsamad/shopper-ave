@@ -7,9 +7,42 @@ const ManageOrders = () => {
       id="manage-orders"
       role="tabpanel"
       aria-labelledby="manage-orders-tab">
-      Manage. Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum,
-      nobis? Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente,
-      quod.
+      <div className="text-center">
+        <h3>All Orders</h3>
+        <table className="table">
+          <thead className="align-middle">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Customer Name</th>
+              <th scope="col">Product Name</th>
+              <th scope="col">Quantity</th>
+              <th colSpan={2}>Actions</th>
+            </tr>
+          </thead>
+          <tbody className="align-middle">
+            <tr>
+              <th scope="row">1</th>
+              <td>John Doe</td>
+              <td>Mens Wear Jacket Large</td>
+              <td>5</td>
+              <td>
+                <button
+                  type="button"
+                  className="btn btn-success text-white w-100">
+                  Delivered
+                </button>
+              </td>
+              <td>
+                <button
+                  type="button"
+                  className="btn btn-danger text-white w-100">
+                  Cancel
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
