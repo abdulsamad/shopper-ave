@@ -146,19 +146,19 @@ const Home = () => {
             </p>
           </div>
         </div>
+        <div className="col card mx-2 shadow-sm text-center text-nowrap bg-danger text-white">
+          <div className="card-body">
+            <h3 className="card-title">Stock</h3>
+            <p className="card-text">
+              <div className="display-4">1000</div>
+            </p>
+          </div>
+        </div>
         <div className="col card mx-2 shadow-sm text-center text-nowrap bg-primary">
           <div className="card-body">
             <h3 className="card-title">Categories</h3>
             <p className="card-text">
               <div className="display-4">10</div>
-            </p>
-          </div>
-        </div>
-        <div className="col card mx-2 shadow-sm text-center text-nowrap bg-danger text-white">
-          <div className="card-body">
-            <h3 className="card-title">Stocks</h3>
-            <p className="card-text">
-              <div className="display-4">1000</div>
             </p>
           </div>
         </div>
