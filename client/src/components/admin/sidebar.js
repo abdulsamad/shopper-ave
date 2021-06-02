@@ -1,7 +1,7 @@
 import React from "react";
 
 const Sidebar = () => (
-  <aside className="bg-dark fixed-bottom col-lg-2 admin-left">
+  <aside className="bg-l-gradient-dark fixed-bottom col-lg-2 admin-left">
     <ul
       className="nav nav-pills nav-justified flex-lg-column border-0 py-2"
       role="tablist">

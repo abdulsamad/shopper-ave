@@ -1,17 +1,15 @@
+// @use "bootstrap/scss/variables";
+
 $utilities: () !default;
 
 $utilities: map-merge(
   $utilities,
   (
-    "opacity": (
-      property: opacity,
-      class: opacity,
+    "background-linear-gradient": (
+      property: background,
+      class: bg-l-gradient,
       values: (
-        0: 0,
-        25: 0.25,
-        50: 0.5,
-        75: 0.75,
-        100: 1,
+        dark: #0d0d14 linear-gradient(315deg, #0d0d14 0%, #242425 74%),
       ),
     ),
   )
