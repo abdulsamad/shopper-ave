@@ -29,7 +29,14 @@ module.exports = {
       },
     },
     "gatsby-plugin-offline",
-    "gatsby-plugin-sass",
+    {
+      resolve: "gatsby-plugin-sass",
+      options: {
+        sassOptions: {
+          includePaths: ["src/scss"],
+        },
+      },
+    },
     {
       resolve: "gatsby-plugin-webfonts",
       options: {
