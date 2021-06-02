@@ -23,7 +23,7 @@ $navbar-height: 70px;
 }
 
 .admin-right {
-  min-height: 100vh;
+  min-height: calc(100vh - #{136px + $navbar-height});
 
   .admin-details {
     height: 287px;
