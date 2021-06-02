@@ -16,9 +16,7 @@ const AdminDashboardPage = () => (
     <div className="admin-dashboard">
       <div className="row gx-0">
         <section className="col-lg-2">
-          <aside className="bg-dark fixed-bottom col-lg-2 admin-left">
-            <Sidebar />
-          </aside>
+          <Sidebar />
         </section>
         <section className="col admin-right">
           <h1 className="text-center my-4">
