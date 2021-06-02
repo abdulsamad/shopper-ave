@@ -1,28 +1,23 @@
 /* Variables */
-
 $navbar-height: 70px;
 
 /* Classes */
-
 .brand-logo-font {
   font-family: Montserrat, Verdana, Tahoma, sans-serif;
   font-style: italic;
 }
 
 /* Layout */
-
 .main {
   margin-top: $navbar-height;
 }
 
 /* Home */
-
 .banner {
   height: calc(80vh - #{$navbar-height});
 }
 
 /* Admin */
-
 .admin-left {
   height: calc(100vh - #{$navbar-height});
 }
