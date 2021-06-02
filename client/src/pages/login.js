@@ -60,7 +60,7 @@ const LogInPage = () => {
             </label>
             <input
               type="email"
-              className="form-control"
+              className={`form-control ${errors.email && "is-invalid"}`}
               id="email"
               placeholder="name@example.com"
               {...register("email", { required: true })}
@@ -78,7 +78,7 @@ const LogInPage = () => {
             </label>
             <input
               type="password"
-              className="form-control"
+              className={`form-control ${errors.password && "is-invalid"}`}
               id="password"
               placeholder="Your secure password"
               {...register("password", { required: true, minLength: 8 })}

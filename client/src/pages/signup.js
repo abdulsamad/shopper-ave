@@ -64,7 +64,7 @@ const SignUpPage = () => {
             </label>
             <input
               type="text"
-              className="form-control"
+              className={`form-control ${errors.name && "is-invalid"}`}
               id="name"
               placeholder="John Doe"
               {...register("name", {
@@ -95,7 +95,7 @@ const SignUpPage = () => {
             </label>
             <input
               type="email"
-              className="form-control"
+              className={`form-control ${errors.email && "is-invalid"}`}
               id="email"
               placeholder="name@example.com"
               {...register("email", { required: true })}
@@ -113,7 +113,7 @@ const SignUpPage = () => {
             </label>
             <input
               type="password"
-              className="form-control"
+              className={`form-control ${errors.password && "is-invalid"}`}
               id="password"
               placeholder="Your secure password"
               {...register("password", {
