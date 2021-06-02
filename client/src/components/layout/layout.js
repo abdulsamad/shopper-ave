@@ -30,7 +30,7 @@ Layout.propTypes = {
   sidebar: PropTypes.bool,
 };
 
-Layout.propTypes = {
+Layout.defaultProps = {
   sidebar: false,
 };
 
