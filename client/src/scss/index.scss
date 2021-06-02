@@ -6,8 +6,9 @@
 @use "bootstrap/scss/bootstrap" with (
 	$primary: #ffc107,
 	$secondary: #9e9e9e,
-	$danger: #f44336,
 	$info: #2196f3,
+	$success: #4CAF50,
+	$danger: #f44336,
 	$dark: #0d0d14,
 	$component-active-color: #0d0d14,
 	$box-shadow: #{0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)},
