@@ -112,19 +112,19 @@ const Home = () => {
           />
         </header>
         <div className="card-body d-flex align-items-center">
-          <p className="card-text">
-            <div className="fs-5">
+          <div className="card-text">
+            <p className="fs-5 mb-0">
               <strong className="fw-normal">Name:&nbsp;</strong>
               <em>John Doe</em>
-            </div>
-            <div className="fs-5">
+            </p>
+            <p className="fs-5 mb-0">
               <strong className="fw-normal">Email:&nbsp;</strong>
               <em>john@example.com</em>
-            </div>
+            </p>
             <span className="badge bg-danger fs-6 mt-3 rounded-pill">
               Admin Area
             </span>
-          </p>
+          </div>
         </div>
         <footer className="card-footer">
           <button type="button" className="btn text-center w-100">
@@ -142,7 +142,7 @@ const Home = () => {
           <div className="card-body">
             <h3 className="card-title">Products</h3>
             <p className="card-text">
-              <div className="display-4">20</div>
+              <span className="display-4 d-block">20</span>
             </p>
           </div>
         </div>
@@ -150,7 +150,7 @@ const Home = () => {
           <div className="card-body">
             <h3 className="card-title">Stock</h3>
             <p className="card-text">
-              <div className="display-4">1000</div>
+              <span className="display-4">1000</span>
             </p>
           </div>
         </div>
@@ -158,7 +158,7 @@ const Home = () => {
           <div className="card-body">
             <h3 className="card-title">Categories</h3>
             <p className="card-text">
-              <div className="display-4">10</div>
+              <span className="display-4 d-block">10</span>
             </p>
           </div>
         </div>
@@ -168,7 +168,7 @@ const Home = () => {
           <div className="card-body">
             <h3 className="card-title">Active Orders</h3>
             <p className="card-text">
-              <div className="display-4">1000</div>
+              <span className="display-4 d-block">1000</span>
             </p>
           </div>
         </div>
@@ -176,12 +176,12 @@ const Home = () => {
           <div className="card-body">
             <h3 className="card-title">Revenue</h3>
             <p className="card-text">
-              <div className="display-4 revenue-number overflow-hidden">
+              <span className="display-4 d-block revenue-number overflow-hidden">
                 {new Intl.NumberFormat("en-US", {
                   style: "currency",
                   currency: "USD",
                 }).format(1000)}
-              </div>
+              </span>
             </p>
           </div>
         </div>

@@ -11,7 +11,8 @@ const Footer = ({ sidebar }) => {
             fulfilled
           </p>
           <p>
-            &copy; {new Date().getFullYear()} FaShop, Created by{" "}
+            &copy; {new Date().getFullYear()}{" "}
+            <span className="brand-logo-font">FaShop</span>, Created by{" "}
             <a href="https://abdulsamad.dev" className="text-decoration-none">
               AbdulSamad
             </a>
@@ -28,7 +29,8 @@ const Footer = ({ sidebar }) => {
         fulfilled
       </p>
       <p>
-        &copy; {new Date().getFullYear()} FaShop, Created by{" "}
+        &copy; {new Date().getFullYear()}{" "}
+        <span className="brand-logo-font">FaShop,</span> Created by{" "}
         <a href="https://abdulsamad.dev" className="text-decoration-none">
           AbdulSamad
         </a>

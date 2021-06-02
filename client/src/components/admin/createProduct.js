@@ -8,18 +8,18 @@ const CreateProduct = () => {
       role="tabpanel"
       aria-labelledby="create-product-tab">
       <form className="mx-auto w-50">
-        <div class="mb-3">
-          <label for="create-product-input-image" class="form-label">
+        <div className="mb-3">
+          <label htmlFor="create-product-input-image" className="form-label">
             Product Image
           </label>
           <input
-            class="form-control"
+            className="form-control"
             type="file"
             id="create-product-input-image"
           />
         </div>
         <div className="my-3">
-          <label for="create-product-input-name" className="form-label">
+          <label htmlFor="create-product-input-name" className="form-label">
             Product Name
           </label>
           <input
@@ -30,7 +30,7 @@ const CreateProduct = () => {
           />
         </div>
         <div className="my-3">
-          <label for="create-product-description" className="form-label">
+          <label htmlFor="create-product-description" className="form-label">
             Product Description
           </label>
           <textarea
@@ -41,7 +41,7 @@ const CreateProduct = () => {
           />
         </div>
         <div className="my-3">
-          <label for="create-product-input-price" className="form-label">
+          <label htmlFor="create-product-input-price" className="form-label">
             Price
           </label>
           <div className="input-group mb-3">
@@ -59,21 +59,22 @@ const CreateProduct = () => {
           </div>
         </div>
         <div className="my-3">
-          <label for="create-product-input-select" className="form-label">
+          <label htmlFor="create-product-input-select" className="form-label">
             Stock
           </label>
           <select
-            class="form-select"
+            className="form-select"
             id="create-product-input-select"
-            aria-label="select category">
-            <option selected>Select category</option>
+            aria-label="select category"
+            defaultValue="default">
+            <option value="default">Select category</option>
             <option value="1">One</option>
             <option value="2">Two</option>
             <option value="3">Three</option>
           </select>
         </div>
         <div className="my-3">
-          <label for="create-product-input-stock" className="form-label">
+          <label htmlFor="create-product-input-stock" className="form-label">
             Stock
           </label>
           <input

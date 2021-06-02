@@ -8,16 +8,16 @@ const CreateCategory = () => {
       role="tabpanel"
       aria-labelledby="create-category-tab">
       <form className="mx-auto w-50">
-        <label for="create-category-input" class="form-label">
+        <label htmlFor="create-category-input" className="form-label">
           Enter New Category
         </label>
         <input
           type="text"
-          class="form-control"
+          className="form-control"
           id="create-category-input"
           placeholder="Jacket"
         />
-        <button class="btn btn-primary my-3" type="submit">
+        <button className="btn btn-primary my-3" type="submit">
           Add Category
         </button>
       </form>

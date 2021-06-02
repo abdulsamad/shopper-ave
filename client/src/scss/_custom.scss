@@ -20,6 +20,11 @@ $navbar-height: 70px;
 /* Admin */
 .admin-left {
   height: calc(100vh - #{$navbar-height});
+
+  .nav-link {
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+  }
 }
 
 .admin-right {
