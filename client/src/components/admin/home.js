@@ -136,7 +136,6 @@ const Home = () => {
       {topStats}
       <div className="row my-5">
         {recentlyJointUsers}
-
         {topRatedProduct}
       </div>
     </div>
