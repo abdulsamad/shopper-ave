@@ -16,7 +16,7 @@ const ManageOrders = () => {
               <th scope="col">Customer Name</th>
               <th scope="col">Product Name</th>
               <th scope="col">Quantity</th>
-              <th colSpan={2}>Actions</th>
+              <th colSpan={3}>Actions</th>
             </tr>
           </thead>
           <tbody className="align-middle">
@@ -30,6 +30,11 @@ const ManageOrders = () => {
                   type="button"
                   className="btn btn-success text-white w-100">
                   Delivered
+                </button>
+              </td>
+              <td>
+                <button type="button" className="btn btn-info text-white w-100">
+                  More Info
                 </button>
               </td>
               <td>
