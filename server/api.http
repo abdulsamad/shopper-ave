@@ -69,7 +69,7 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "name": "Rainy"
+  "name": "Jacket"
 }
 
 ### Update Category
@@ -78,7 +78,7 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "name": "Rainy is awesome"
+  "name": "Jacket"
 }
 
 ### Delete Category
@@ -87,9 +87,11 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "name": "Rainy is awesome"
+  "name": "Jacket"
 }
 
+### Get Products
+GET {{API_BASE}}/products HTTP/1.1
 
 ### Create Product
 POST {{API_BASE}}/product/create/{{userId}} HTTP/1.1
