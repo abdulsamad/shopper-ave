@@ -10,21 +10,21 @@ const Banner = () => (
       <div className="carousel-inner">
         <div className="carousel-item active">
           <StaticImage
-            src="../images/shopping.png"
+            src="../../images/shopping.png"
             imgClassName="d-block w-100 img-fluid"
             alt="shopping"
           />
         </div>
         <div className="carousel-item">
           <StaticImage
-            src="../images/guy.png"
+            src="../../images/guy.png"
             imgClassName="d-block w-100 img-fluid"
             alt="shopping"
           />
         </div>
         <div className="carousel-item">
           <StaticImage
-            src="../images/jacket.png"
+            src="../../images/jacket.png"
             imgClassName="d-block w-100 img-fluid"
             alt="shopping"
           />
