@@ -73,6 +73,45 @@ const Home = () => {
     </div>
   );
 
+  const adminDetails = (
+    <div className="col">
+      <div className="card shadow-sm border-0 admin-details">
+        <header className="card-header bg-primary border-0 position-relative d-flex align-items-center">
+          <h5 className="card-title m-0">
+            <i class="bi bi-person" /> Profile Details
+          </h5>
+          <img
+            className="rounded-pill position-absolute"
+            src="https://picsum.photos/70"
+            alt="admin-profile"
+          />
+        </header>
+        <div className="card-body d-flex align-items-center">
+          <p className="card-text">
+            <div className="fs-5">
+              <strong className="fw-normal">Name:&nbsp;</strong>
+              <em>John Doe</em>
+            </div>
+            <div className="fs-5">
+              <strong className="fw-normal">Email:&nbsp;</strong>
+              <em>john@example.com</em>
+            </div>
+            <span className="badge bg-danger fs-6 mt-3 rounded-pill">
+              Admin Area
+            </span>
+          </p>
+        </div>
+        <footer className="card-footer">
+          <button
+            type="button"
+            className="btn btn-outline-dark text-center w-100">
+            Update Profile
+          </button>
+        </footer>
+      </div>
+    </div>
+  );
+
   const topRatedProduct = (
     <div className="col">
       <table className="table table-striped table-hoverable table-bordered text-center caption-top">
@@ -90,37 +129,55 @@ const Home = () => {
             <th scope="row">1</th>
             <td>MKBHD Hoodie</td>
             <td>Jacket</td>
-            <td>4.5</td>
+            <td>
+              4.5&nbsp;
+              <i class="bi bi-star-fill" />
+            </td>
           </tr>
           <tr>
             <th scope="row">2</th>
             <td>MKBHD Hoodie</td>
             <td>Jacket</td>
-            <td>4.5</td>
+            <td>
+              none &nbsp;
+              <i class="bi bi-star" />
+            </td>
           </tr>
           <tr>
             <th scope="row">3</th>
             <td>MKBHD Hoodie</td>
             <td>Jacket</td>
-            <td>4.5</td>
+            <td>
+              4.5&nbsp;
+              <i class="bi bi-star-fill" />
+            </td>
           </tr>
           <tr>
             <th scope="row">4</th>
             <td>MKBHD Hoodie</td>
             <td>Jacket</td>
-            <td>4.5</td>
+            <td>
+              4.5&nbsp;
+              <i class="bi bi-star-fill" />
+            </td>
           </tr>
           <tr>
             <th scope="row">5</th>
             <td>MKBHD Hoodie</td>
             <td>Jacket</td>
-            <td>4.5</td>
+            <td>
+              4.5&nbsp;
+              <i class="bi bi-star-fill" />
+            </td>
           </tr>
           <tr>
             <th scope="row">6</th>
             <td>MKBHD Hoodie</td>
             <td>Jacket</td>
-            <td>4.5</td>
+            <td>
+              4.5&nbsp;
+              <i class="bi bi-star-fill" />
+            </td>
           </tr>
         </tbody>
       </table>
@@ -134,8 +191,12 @@ const Home = () => {
       role="tabpanel"
       aria-labelledby="home-tab">
       {topStats}
-      <div className="row my-5">
+      <div className="row mt-5 mb-2">
         {recentlyJointUsers}
+        {adminDetails}
+      </div>
+      <div className="row">
+        <div className="col"></div>
         {topRatedProduct}
       </div>
     </div>

@@ -23,5 +23,22 @@ $navbar-height: 70px;
 }
 
 .admin-right {
-  height: 100vh;
+  min-height: 100vh;
+
+  .admin-details {
+    height: 287px;
+    margin-top: 40px;
+
+    .card-header {
+      height: 70px;
+    }
+
+    img {
+      height: 70px;
+      width: 70px;
+      top: 0;
+      left: 50%;
+      transform: translate(-50%, 50%);
+    }
+  }
 }
