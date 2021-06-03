@@ -26,14 +26,26 @@ $carousel-height: calc(80vh - #{$navbar-height});
   }
 
   .first {
-    background: linear-gradient(to right, #8e54e9, #4776e6);
+    background: #8e54e9 linear-gradient(45deg, #8e54e9, #4776e6);
 
     .img-wrapper {
       right: 0;
+
+      // &::before {
+      //   content: "";
+      //   height: 850px;
+      //   width: 850px;
+      //   border-radius: 50%;
+      //   display: block;
+      //   position: absolute;
+      //   bottom: -100px;
+      //   right: -100px;
+      //   background-color: turquoise;
+      // }
     }
 
     img {
-      filter: drop-shadow(2rem 2rem 2rem rgba(253, 253, 253, 0.2));
+      filter: drop-shadow(0.5rem 1rem 2rem rgb(253, 253, 253));
     }
 
     .carousel-caption {
@@ -45,11 +57,33 @@ $carousel-height: calc(80vh - #{$navbar-height});
   }
 
   .second {
-    background-color: #673ab7;
+    background: #2196f3
+      linear-gradient(
+        110deg,
+        #0e0f0a 0%,
+        #0e0f0a 33%,
+        #e0e0e0 33%,
+        #e0e0e0 66%,
+        #e9878c 66%,
+        #e9878c 100%
+      );
+
+    .carousel-caption {
+      background-color: rgba(0, 0, 0, 0.6);
+    }
   }
 
   .third {
-    background-color: #2196f3;
+    background: #f44336 radial-gradient(circle, #d64a40, #f44336);
+
+    .carousel-caption {
+      width: 30%;
+      left: auto;
+      right: 0;
+      top: 50%;
+      bottom: auto;
+      transform: translate(-50%, -50%);
+    }
   }
 }
 
