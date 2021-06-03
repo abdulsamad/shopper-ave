@@ -86,9 +86,5 @@ $carousel-height: calc(80vh - #{$navbar-height});
   .bottom-left-info {
     margin-top: 40px;
     height: 287px;
-
-    .revenue-number {
-      text-overflow: ellipsis;
-    }
   }
 }

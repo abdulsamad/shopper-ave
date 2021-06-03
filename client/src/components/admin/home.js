@@ -176,7 +176,7 @@ const Home = () => {
           <div className="card-body">
             <h3 className="card-title">Revenue</h3>
             <p className="card-text">
-              <span className="display-4 d-block revenue-number overflow-hidden">
+              <span className="display-4 d-block text-truncate">
                 {new Intl.NumberFormat("en-US", {
                   style: "currency",
                   currency: "USD",
