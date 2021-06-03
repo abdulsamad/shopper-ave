@@ -1,10 +1,15 @@
 /* Variables */
 $navbar-height: 70px;
+$carousel-height: calc(80vh - #{$navbar-height});
 
 /* Classes */
 .brand-logo-font {
   font-family: Montserrat, Verdana, Tahoma, sans-serif;
   font-style: italic;
+}
+
+.text-small {
+  font-size: 0.8rem;
 }
 
 /* Layout */
@@ -14,7 +19,38 @@ $navbar-height: 70px;
 
 /* Home */
 .banner {
-  height: calc(80vh - #{$navbar-height});
+  height: $carousel-height;
+
+  .carousel-item {
+    height: $carousel-height;
+  }
+
+  .first {
+    background: linear-gradient(to right, #8e54e9, #4776e6);
+
+    .img-wrapper {
+      right: 0;
+    }
+
+    img {
+      filter: drop-shadow(2rem 2rem 2rem rgba(253, 253, 253, 0.2));
+    }
+
+    .carousel-caption {
+      left: 25%;
+      top: 50%;
+      width: 30%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .second {
+    background-color: #673ab7;
+  }
+
+  .third {
+    background-color: #2196f3;
+  }
 }
 
 /* Admin */
