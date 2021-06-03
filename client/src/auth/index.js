@@ -19,7 +19,7 @@ const signIn = (user) => {
     .then(({ data }) => {
       const { token } = data;
 
-      if (typeof window !== undefined) {
+      if (typeof window !== "undefined") {
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         localStorage.setItem("jwt", JSON.stringify(data));
       }
@@ -28,8 +28,8 @@ const signIn = (user) => {
     });
 };
 
-const signOut = (next) => {
-  if (typeof window !== undefined) {
+const signOut = () => {
+  if (typeof window !== "undefined") {
     localStorage.removeItem("jwt");
     delete axios.defaults.headers.common["Authorization"];
 
@@ -40,11 +40,11 @@ const signOut = (next) => {
 };
 
 const isAuthenticated = () => {
-  if (typeof window === undefined) {
+  if (typeof window === "undefined") {
     return false;
   }
 
-  if (localStorage.getItem("jwt")) {
+  if (typeof window !== "undefined" && localStorage.getItem("jwt")) {
     return JSON.parse(localStorage.getItem("jwt"));
   } else {
     return false;
