@@ -77,7 +77,7 @@ const Banner = () => (
             alt="shopping"
           />
           <div className="carousel-caption d-none d-md-inline-block">
-            <h5 className="display-3 text-uppercase fst-italic">
+            <h5 className="display-3 text-uppercase fw-bold fst-italic">
               Fashion as unique as you are
             </h5>
             <p className="mb-0 fs-5">
