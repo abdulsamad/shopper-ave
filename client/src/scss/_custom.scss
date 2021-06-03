@@ -122,3 +122,45 @@ $carousel-height: calc(80vh - #{$navbar-height});
     height: 287px;
   }
 }
+
+/* Cart */
+.cart {
+  top: $navbar-height;
+  right: 0;
+  z-index: 1030;
+  border-bottom-left-radius: 25px;
+  transition: 0.3s ease;
+  transform-origin: top right;
+
+  &__in-anim {
+    animation: cart-in-anim 0.3s ease both;
+  }
+
+  &__out-anim {
+    animation: cart-out-anim 0.3s ease both;
+  }
+}
+
+@keyframes cart-in-anim {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    display: block;
+    transform: scale(1);
+  }
+}
+
+@keyframes cart-out-anim {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    display: none;
+    transform: scale(0.8);
+  }
+}
