@@ -2,11 +2,7 @@ import React from "react";
 
 const CreateCategory = () => {
   return (
-    <div
-      className="tab-pane fade show"
-      id="create-category"
-      role="tabpanel"
-      aria-labelledby="create-category-tab">
+    <div className="admin-create-category">
       <form className="mx-auto w-50">
         <label htmlFor="create-category-input" className="form-label">
           Enter New Category

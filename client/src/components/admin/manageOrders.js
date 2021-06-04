@@ -2,11 +2,7 @@ import React from "react";
 
 const ManageOrders = () => {
   return (
-    <div
-      className="tab-pane fade"
-      id="manage-orders"
-      role="tabpanel"
-      aria-labelledby="manage-orders-tab">
+    <div className="admin-manage-orders">
       <div className="text-center">
         <h3>All Orders</h3>
         <table className="table">

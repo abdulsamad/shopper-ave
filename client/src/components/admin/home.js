@@ -237,11 +237,7 @@ const Home = () => {
   );
 
   return (
-    <div
-      className="tab-pane fade show active"
-      id="admin-home"
-      role="tabpanel"
-      aria-labelledby="home-tab">
+    <div className="admin-home">
       {topStats}
       <div className="row mt-5 mb-2">
         {topRatedProduct}

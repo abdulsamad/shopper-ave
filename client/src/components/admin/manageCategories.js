@@ -2,11 +2,7 @@ import React from "react";
 
 const ManageCategories = () => {
   return (
-    <div
-      className="tab-pane fade"
-      id="manage-categories"
-      role="tabpanel"
-      aria-labelledby="manage-category-tab">
+    <div className="admin-manage-categories">
       <div className="text-center">
         <h3>All Categories</h3>
         <table className="table">

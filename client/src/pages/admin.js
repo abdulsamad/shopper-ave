@@ -1,4 +1,5 @@
 import React from "react";
+import { Router } from "@reach/router";
 
 import Layout from "../components/layout/layout";
 import Seo from "../components/utils/SEO";
@@ -23,14 +24,14 @@ const AdminDashboardPage = () => (
             Welcome to <span className="text-primary">Admin Area</span>
           </h1>
           <div className="container">
-            <div className="tab-content">
-              <Home />
-              <CreateCategory />
-              <ManageCategory />
-              <CreateProduct />
-              <ManageProducts />
-              <ManageOrders />
-            </div>
+            <Router>
+              <Home path="/admin" />
+              <CreateCategory path="/admin/create-category" />
+              <ManageCategory path="/admin/manage-categories" />
+              <CreateProduct path="/admin/create-product" />
+              <ManageProducts path="/admin/manage-products" />
+              <ManageOrders path="/admin/manage-orders" />
+            </Router>
           </div>
         </section>
       </div>

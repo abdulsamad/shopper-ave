@@ -2,11 +2,7 @@ import React from "react";
 
 const CreateProduct = () => {
   return (
-    <div
-      className="tab-pane fade"
-      id="create-product"
-      role="tabpanel"
-      aria-labelledby="create-product-tab">
+    <div className="admin-create-product">
       <form className="mx-auto w-50">
         <div className="mb-3">
           <label htmlFor="create-product-input-image" className="form-label">

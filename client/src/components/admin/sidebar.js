@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "@reach/router";
 
 const Sidebar = () => (
   <aside className="bg-l-gradient-dark fixed-bottom col-lg-2 admin-left">
@@ -6,65 +7,52 @@ const Sidebar = () => (
       className="nav nav-pills nav-justified flex-lg-column border-0 py-2"
       role="tablist">
       <li className="nav-item pe-2" role="presentation">
-        <button
-          type="button"
-          className="nav-link rounded-start-0 rounded-pill p-3 active"
-          data-bs-toggle="tab"
-          data-bs-target="#admin-home"
-          aria-current="page">
+        <Link
+          to="/admin/home"
+          className="nav-link rounded-start-0 rounded-pill p-3 active">
           <i className="bi bi-house-door fs-5 d-inline-block me-2" />
           Home
-        </button>
+        </Link>
       </li>
       <li className="nav-item pe-2" role="presentation">
-        <button
-          type="button"
-          className="nav-link rounded-start-0 rounded-pill p-3"
-          data-bs-toggle="tab"
-          data-bs-target="#create-category">
+        <Link
+          to="/admin/create-category"
+          className="nav-link rounded-start-0 rounded-pill p-3">
           <i className="bi bi-bookmark-plus fs-5 d-inline-block me-2" />
           Create Category
-        </button>
+        </Link>
       </li>
       <li className="nav-item pe-2" role="presentation">
-        <button
-          type="button"
-          className="nav-link rounded-start-0 rounded-pill p-3"
-          data-bs-toggle="tab"
-          data-bs-target="#manage-categories">
+        <Link
+          to="/admin/manage-categories"
+          className="nav-link rounded-start-0 rounded-pill p-3">
           <i className="bi bi-bookmark fs-5 d-inline-block me-2" />
           Manage Categories
-        </button>
+        </Link>
       </li>
       <li className="nav-item pe-2" role="presentation">
-        <button
-          type="button"
-          className="nav-link rounded-start-0 rounded-pill p-3"
-          data-bs-toggle="tab"
-          data-bs-target="#create-product">
+        <Link
+          to="/admin/create-product"
+          className="nav-link rounded-start-0 rounded-pill p-3">
           <i className="bi bi-plus-circle fs-5 d-inline-block me-2" />
           Create Product
-        </button>
+        </Link>
       </li>
       <li className="nav-item pe-2" role="presentation">
-        <button
-          type="button"
-          className="nav-link rounded-start-0 rounded-pill p-3"
-          data-bs-toggle="tab"
-          data-bs-target="#manage-products">
+        <Link
+          to="/admin/manage-products"
+          className="nav-link rounded-start-0 rounded-pill p-3">
           <i className="bi bi-wrench fs-5 d-inline-block me-2" />
           Manage Products
-        </button>
+        </Link>
       </li>
       <li className="nav-item pe-2" role="presentation">
-        <button
-          type="button"
-          className="nav-link rounded-start-0 rounded-pill p-3"
-          data-bs-toggle="tab"
-          data-bs-target="#manage-orders">
+        <Link
+          to="/admin/manage-orders"
+          className="nav-link rounded-start-0 rounded-pill p-3">
           <i className="bi bi-cart-check fs-5 d-inline-block me-2"></i>
           Manage Orders
-        </button>
+        </Link>
       </li>
     </ul>
   </aside>
