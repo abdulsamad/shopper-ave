@@ -6,12 +6,13 @@
   "author": "AbdulSamad",
   "license": "UNLICENSED",
   "scripts": {
-    "develop": "concurrently -k \"yarn run dev-server\" \"yarn run start-client\"",
-    "install": "yarn run client-install && yarn run server-install",
+    "start": "concurrently -k \"yarn run dev-server\" \"yarn run start-client\"",
+    "build": "yarn run build-client && yarn run start-server",
     "start-client": "yarn --cwd client start",
     "build-client": "yarn --cwd client build",
     "start-server": "yarn --cwd server start",
     "dev-server": "yarn --cwd server dev",
+    "install": "yarn run client-install && yarn run server-install",
     "client-install": "yarn --cwd client install",
     "server-install": "yarn --cwd server install"
   },
