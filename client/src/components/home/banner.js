@@ -10,7 +10,7 @@ const Banner = () => (
       <div className="carousel-inner">
         <div className="carousel-item position-relative active first">
           <StaticImage
-            src="../../images/shopping.png"
+            src="../../images/banner/shopping.png"
             className="h-100 position-absolute img-wrapper"
             imgClassName="d-block"
             alt="shopping"
@@ -38,19 +38,19 @@ const Banner = () => (
         <div className="carousel-item second">
           <div className="img-container position-relative d-flex justify-content-between h-100">
             <StaticImage
-              src="../../images/cap-guy.png"
+              src="../../images/banner/cap-guy.png"
               className="cap-guy"
               imgClassName="d-block"
               alt="guy in cap and jacket"
             />
             <StaticImage
-              src="../../images/tshirt.png"
+              src="../../images/banner/tshirt.png"
               className="tshirt"
               imgClassName="d-block"
               alt="guy in tshirt"
             />
             <StaticImage
-              src="../../images/hoodie.png"
+              src="../../images/banner/hoodie.png"
               className="hoodie"
               imgClassName="d-block"
               alt="guy in hoodie"
@@ -71,7 +71,7 @@ const Banner = () => (
         </div>
         <div className="carousel-item position-relative third">
           <StaticImage
-            src="../../images/jacket.png"
+            src="../../images/banner/jacket.png"
             className="h-100 position-absolute"
             imgClassName="d-block"
             alt="shopping"
