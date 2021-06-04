@@ -22,7 +22,7 @@ const Cart = ({ cartToggle }) => {
     cartToggle
       ? api.start({ opacity: 1, transform: "translateY(0px)" })
       : api.start({ opacity: 0.5, transform: "translateY(-5px)" });
-  }, [cartToggle]);
+  }, [cartToggle, api]);
 
   return (
     <animated.section
