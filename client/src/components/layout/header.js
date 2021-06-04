@@ -28,12 +28,20 @@ const Header = ({ siteTitle }) => {
   const isNotLoggedIn = (
     <>
       <li className="nav-item">
-        <Link className="nav-link" activeClassName="active" to="/login">
+        <Link
+          className="nav-link"
+          activeClassName="active"
+          partiallyActive={true}
+          to="/login">
           LogIn
         </Link>
       </li>
       <li className="nav-item">
-        <Link className="nav-link" activeClassName="active" to="/signup">
+        <Link
+          className="nav-link"
+          activeClassName="active"
+          partiallyActive={true}
+          to="/signup">
           SignUp
         </Link>
       </li>
@@ -79,6 +87,7 @@ const Header = ({ siteTitle }) => {
                   <Link
                     className="nav-link"
                     activeClassName="active"
+                    partiallyActive={true}
                     to="/dashboard">
                     {user?.role === 1 && <span>User&nbsp;</span>}
                     Dashboard
@@ -90,6 +99,7 @@ const Header = ({ siteTitle }) => {
                   <Link
                     className="nav-link"
                     activeClassName="active"
+                    partiallyActive={true}
                     to="/admin">
                     Admin Dashboard
                   </Link>
@@ -100,7 +110,7 @@ const Header = ({ siteTitle }) => {
               <li className="nav-item ms-2">
                 <button
                   type="button"
-                  className="nav-link btn"
+                  className={`nav-link btn ${cartToggle && "active"}`}
                   onClick={() => setCartToggle((prevState) => !prevState)}>
                   <span className="d-lg-none">Cart</span>{" "}
                   <i className="bi bi-cart4 fs-4" />
