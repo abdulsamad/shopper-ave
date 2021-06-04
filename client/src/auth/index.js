@@ -1,12 +1,9 @@
 import axios from "axios";
 
-axios.defaults.baseURL = process.env.GATSBY_API_URL;
-axios.defaults.headers.common["Accept"] = "application/json";
-
-const contentType = { "Content-Type": "application/json" };
 const isBrowser = typeof window !== "undefined";
+const contentType = { "Content-Type": "application/json" };
 
-const signUp = (user) => {
+export const signUp = (user) => {
   return axios
     .post("/signup", user, { headers: contentType })
     .then(({ data }) => {
@@ -14,7 +11,7 @@ const signUp = (user) => {
     });
 };
 
-const signIn = (user) => {
+export const signIn = (user) => {
   return axios
     .post("/signin", user, { headers: contentType })
     .then(({ data }) => {
@@ -29,7 +26,7 @@ const signIn = (user) => {
     });
 };
 
-const signOut = () => {
+export const signOut = () => {
   if (isBrowser) {
     localStorage.removeItem("jwt");
     delete axios.defaults.headers.common["Authorization"];
@@ -40,7 +37,7 @@ const signOut = () => {
   }
 };
 
-const isAuthenticated = () => {
+export const isAuthenticated = () => {
   if (!isBrowser) {
     return false;
   }
@@ -51,5 +48,3 @@ const isAuthenticated = () => {
     return false;
   }
 };
-
-export { signUp, signIn, signOut, isAuthenticated };
