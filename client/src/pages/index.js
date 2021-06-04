@@ -21,7 +21,9 @@ const IndexPage = () => (
           <div className="col" key={title}>
             <div className="card" style={{ width: "18rem" }}>
               <img
-                src="https://source.unsplash.com/350x550?fashion"
+                height={400}
+                width={250}
+                src="https://source.unsplash.com/250x400?fashion"
                 className="card-img-top"
                 alt="..."
               />
