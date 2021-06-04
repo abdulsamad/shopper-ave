@@ -21,7 +21,7 @@ const UserDashboardPage = () => {
                   alt="profile"
                   className="rounded-pill"
                 />
-                {user.role === 1 && (
+                {user?.role === 1 && (
                   <div className="my-4">
                     <span className="badge rounded-pill bg-primary text-uppercase">
                       Admin
