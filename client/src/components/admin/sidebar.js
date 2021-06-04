@@ -3,10 +3,8 @@ import { Link } from "@reach/router";
 
 const Sidebar = () => (
   <aside className="bg-l-gradient-dark fixed-bottom col-lg-2 admin-left">
-    <ul
-      className="nav nav-pills nav-justified flex-lg-column border-0 py-2"
-      role="tablist">
-      <li className="nav-item pe-2" role="presentation">
+    <ul className="nav nav-pills nav-justified flex-lg-column border-0 py-2">
+      <li className="nav-item pe-2">
         <Link
           to="/admin/home"
           className="nav-link rounded-start-0 rounded-pill p-3 active">
@@ -14,7 +12,7 @@ const Sidebar = () => (
           Home
         </Link>
       </li>
-      <li className="nav-item pe-2" role="presentation">
+      <li className="nav-item pe-2">
         <Link
           to="/admin/create-category"
           className="nav-link rounded-start-0 rounded-pill p-3">
@@ -22,7 +20,7 @@ const Sidebar = () => (
           Create Category
         </Link>
       </li>
-      <li className="nav-item pe-2" role="presentation">
+      <li className="nav-item pe-2">
         <Link
           to="/admin/manage-categories"
           className="nav-link rounded-start-0 rounded-pill p-3">
@@ -30,7 +28,7 @@ const Sidebar = () => (
           Manage Categories
         </Link>
       </li>
-      <li className="nav-item pe-2" role="presentation">
+      <li className="nav-item pe-2">
         <Link
           to="/admin/create-product"
           className="nav-link rounded-start-0 rounded-pill p-3">
@@ -38,7 +36,7 @@ const Sidebar = () => (
           Create Product
         </Link>
       </li>
-      <li className="nav-item pe-2" role="presentation">
+      <li className="nav-item pe-2">
         <Link
           to="/admin/manage-products"
           className="nav-link rounded-start-0 rounded-pill p-3">
@@ -46,7 +44,7 @@ const Sidebar = () => (
           Manage Products
         </Link>
       </li>
-      <li className="nav-item pe-2" role="presentation">
+      <li className="nav-item pe-2">
         <Link
           to="/admin/manage-orders"
           className="nav-link rounded-start-0 rounded-pill p-3">
