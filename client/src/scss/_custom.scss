@@ -130,15 +130,6 @@ $carousel-height: calc(80vh - #{$navbar-height});
   right: 0;
   z-index: 1030;
   border-bottom-left-radius: 25px;
-  transform-origin: top right;
-
-  &__in-anim {
-    animation: cart-in-anim 0.3s ease forwards;
-  }
-
-  &__out-anim {
-    animation: cart-out-anim 0.3s ease forwards;
-  }
 
   .card-body {
     max-height: calc(100vh - 250px);
@@ -154,38 +145,18 @@ $carousel-height: calc(80vh - #{$navbar-height});
     }
 
     &::-webkit-scrollbar-thumb {
-      background-color: #ffc107;
+      background-color: #0d0d14;
       border-radius: 10px;
     }
+  }
+
+  .checkout-btn {
+    border-bottom-left-radius: 25px;
   }
 
   .list-group-item {
     & + .list-group-item {
       margin-top: 10px;
     }
-  }
-}
-
-@keyframes cart-in-anim {
-  from {
-    opacity: 0;
-    transform: translateX(50%);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-    display: block;
-  }
-}
-
-@keyframes cart-out-anim {
-  from {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateX(50%);
-    display: none;
   }
 }
