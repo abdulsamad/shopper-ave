@@ -6,7 +6,7 @@
   "author": "AbdulSamad",
   "license": "UNLICENSED",
   "scripts": {
-    "develop": "concurrently \"yarn run dev-server\" \"yarn run start-client\"",
+    "develop": "concurrently -k \"yarn run dev-server\" \"yarn run start-client\"",
     "install": "yarn run client-install && yarn run server-install",
     "start-client": "yarn --cwd client start",
     "build-client": "yarn --cwd client build",
