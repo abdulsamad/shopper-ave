@@ -24,13 +24,13 @@ const AdminDashboardPage = () => (
             Welcome to <span className="text-primary">Admin Area</span>
           </h1>
           <div className="container">
-            <Router>
-              <Home path="/admin" />
-              <CreateCategory path="/admin/create-category" />
-              <ManageCategory path="/admin/manage-categories" />
-              <CreateProduct path="/admin/create-product" />
-              <ManageProducts path="/admin/manage-products" />
-              <ManageOrders path="/admin/manage-orders" />
+            <Router basepath="/admin">
+              <Home path="/" />
+              <CreateCategory path="/create-category" />
+              <ManageCategory path="/manage-categories" />
+              <CreateProduct path="/create-product" />
+              <ManageProducts path="/manage-products" />
+              <ManageOrders path="/manage-orders" />
             </Router>
           </div>
         </section>
