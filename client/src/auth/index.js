@@ -4,6 +4,7 @@ axios.defaults.baseURL = process.env.GATSBY_API_URL;
 axios.defaults.headers.common["Accept"] = "application/json";
 
 const contentType = { "Content-Type": "application/json" };
+const isBrowser = typeof window !== "undefined";
 
 const signUp = (user) => {
   return axios
@@ -19,7 +20,7 @@ const signIn = (user) => {
     .then(({ data }) => {
       const { token } = data;
 
-      if (typeof window !== "undefined") {
+      if (isBrowser) {
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         localStorage.setItem("jwt", JSON.stringify(data));
       }
@@ -29,7 +30,7 @@ const signIn = (user) => {
 };
 
 const signOut = () => {
-  if (typeof window !== "undefined") {
+  if (isBrowser) {
     localStorage.removeItem("jwt");
     delete axios.defaults.headers.common["Authorization"];
 
@@ -40,11 +41,11 @@ const signOut = () => {
 };
 
 const isAuthenticated = () => {
-  if (typeof window === "undefined") {
+  if (!isBrowser) {
     return false;
   }
 
-  if (typeof window !== "undefined" && localStorage.getItem("jwt")) {
+  if (isBrowser && localStorage.getItem("jwt")) {
     return JSON.parse(localStorage.getItem("jwt"));
   } else {
     return false;
