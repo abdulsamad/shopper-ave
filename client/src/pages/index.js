@@ -61,10 +61,10 @@ const IndexPage = () => (
     <Seo title="Home" />
     <Banner />
     <div className="container my-4 home-collection">
-      <div className="row">
+      <div className="row justify-content-center gx-2 p-0">
         {data.map(({ _id, title, excerpt }) => (
-          <div className="col" key={_id}>
-            <div className="card" style={{ width: "18rem" }}>
+          <div className="col product-item" key={_id}>
+            <div className="card shadow-sm">
               <img
                 height={400}
                 width={250}
@@ -75,12 +75,12 @@ const IndexPage = () => (
               <div className="card-body">
                 <h5 className="card-title">{title}</h5>
                 <p className="card-text">{excerpt}</p>
+              </div>
+              <div className="card-footer p-0">
                 <div className="d-flex">
-                  <Link to="/" className="btn btn-outline-primary w-50">
+                  <Link to="/" className="btn btn-primary rounded-0 w-100">
+                    <i className="bi bi-cart-plus-fill me-2" />
                     Add to Cart
-                  </Link>
-                  <Link to="/" className="btn btn-primary w-50 ms-2">
-                    Buy Now
                   </Link>
                 </div>
               </div>
