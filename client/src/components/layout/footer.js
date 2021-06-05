@@ -31,7 +31,9 @@ const Footer = ({ sidebar }) => {
       <p>
         &copy; {new Date().getFullYear()}{" "}
         <span className="brand-logo-font">FaShop,</span> Created by{" "}
-        <a href="https://abdulsamad.dev" className="text-decoration-none">
+        <a
+          href="https://abdulsamad.dev"
+          className="text-decoration-none text-dark">
           AbdulSamad
         </a>
       </p>
