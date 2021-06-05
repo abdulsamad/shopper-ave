@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { useTransition, useTrail, animated } from "react-spring";
+import { Link } from "gatsby";
 
 const data = [0, 0, 0, 0, 0, 0, 0].fill({
   name: "Awesome T-Shirt",
@@ -60,6 +61,8 @@ const Cart = ({ cartToggle, setCartToggle }) => {
                         <img
                           src="https://picsum.photos/60"
                           alt="product"
+                          height={60}
+                          width={60}
                           className="img-thumbnail"
                         />
                       </div>
@@ -100,10 +103,12 @@ const Cart = ({ cartToggle, setCartToggle }) => {
                   }).format(1000)}
                 </h6>
               </div>
-              <button className="checkout-btn btn btn-outline-dark w-100 p-2 fs-4 border border-2 my-2">
+              <Link
+                to="/checkout"
+                className="checkout-btn btn btn-outline-dark w-100 p-2 fs-4 border border-2 my-2">
                 <i className="bi bi-box-arrow-right me-2" />
                 Checkout
-              </button>
+              </Link>
             </footer>
           </div>
         </animated.section>
