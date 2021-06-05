@@ -4,6 +4,7 @@
 
 /* Bootstrap */
 @use "bootstrap/scss/bootstrap" with (
+	$font-family-sans-serif: #{ "Open Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"},
 	$primary: #ffc107,
 	$secondary: #9e9e9e,
 	$info: #2196f3,

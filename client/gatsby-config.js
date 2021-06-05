@@ -19,11 +19,11 @@ module.exports = {
     {
       resolve: "gatsby-plugin-manifest",
       options: {
-        name: "gatsby-starter-default",
-        short_name: "starter",
+        name: "FaShop - A few clicks is all it takes.",
+        short_name: "FaShop",
         start_url: "/",
-        background_color: "#663399",
-        theme_color: "#663399",
+        background_color: "#ffc107",
+        theme_color: "#ffc107",
         display: "minimal-ui",
         icon: "src/images/icon.png",
       },
