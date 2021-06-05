@@ -5,11 +5,56 @@ import Layout from "../components/layout/layout";
 import Seo from "../components/utils/SEO";
 import Banner from "../components/home/banner";
 
-const data = [0, 0, 0, 0].fill({
-  title: "Product Name",
-  excerpt:
-    "Some quick example text to build on the card title and make up the bulk of the card's content.",
-});
+const data = [
+  {
+    _id: 1,
+    title: "Crawfish",
+    excerpt:
+      "Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.",
+  },
+  {
+    _id: 2,
+    title: "Lid - 10,12,16 Oz",
+    excerpt:
+      "Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.",
+  },
+  {
+    _id: 3,
+    title: "Lychee - Canned",
+    excerpt:
+      "Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.",
+  },
+  {
+    _id: 4,
+    title: "Sprouts - Alfalfa",
+    excerpt:
+      "Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.",
+  },
+  {
+    _id: 5,
+    title: "Appetizer - Assorted Box",
+    excerpt:
+      "Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.",
+  },
+  {
+    _id: 6,
+    title: "Compound - Mocha",
+    excerpt:
+      "Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.",
+  },
+  {
+    _id: 7,
+    title: "Juice - Orange, 341 Ml",
+    excerpt:
+      "Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.",
+  },
+  {
+    _id: 8,
+    title: "Flour - Semolina",
+    excerpt:
+      "Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.",
+  },
+];
 
 const IndexPage = () => (
   <Layout>
@@ -17,8 +62,8 @@ const IndexPage = () => (
     <Banner />
     <div className="container my-4 home-collection">
       <div className="row">
-        {data.map(({ title, excerpt }) => (
-          <div className="col" key={title}>
+        {data.map(({ _id, title, excerpt }) => (
+          <div className="col" key={_id}>
             <div className="card" style={{ width: "18rem" }}>
               <img
                 height={400}
