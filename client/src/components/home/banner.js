@@ -31,7 +31,7 @@ const Banner = () => (
               <small className="my-3 text-small">* T&amp;C Apply</small>
             </p>
             <button className="btn btn-lg btn-primary my-3">
-              Shop Now <i class="bi bi-cart4 ms-2" />
+              Shop Now <i className="bi bi-cart4 ms-2" />
             </button>
           </div>
         </div>
@@ -65,7 +65,7 @@ const Banner = () => (
             </p>
             <button className="btn btn-lg btn-primary my-3">
               Shop Now
-              <i class="bi bi-cart4 ms-2" />
+              <i className="bi bi-cart4 ms-2" />
             </button>
           </div>
         </div>
@@ -88,7 +88,7 @@ const Banner = () => (
             <p className="lead">Casual | Formal | Ethnic</p>
             <button className="btn btn-lg btn-primary my-3">
               Shop Now
-              <i class="bi bi-cart4 ms-2" />
+              <i className="bi bi-cart4 ms-2" />
             </button>
           </div>
         </div>
