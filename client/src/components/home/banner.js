@@ -13,6 +13,7 @@ const Banner = () => (
             src="../../images/banner/shopping.png"
             className="h-100 position-absolute img-wrapper"
             imgClassName="d-block"
+            loading="eager"
             alt="shopping"
             objectFit="cover"
           />
@@ -41,18 +42,21 @@ const Banner = () => (
               src="../../images/banner/cap-guy.png"
               className="cap-guy"
               imgClassName="d-block"
+              loading="eager"
               alt="guy in cap and jacket"
             />
             <StaticImage
               src="../../images/banner/tshirt.png"
               className="tshirt"
               imgClassName="d-block"
+              loading="eager"
               alt="guy in tshirt"
             />
             <StaticImage
               src="../../images/banner/hoodie.png"
               className="hoodie"
               imgClassName="d-block"
+              loading="eager"
               alt="guy in hoodie"
             />
           </div>
@@ -74,6 +78,7 @@ const Banner = () => (
             src="../../images/banner/jacket.png"
             className="h-100 position-absolute"
             imgClassName="d-block"
+            loading="eager"
             alt="shopping"
           />
           <div className="carousel-caption d-none d-md-inline-block">

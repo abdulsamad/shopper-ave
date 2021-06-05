@@ -56,6 +56,7 @@ const Header = ({ siteTitle }) => {
             <StaticImage
               src="../../images/icon.png"
               alt="FaShop"
+              loading="eager"
               width={33}
               height={30}
             />
