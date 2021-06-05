@@ -12,7 +12,8 @@ const ManageOrders = () => {
               <th scope="col">Customer Name</th>
               <th scope="col">Product Name</th>
               <th scope="col">Quantity</th>
-              <th colSpan={3}>Actions</th>
+              <th colSpan={2}>Actions</th>
+              <th>Delivered</th>
             </tr>
           </thead>
           <tbody className="align-middle">
@@ -21,13 +22,6 @@ const ManageOrders = () => {
               <td>John Doe</td>
               <td>Mens Wear Jacket Large</td>
               <td>5</td>
-              <td>
-                <button
-                  type="button"
-                  className="btn btn-success text-white w-100">
-                  Delivered
-                </button>
-              </td>
               <td>
                 <button type="button" className="btn btn-info text-white w-100">
                   More Info
@@ -38,6 +32,30 @@ const ManageOrders = () => {
                   type="button"
                   className="btn btn-danger text-white w-100">
                   Cancel
+                </button>
+              </td>
+              <td>Delivered</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>John Doe</td>
+              <td>Mens Wear Jacket Large</td>
+              <td>5</td>
+              <td>
+                <button type="button" className="btn btn-info text-white w-100">
+                  More Info
+                </button>
+              </td>
+              <td>
+                <button
+                  type="button"
+                  className="btn btn-danger text-white w-100">
+                  Cancel
+                </button>
+              </td>
+              <td>
+                <button type="button" className="btn btn-outline-success w-100">
+                  <i className="bi bi-check" />
                 </button>
               </td>
             </tr>
