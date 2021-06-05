@@ -11,7 +11,7 @@ const Sidebar = () => (
     <ul className="nav nav-pills nav-justified flex-lg-column border-0 py-2">
       <li className="nav-item pe-2">
         <Link
-          to="/admin/home"
+          to="/admin"
           getProps={isActive}
           className="nav-link rounded-start-0 rounded-pill p-3">
           <i className="bi bi-house-door fs-5 d-inline-block me-2" />
