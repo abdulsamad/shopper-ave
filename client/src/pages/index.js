@@ -65,23 +65,25 @@ const IndexPage = () => (
         {data.map(({ _id, title, excerpt }) => (
           <div className="col product-item" key={_id}>
             <div className="card shadow-sm">
-              <img
-                height={400}
-                width={250}
-                src="https://source.unsplash.com/250x400?fashion"
-                className="card-img-top"
-                alt="..."
-              />
-              <div className="card-body">
-                <h5 className="card-title">{title}</h5>
-                <p className="card-text">{excerpt}</p>
-              </div>
+              <Link to="/product" className="text-decoration-none text-dark">
+                <img
+                  height={400}
+                  width={250}
+                  src="https://source.unsplash.com/250x400?fashion"
+                  className="card-img-top"
+                  alt="..."
+                />
+                <div className="card-body">
+                  <h5 className="card-title">{title}</h5>
+                  <p className="card-text">{excerpt}</p>
+                </div>
+              </Link>
               <div className="card-footer p-0">
                 <div className="d-flex">
-                  <Link to="/" className="btn btn-primary rounded-0 w-100">
+                  <button className="btn btn-primary rounded-0 w-100">
                     <i className="bi bi-cart-plus-fill me-2" />
                     Add to Cart
-                  </Link>
+                  </button>
                 </div>
               </div>
             </div>
