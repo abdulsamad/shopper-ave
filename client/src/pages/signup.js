@@ -55,7 +55,7 @@ const SignUpPage = () => {
           {submitError && (
             <div className="alert alert-danger" role="alert">
               <i className="bi bi-x-lg me-2" />
-              Login unsuccessful. Email and Password did not match.
+              SignUp unsuccessful.
             </div>
           )}
           <div className="my-3">
