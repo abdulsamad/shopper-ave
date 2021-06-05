@@ -121,7 +121,7 @@ const Header = ({ siteTitle }) => {
           </div>
         </div>
       </nav>
-      <Cart cartToggle={cartToggle} />
+      <Cart cartToggle={cartToggle} setCartToggle={setCartToggle} />
     </>
   );
 };

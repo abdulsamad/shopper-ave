@@ -132,7 +132,7 @@ $carousel-height: calc(80vh - #{$navbar-height});
   border-bottom-left-radius: 25px;
 
   .card-body {
-    max-height: calc(100vh - 250px);
+    max-height: calc(100vh - 400px);
     overflow-y: auto;
 
     &::-webkit-scrollbar {
@@ -156,7 +156,13 @@ $carousel-height: calc(80vh - #{$navbar-height});
 
   .list-group-item {
     & + .list-group-item {
-      margin-top: 10px;
+      margin-top: 14px;
+    }
+
+    .delete-btn {
+      top: 50%;
+      right: 20px;
+      transform: translateY(-50%);
     }
   }
 }
