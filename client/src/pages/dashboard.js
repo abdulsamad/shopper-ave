@@ -7,6 +7,8 @@ import { isAuthenticated } from "../auth";
 
 const UserDashboardPage = () => {
   const [updating, setUpdating] = useState(false);
+  const [name, setName] = useState("John Doe");
+  const [email, setEmail] = useState("john@example.com");
   const {
     register,
     handleSubmit,
@@ -14,8 +16,10 @@ const UserDashboardPage = () => {
   } = useForm();
   const { user } = isAuthenticated();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = ({ name, email, image }) => {
+    setName(name);
+    setEmail(email);
+    setUpdating(false);
   };
 
   return (
@@ -137,7 +141,7 @@ const UserDashboardPage = () => {
                       type="text"
                       className="form-control fst-italic"
                       id="readOnlyName"
-                      value="John Doe"
+                      value={name}
                       readOnly
                     />
                   </div>
@@ -153,7 +157,7 @@ const UserDashboardPage = () => {
                       type="email"
                       className="form-control fst-italic"
                       id="readOnlyEmail"
-                      value="john@example.com"
+                      value={email}
                       readOnly
                     />
                   </div>
