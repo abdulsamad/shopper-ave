@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { navigate } from "gatsby";
 
 import Layout from "../components/layout/layout";
 
 const Product = () => {
+  const [size, setSize] = useState("medium");
+
   return (
     <Layout>
       <div className="container pt-4 pb-3 product">
@@ -37,6 +39,9 @@ const Product = () => {
                     className="form-check-input"
                     name="options"
                     id="extra-small"
+                    value="extra-small"
+                    checked={size === "extra-small"}
+                    onClick={(ev) => setSize(ev.target.value)}
                   />
                   <label className="form-check-label" htmlFor="extra-small">
                     XS
@@ -48,6 +53,9 @@ const Product = () => {
                     className="form-check-input"
                     name="options"
                     id="small"
+                    value="small"
+                    checked={size === "small"}
+                    onClick={(ev) => setSize(ev.target.value)}
                   />
                   <label className="form-check-label" htmlFor="small">
                     S
@@ -59,6 +67,9 @@ const Product = () => {
                     className="form-check-input"
                     name="options"
                     id="medium"
+                    value="medium"
+                    checked={size === "medium"}
+                    onClick={(ev) => setSize(ev.target.value)}
                   />
                   <label className="form-check-label" htmlFor="medium">
                     M
@@ -70,6 +81,9 @@ const Product = () => {
                     className="form-check-input"
                     name="options"
                     id="large"
+                    value="large"
+                    checked={size === "large"}
+                    onClick={(ev) => setSize(ev.target.value)}
                   />
                   <label className="form-check-label" htmlFor="large">
                     L
@@ -81,6 +95,9 @@ const Product = () => {
                     className="form-check-input"
                     name="options"
                     id="extra-large"
+                    value="extra-large"
+                    checked={size === "extra-large"}
+                    onClick={(ev) => setSize(ev.target.value)}
                   />
                   <label className="form-check-label" htmlFor="extra-large">
                     XL
