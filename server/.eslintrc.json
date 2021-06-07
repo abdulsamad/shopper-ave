@@ -1,0 +1,30 @@
+{
+  "parser": "@babel/eslint-parser",
+  "env": {
+    "browser": true,
+    "es6": true,
+    "commonjs": true
+  },
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "extends": [
+    "prettier",
+    "airbnb-base",
+    "plugin:node/recommended",
+    "plugin:security/recommended"
+  ],
+  "plugins": ["prettier"],
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "requireConfigFile": false
+  },
+  "rules": {
+    "quotes": "off",
+    "consistent-return": "warn",
+    "no-underscore-dangle": "off",
+    "no-param-reassign": [2, { "props": false }],
+    "object-curly-newline": "off"
+  }
+}
