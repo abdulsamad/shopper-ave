@@ -10,7 +10,7 @@ router.post(
   "/payment/braintree/:userId",
   isSignedIn,
   isAuthenticated,
-  processPayment
+  processPayment,
 );
 
 module.exports = router;

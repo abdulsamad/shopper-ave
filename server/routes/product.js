@@ -24,7 +24,7 @@ router.post(
   isSignedIn,
   isAuthenticated,
   isAdmin,
-  createProduct
+  createProduct,
 );
 
 // read routes
@@ -37,7 +37,7 @@ router.delete(
   isSignedIn,
   isAuthenticated,
   isAdmin,
-  deleteProduct
+  deleteProduct,
 );
 
 //update route
@@ -46,7 +46,7 @@ router.put(
   isSignedIn,
   isAuthenticated,
   isAdmin,
-  updateProduct
+  updateProduct,
 );
 
 //listing route

@@ -18,7 +18,7 @@ router.get(
   "/orders/user/:userId",
   isSignedIn,
   isAuthenticated,
-  userPurchaseList
+  userPurchaseList,
 );
 
 module.exports = router;

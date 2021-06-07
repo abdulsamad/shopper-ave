@@ -22,7 +22,7 @@ router.post(
   isSignedIn,
   isAuthenticated,
   isAdmin,
-  createCategory
+  createCategory,
 );
 
 //read
@@ -35,7 +35,7 @@ router.put(
   isSignedIn,
   isAuthenticated,
   isAdmin,
-  updateCategory
+  updateCategory,
 );
 
 //delete
@@ -44,7 +44,7 @@ router.delete(
   isSignedIn,
   isAuthenticated,
   isAdmin,
-  removeCategory
+  removeCategory,
 );
 
 module.exports = router;

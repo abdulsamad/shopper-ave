@@ -12,7 +12,7 @@ router.post(
       min: 3,
     }),
   ],
-  signup
+  signup,
 );
 
 router.post(
@@ -21,7 +21,7 @@ router.post(
     check("email", "email is required").isEmail(),
     check("password", "password field is required").isLength({ min: 1 }),
   ],
-  signin
+  signin,
 );
 
 router.get("/signout", signout);

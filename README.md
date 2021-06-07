@@ -1,4 +1,4 @@
-## FaShop 
+## FaShop
 
 ## :construction: Underconstruction!
 

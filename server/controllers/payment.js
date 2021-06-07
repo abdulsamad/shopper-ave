@@ -37,6 +37,6 @@ exports.processPayment = (req, res) => {
       } else {
         return res.send(result);
       }
-    }
+    },
   );
 };

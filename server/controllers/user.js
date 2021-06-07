@@ -35,7 +35,7 @@ exports.updateUser = (req, res) => {
       user.salt = undefined;
       user.encry_password = undefined;
       res.json(user);
-    }
+    },
   );
 };
 
@@ -81,6 +81,6 @@ exports.pushOrderInPurchaseList = (req, res, next) => {
       }
 
       next();
-    }
+    },
   );
 };

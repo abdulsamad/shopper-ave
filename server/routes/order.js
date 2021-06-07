@@ -24,7 +24,7 @@ router.post(
   isAuthenticated,
   pushOrderInPurchaseList,
   updateStock,
-  createOrder
+  createOrder,
 );
 //read
 router.get(
@@ -32,7 +32,7 @@ router.get(
   isSignedIn,
   isAuthenticated,
   isAdmin,
-  getAllOrders
+  getAllOrders,
 );
 
 //status of order
@@ -41,14 +41,14 @@ router.get(
   isSignedIn,
   isAuthenticated,
   isAdmin,
-  getOrderStatus
+  getOrderStatus,
 );
 router.put(
   "/order/:orderId/status/:userId",
   isSignedIn,
   isAuthenticated,
   isAdmin,
-  updateStatus
+  updateStatus,
 );
 
 module.exports = router;
