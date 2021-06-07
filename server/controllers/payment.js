@@ -8,12 +8,12 @@ const gateway = new braintree.BraintreeGateway({
 });
 
 exports.getToken = (req, res) => {
-  gateway.clientToken.generate({}, function (err, response) {
+  gateway.clientToken.generate({}, (err, response) => {
     if (err) {
       return res.status(500).send(err);
-    } else {
-      return res.send(response);
     }
+
+    return res.send(response);
   });
 };
 
@@ -31,12 +31,12 @@ exports.processPayment = (req, res) => {
       },
     },
 
-    function (err, result) {
+    (err, result) => {
       if (err) {
-        return res.status(500).send(error);
-      } else {
-        return res.send(result);
+        return res.status(500).send(err);
       }
+
+      return res.send(result);
     },
   );
 };

@@ -1,7 +1,7 @@
-const Product = require("../models/product");
 const formidable = require("formidable");
 const _ = require("lodash");
 const fs = require("fs");
+const Product = require("../models/product");
 
 exports.getProductById = (req, res, next, id) => {
   Product.findById(id)
@@ -18,7 +18,7 @@ exports.getProductById = (req, res, next, id) => {
 };
 
 exports.createProduct = (req, res) => {
-  let form = new formidable.IncomingForm();
+  const form = new formidable.IncomingForm();
   form.keepExtensions = true;
 
   form.parse(req, (err, fields, file) => {
@@ -28,7 +28,7 @@ exports.createProduct = (req, res) => {
       });
     }
 
-    //destructure the fields
+    // destructure the fields
     const { name, description, price, category, stock } = fields;
 
     if (!name || !description || !price || !category || !stock) {
@@ -39,7 +39,7 @@ exports.createProduct = (req, res) => {
 
     const product = new Product(fields);
 
-    //handle file here
+    // handle file here
     if (file.photo) {
       if (file.photo.size > 3000000) {
         return res.status(400).json({
@@ -51,15 +51,15 @@ exports.createProduct = (req, res) => {
       product.photo.contentType = file.photo.type;
     }
 
-    //save to the DB
-    product.save((err, product) => {
-      if (err) {
-        res.status(400).json({
+    // save to the DB
+    product.save((dbErr, dbProduct) => {
+      if (dbErr) {
+        return res.status(400).json({
           err: "Saving tshirt in DB failed",
         });
       }
 
-      res.json(product);
+      return res.json(dbProduct);
     });
   });
 };
@@ -69,7 +69,7 @@ exports.getProduct = (req, res) => {
   return res.json(req.product);
 };
 
-//middleware
+// middleware
 exports.photo = (req, res, next) => {
   if (req.product.photo.data) {
     res.set("Content-Type", req.product.photo.contentType);
@@ -81,7 +81,7 @@ exports.photo = (req, res, next) => {
 
 // delete controllers
 exports.deleteProduct = (req, res) => {
-  const product = req.product;
+  const { product } = req;
 
   product.remove((err, deletedProduct) => {
     if (err) {
@@ -99,7 +99,7 @@ exports.deleteProduct = (req, res) => {
 
 // delete controllers
 exports.updateProduct = (req, res) => {
-  let form = new formidable.IncomingForm();
+  const form = new formidable.IncomingForm();
   form.keepExtensions = true;
 
   form.parse(req, (err, fields, file) => {
@@ -109,11 +109,11 @@ exports.updateProduct = (req, res) => {
       });
     }
 
-    //updation code
-    const product = req.product;
+    // updation code
+    let { product } = req;
     product = _.extend(product, fields);
 
-    //handle file here
+    // handle file here
     if (file.photo) {
       if (file.photo.size > 3000000) {
         return res.status(400).json({
@@ -125,22 +125,22 @@ exports.updateProduct = (req, res) => {
       product.photo.contentType = file.photo.type;
     }
 
-    //save to the DB
-    product.save((err, product) => {
-      if (err) {
-        res.status(400).json({
+    // save to the DB
+    product.save((dbErr, dbProduct) => {
+      if (dbErr) {
+        return res.status(400).json({
           err: "Updation of product failed",
         });
       }
 
-      res.json(product);
+      return res.json(dbProduct);
     });
   });
 };
 
-//product listing
+// product listing
 exports.getAllProducts = (req, res) => {
-  const limit = req.query.limit ? parseInt(req.query.limit) : 8;
+  const limit = req.query.limit ? parseInt(req.query.limit, 10) : 8;
   const sortBy = req.query.sortBy ? req.query.sortBy : "_id";
 
   Product.find()
@@ -172,16 +172,14 @@ exports.getAllUniqueCategories = (req, res) => {
 };
 
 exports.updateStock = (req, res, next) => {
-  const myOperations = req.body.order.products.map((prod) => {
-    return {
-      updateOne: {
-        filter: { _id: prod._id },
-        update: { $inc: { stock: -prod.count, sold: +prod.count } },
-      },
-    };
-  });
+  const myOperations = req.body.order.products.map((prod) => ({
+    updateOne: {
+      filter: { _id: prod._id },
+      update: { $inc: { stock: -prod.count, sold: +prod.count } },
+    },
+  }));
 
-  Product.bulkWrite(myOperations, {}, (err, products) => {
+  Product.bulkWrite(myOperations, {}, (err) => {
     if (err) {
       return res.status(400).json({
         err: "Bulk operation failed",

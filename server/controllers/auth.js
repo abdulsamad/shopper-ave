@@ -1,9 +1,10 @@
-const User = require("../models/user");
 const { validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 const expressJwt = require("express-jwt");
+const User = require("../models/user");
 
 exports.signup = (req, res) => {
+  const user = new User(req.body);
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
@@ -12,17 +13,17 @@ exports.signup = (req, res) => {
     });
   }
 
-  const user = new User(req.body);
-  user.save((err, user) => {
+  user.save((err, dbUser) => {
     if (err) {
       return res.status(400).json({
         err: "Not able to save user in DB",
       });
     }
-    res.json({
-      name: user.name,
-      email: user.email,
-      id: user._id,
+
+    return res.json({
+      name: dbUser.name,
+      email: dbUser.email,
+      id: dbUser._id,
     });
   });
 };
@@ -50,16 +51,24 @@ exports.signin = (req, res) => {
       });
     }
 
-    //create token
+    // create token
     const token = jwt.sign({ _id: user._id }, process.env.SECRET);
 
-    //put token in cookie
+    // put token in cookie
     res.cookie("token", token, { expire: new Date() + 9999 });
 
-    //send response to front end
-    const { _id, name, email, role } = user;
+    // send response to front end
+    const { _id, name, role } = user;
 
-    return res.json({ token, user: { _id, name, email, role } });
+    return res.json({
+      token,
+      user: {
+        _id,
+        name,
+        email,
+        role,
+      },
+    });
   });
 };
 
@@ -71,16 +80,18 @@ exports.signout = (req, res) => {
   });
 };
 
-//protected routes
+// protected routes
 exports.isSignedIn = expressJwt({
   secret: process.env.SECRET,
   userProperty: "auth",
   algorithms: ["HS256"],
 });
 
-//custom middlewares
+// custom middlewares
 exports.isAuthenticated = (req, res, next) => {
-  let checker = req.profile && req.auth && req.profile._id == req.auth._id;
+  const checker = req.profile
+    && req.auth
+    && req.profile._id.toString() === req.auth._id.toString();
 
   // ! Payment not working with this check
   if (!checker) {

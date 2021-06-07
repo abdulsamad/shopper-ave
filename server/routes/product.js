@@ -1,4 +1,5 @@
 const express = require("express");
+
 const router = express.Router();
 
 const { isSignedIn, isAuthenticated, isAdmin } = require("../controllers/auth");
@@ -14,11 +15,11 @@ const {
   getAllUniqueCategories,
 } = require("../controllers/product");
 
-//all of params
+// all of params
 router.param("userId", getUserById);
 router.param("productId", getProductById);
 
-//create route
+// create route
 router.post(
   "/product/create/:userId",
   isSignedIn,
@@ -31,7 +32,7 @@ router.post(
 router.get("/product/:productId", getProduct);
 router.get("/product/photo/:productId", photo);
 
-//delete route
+// delete route
 router.delete(
   "/product/:productId/:userId",
   isSignedIn,
@@ -40,7 +41,7 @@ router.delete(
   deleteProduct,
 );
 
-//update route
+// update route
 router.put(
   "/product/:productId/:userId",
   isSignedIn,
@@ -49,7 +50,7 @@ router.put(
   updateProduct,
 );
 
-//listing route
+// listing route
 router.get("/products", getAllProducts);
 
 router.get("/products/categories", getAllUniqueCategories);

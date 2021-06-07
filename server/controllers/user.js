@@ -34,7 +34,7 @@ exports.updateUser = (req, res) => {
 
       user.salt = undefined;
       user.encry_password = undefined;
-      res.json(user);
+      return res.json(user);
     },
   );
 };
@@ -68,12 +68,12 @@ exports.pushOrderInPurchaseList = (req, res, next) => {
     });
   });
 
-  //store thi in DB
+  // store thi in DB
   User.findOneAndUpdate(
     { _id: req.profile._id },
-    { $push: { purchases: purchases } },
+    { $push: { purchases } },
     { new: true },
-    (err, purchases) => {
+    (err) => {
       if (err) {
         return res.status(400).json({
           err: "Unable to save purchase list",

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const crypto = require("crypto");
 const { v4: uuidv4 } = require("uuid");
 
-var userSchema = new mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -49,11 +49,11 @@ userSchema
   });
 
 userSchema.methods = {
-  authenticate: function (plainpassword) {
+  authenticate(plainpassword) {
     return this.securePassword(plainpassword) === this.encry_password;
   },
 
-  securePassword: function (plainpassword) {
+  securePassword(plainpassword) {
     if (!plainpassword) return "";
 
     try {

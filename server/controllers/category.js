@@ -16,20 +16,18 @@ exports.getCategoryById = (req, res, next, id) => {
 exports.createCategory = (req, res) => {
   const category = new Category(req.body);
 
-  category.save((err, category) => {
+  category.save((err, dbCategory) => {
     if (err) {
       return res.status(400).json({
         err: "NOT able to save category in DB",
       });
     }
 
-    res.json({ category });
+    return res.json({ dbCategory });
   });
 };
 
-exports.getCategory = (req, res) => {
-  return res.json(req.category);
-};
+exports.getCategory = (req, res) => res.json(req.category);
 
 exports.getAllCategory = (req, res) => {
   Category.find().exec((err, categories) => {
@@ -44,7 +42,7 @@ exports.getAllCategory = (req, res) => {
 };
 
 exports.updateCategory = (req, res) => {
-  const category = req.category;
+  const { category } = req;
   category.name = req.body.name;
 
   category.save((err, updatedCategory) => {
@@ -59,9 +57,9 @@ exports.updateCategory = (req, res) => {
 };
 
 exports.removeCategory = (req, res) => {
-  const category = req.category;
+  const { category } = req;
 
-  category.remove((err, category) => {
+  category.remove((err, dbCategory) => {
     if (err) {
       return res.status(400).json({
         err: "Failed to delete this category",
@@ -69,7 +67,7 @@ exports.removeCategory = (req, res) => {
     }
 
     res.json({
-      message: `Successfull deleted ${category}`,
+      message: `Successfull deleted ${dbCategory}`,
     });
   });
 };

@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const mongoose = require("mongoose");
 const express = require("express");
+
 const app = express();
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
@@ -15,7 +16,7 @@ const productRoutes = require("./routes/product");
 const orderRoutes = require("./routes/order");
 const paymentBRoutes = require("./routes/payment");
 
-//DB Connection
+// DB Connection
 mongoose
   .connect(process.env.DATABASE, {
     useNewUrlParser: true,
@@ -26,12 +27,12 @@ mongoose
     console.log("DB CONNECTED");
   });
 
-//Middlewares
+// Middlewares
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(cors());
 
-//My Routes
+// My Routes
 app.use("/api", authRoutes);
 app.use("/api", userRoutes);
 app.use("/api", categoryRoutes);
@@ -39,10 +40,10 @@ app.use("/api", productRoutes);
 app.use("/api", orderRoutes);
 app.use("/api", paymentBRoutes);
 
-//PORT
+// PORT
 const port = process.env.PORT || 5000;
 
-//Starting a server
+// Starting a server
 app.listen(port, () => {
   console.log(`app is running at ${port}`);
 });
