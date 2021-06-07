@@ -22,7 +22,7 @@
   },
   "rules": {
     "quotes": "off",
-    "consistent-return": "warn",
+    "consistent-return": "off",
     "no-underscore-dangle": "off",
     "no-param-reassign": [2, { "props": false }],
     "object-curly-newline": "off"
