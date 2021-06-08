@@ -1,7 +1,6 @@
 require("dotenv").config();
 
 const express = require("express");
-const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
@@ -20,11 +19,11 @@ const app = express();
 connectDB();
 
 // Middlewares
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
 
-// My Routes
+// Routes
 app.use("/api", authRoutes);
 app.use("/api", userRoutes);
 app.use("/api", categoryRoutes);
