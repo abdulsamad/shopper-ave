@@ -1,0 +1,13 @@
+[[redirects]]
+  from = "/admin/*"
+  to = "/admin"
+	status = 200
+	
+[[headers]]
+	for = "/*"
+
+	[[headers.values]]
+		X-Frame-Options = "DENY"
+		cache-control = '''
+		max-age=0,
+		must-revalidate'''
