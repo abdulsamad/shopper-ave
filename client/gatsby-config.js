@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: "FaShop",
-    description: "A few clicks is all it takes.",
+    description: "A few clicks is all it takes",
     author: "AbdulSamad",
   },
   plugins: [
@@ -19,7 +19,7 @@ module.exports = {
     {
       resolve: "gatsby-plugin-manifest",
       options: {
-        name: "FaShop - A few clicks is all it takes.",
+        name: "FaShop - A few clicks is all it takes",
         short_name: "FaShop",
         start_url: "/",
         background_color: "#ffc107",

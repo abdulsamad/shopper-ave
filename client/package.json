@@ -1,7 +1,7 @@
 {
   "name": "fashop",
   "private": true,
-  "description": "A few clicks is all it takes.",
+  "description": "A few clicks is all it takes",
   "version": "2.0.0",
   "author": "AbdulSamad",
   "dependencies": {

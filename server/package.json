@@ -1,7 +1,7 @@
 {
   "name": "fashop",
   "version": "2.0.0",
-  "description": "A few clicks is all it takes.",
+  "description": "A few clicks is all it takes",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
