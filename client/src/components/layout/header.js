@@ -55,7 +55,7 @@ const Header = ({ siteTitle }) => {
           <button className="navbar-brand btn btn-link d-inline-flex align-items-center fw-bold fs-4 brand-logo-font">
             <StaticImage
               src="../../images/icon.png"
-              alt="FaShop"
+              alt={siteTitle}
               loading="eager"
               width={33}
               height={30}

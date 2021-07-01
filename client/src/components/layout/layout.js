@@ -20,7 +20,7 @@ const Layout = ({ children, sidebar }) => {
     <>
       <Header siteTitle={data.site.siteMetadata?.title} />
       <main className="main">{children}</main>
-      <Footer sidebar={sidebar} />
+      <Footer siteTitle={data.site.siteMetadata?.title} sidebar={sidebar} />
     </>
   );
 };

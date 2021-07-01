@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Footer = ({ sidebar }) => {
+const Footer = ({ siteTitle, sidebar }) => {
   if (sidebar) {
     return (
       <div className="row mx-0">
@@ -12,7 +12,7 @@ const Footer = ({ sidebar }) => {
           </p>
           <p>
             &copy; {new Date().getFullYear()}{" "}
-            <span className="brand-logo-font">FaShop</span>, Created by{" "}
+            <span className="brand-logo-font">{siteTitle}</span>, Created by{" "}
             <a href="https://abdulsamad.dev" className="text-decoration-none">
               AbdulSamad
             </a>
@@ -30,7 +30,7 @@ const Footer = ({ sidebar }) => {
       </p>
       <p>
         &copy; {new Date().getFullYear()}{" "}
-        <span className="brand-logo-font">FaShop,</span> Created by{" "}
+        <span className="brand-logo-font">{siteTitle},</span> Created by{" "}
         <a
           href="https://abdulsamad.dev"
           className="text-decoration-none text-dark">
@@ -42,6 +42,7 @@ const Footer = ({ sidebar }) => {
 };
 
 Footer.propTypes = {
+  siteTitle: PropTypes.string.isRequired,
   sidebar: PropTypes.bool.isRequired,
 };
 
