@@ -1,6 +1,6 @@
 [[redirects]]
   from = "/admin/*"
-  to = "/admin"
+  to = "/admin/"
 	status = 200
 	
 [[headers]]
