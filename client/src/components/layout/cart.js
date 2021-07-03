@@ -55,7 +55,7 @@ const Cart = ({ cartToggle, setCartToggle }) => {
                   <animated.li
                     style={styles}
                     key={index}
-                    className="list-group-item shadow-sm rounded-3 position-relative">
+                    className="list-group-item shadow-sm rounded-3 position-relative cart-item">
                     <div className="row g-0">
                       <div className="col-3">
                         <img

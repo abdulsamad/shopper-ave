@@ -29,18 +29,6 @@ $carousel-height: calc(80vh - #{$navbar-height});
 
     .img-wrapper {
       right: 0;
-
-      // &::before {
-      //   content: "";
-      //   height: 850px;
-      //   width: 850px;
-      //   border-radius: 50%;
-      //   display: block;
-      //   position: absolute;
-      //   bottom: -100px;
-      //   right: -100px;
-      //   background-color: turquoise;
-      // }
     }
 
     img {
@@ -159,6 +147,10 @@ $carousel-height: calc(80vh - #{$navbar-height});
     &::-webkit-scrollbar-thumb {
       background-color: #0d0d14;
       border-radius: 10px;
+    }
+
+    .cart-item {
+      height: 78px;
     }
   }
 
