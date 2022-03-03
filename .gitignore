@@ -122,4 +122,5 @@ public
 # Local Netlify folder
 .netlify
 
+# DS Store
 .DS_Store
