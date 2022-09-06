@@ -1,6 +1,6 @@
 {
   "name": "shopper-ave",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "workspaces": [
     "apps/*",
@@ -18,8 +18,8 @@
     "turbo": "^1.4.0"
   },
   "engines": {
-    "npm": ">=7.0.0",
-    "node": ">=14.0.0"
+    "npm": ">=8.0.0",
+    "node": ">=16.0.0"
   },
   "dependencies": {},
   "packageManager": "yarn@1.22.19"
