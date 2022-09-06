@@ -1,3 +1,3 @@
-const message = 'Hello from Server!';
+const message = "Hello from Server!";
 
 console.log(message);
