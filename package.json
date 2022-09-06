@@ -1,23 +1,26 @@
 {
-  "name": "fashop",
-  "version": "2.0.0",
-  "description": "A few clicks is all it takes",
-  "main": "server/app.js",
-  "author": "AbdulSamad",
-  "license": "UNLICENSED",
+  "name": "shopper-ave",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
-    "start": "concurrently -k \"yarn run dev-server\" \"yarn run start-client\"",
-    "build": "yarn run build-client && yarn run start-server",
-    "start-client": "yarn --cwd client start",
-    "build-client": "yarn --cwd client build",
-    "start-server": "yarn --cwd server start",
-    "dev-server": "yarn --cwd server dev",
-    "install": "yarn run client-install && yarn run server-install",
-    "client-install": "yarn --cwd client install",
-    "server-install": "yarn --cwd server install"
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
-    "concurrently": "^6.2.0",
-    "prettier": "^2.3.1"
-  }
+    "eslint-config-custom": "*",
+    "prettier": "latest",
+    "turbo": "^1.4.0"
+  },
+  "engines": {
+    "npm": ">=8.0.0",
+    "node": ">=16.0.0"
+  },
+  "dependencies": {},
+  "packageManager": "yarn@1.22.19"
 }
