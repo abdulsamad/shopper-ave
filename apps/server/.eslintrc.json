@@ -1,6 +1,6 @@
 {
   "root": true,
-  "extends": ["custom"],
+  "extends": ["custom", "plugin:security-node/recommended"],
   "rules": {
     //
   }
