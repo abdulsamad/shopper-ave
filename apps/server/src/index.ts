@@ -1,1 +1,3 @@
-console.log('Hello from Server!');
+const message = 'Hello from Server!';
+
+console.log(message);
