@@ -6,6 +6,7 @@
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off",
     "react/jsx-key": "warn",
-    "no-console": "warn"
+    "no-console": "warn",
+    "react/button-has-type": "off"
   }
 }
