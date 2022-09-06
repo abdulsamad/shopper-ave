@@ -1,6 +1,6 @@
 {
   "ignore": [".git", "node_modules", "dist"],
   "watch": ["./src"],
-  "exec": "yarn run dev",
+  "exec": "yarn start",
   "ext": "ts, js, json"
 }
