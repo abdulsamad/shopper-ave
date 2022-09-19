@@ -7,7 +7,7 @@ import swaggerUI from 'swagger-ui-express';
 import * as YAML from 'yamljs';
 import path from 'path';
 
-import { home } from '@controllers/home';
+import home from '@routes/home';
 
 // Initialize dotenv
 dotenv.config();

@@ -1,9 +1,9 @@
 import express from 'express';
 
-import { home } from '@controllers/home';
+import { welcome } from '@controllers/home';
 
 const router = express.Router();
 
-router.route('/').get(home);
+router.route('/').get(welcome);
 
-export { router };
+export default router;
