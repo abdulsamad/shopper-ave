@@ -3,6 +3,9 @@ import * as dotenv from 'dotenv';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import fileUpload from 'express-fileupload';
+import swaggerUI from 'swagger-ui-express';
+import * as YAML from 'yamljs';
+import path from 'path';
 
 import { home } from '@controllers/home';
 
@@ -10,6 +13,10 @@ import { home } from '@controllers/home';
 dotenv.config();
 
 const app = express();
+
+// Swagger documentation
+const swaggerDocument = YAML.load(path.resolve(__dirname, '../swagger.yml'));
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 // Regular middlewares
 app.use(express.json());
