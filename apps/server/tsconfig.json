@@ -2,11 +2,21 @@
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
-    "rootDir": "./",
-    "outDir": "./dist",
+    "rootDir": ".",
+    "outDir": "dist",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "baseUrl": "src",
+    "paths": {
+      "@config/*": ["config/*"],
+      "@controllers/*": ["controllers/*"],
+      "@middlewares/*": ["middlewares/*"],
+      "@models/*": ["models/*"],
+      "@routes/*": ["routes/*"],
+      "@seeds/*": ["seeds/*"],
+      "@utils/*": ["utils/*"]
+    }
   }
 }
