@@ -2,6 +2,7 @@
   "name": "server",
   "version": "1.0.0",
   "main": "index.js",
+  "private": true,
   "scripts": {
     "start": "ts-node -r tsconfig-paths/register --files src/index.ts",
     "dev": "nodemon",
