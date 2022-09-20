@@ -1,9 +1,9 @@
 import type { Config } from '@jest/types';
 
 const config: Config.InitialOptions = {
+  preset: 'ts-jest',
   coverageDirectory: '<rootDir>/coverage',
   coverageReporters: ['lcov'],
-  moduleFileExtensions: ['.ts', '.tsx'],
   transform: {
     '^.+\\.tsx?$': 'ts-jest',
   },
