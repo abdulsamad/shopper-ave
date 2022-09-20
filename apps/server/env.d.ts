@@ -9,8 +9,8 @@ declare namespace NodeJS {
 }
 
 // Modifying Express Request
-declare namespace Express {
-  export interface Request {
-    token: string;
-  }
-}
+// declare namespace Express {
+//   export interface Request {
+//     token: number;
+//   }
+// }
