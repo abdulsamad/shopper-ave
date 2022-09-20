@@ -3,6 +3,7 @@ declare namespace NodeJS {
     PORT: string;
     JWT_SECRET: string;
     JWT_EXPIRY: string;
+    COOKIE_TIME: string;
   }
 }
 
