@@ -2,12 +2,13 @@ import type { Config } from '@jest/types';
 
 const config: Config.InitialOptions = {
   preset: 'ts-jest',
-  coverageDirectory: 'coverage',
-  coverageReporters: ['lcov'],
+  rootDir: 'src',
+  coverageDirectory: '<rootDir>/../coverage',
+  coverageReporters: ['lcov', 'text', 'json'],
+  collectCoverage: true,
   transform: { '^.+\\.tsx?$': 'ts-jest' },
   testEnvironment: 'node',
   verbose: true,
-  rootDir: 'src',
   moduleNameMapper: {
     '@config/(.*)': ['<rootDir>/config/$1'],
     '@controllers/(.*)': ['<rootDir>/controllers/$1'],
