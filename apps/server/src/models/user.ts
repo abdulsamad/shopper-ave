@@ -4,7 +4,20 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 
-const UserSchema = new mongoose.Schema(
+export interface IUser {
+  name: string;
+  email: string;
+  password: string;
+  role: string;
+  photo: { id: string; secure_url: string };
+  forgotPasswordToken: string;
+  forgotPasswordExpiry: string;
+  isValidPassword: () => boolean;
+  getJwtToken: () => void;
+  getForgotPasswordToken: () => string;
+}
+
+const UserSchema = new mongoose.Schema<IUser>(
   {
     name: {
       type: String,
@@ -19,8 +32,8 @@ const UserSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: [true, 'Please provide an email'],
-      validator: [validator.isEmail, 'Please enter email in correct format'],
+      required: [true, 'Please provide a password'],
+      // validator: [validator.isStrongPassword, 'Please enter a strong password'],
       minLength: [8, 'Password should be atleast 8 characters'],
       select: false,
     },
@@ -31,11 +44,9 @@ const UserSchema = new mongoose.Schema(
     photo: {
       id: {
         type: String,
-        required: true,
       },
       secure_url: {
         type: String,
-        requiredPaths: true,
       },
     },
     forgotPasswordToken: String,
