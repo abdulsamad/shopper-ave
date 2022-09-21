@@ -11,6 +11,7 @@
     "@next/next/no-html-link-for-pages": "off",
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off",
+    "react/jsx-filename-extension": [1, { "extensions": [".ts", ".tsx"] }],
     "react/jsx-key": "warn",
     "no-console": "warn",
     "react/button-has-type": "off"

@@ -1,0 +1,32 @@
+openapi: 3.0.0
+info:
+  title: Shopper Ave API
+  description: Shopper Ave - An E-Commerce API with MERN stack
+  version: 1.0.0
+
+servers:
+  - url: "{protocol}://localhost:4000/api/{version}"
+    description: Development version
+    variables:
+      version:
+        enum:
+          - v1
+          - v2
+        default: v1
+      protocol:
+        enum:
+          - http
+          - https
+        default: http
+  # - url: https://example.com/api/v1
+  #   description: Production version
+
+components:
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: token
+    BearerAuth:
+      type: http
+      scheme: bearer
