@@ -12,7 +12,7 @@ export interface IUser {
   photo: { id: string; secure_url: string };
   forgotPasswordToken: string;
   forgotPasswordExpiry: string;
-  isValidPassword: () => boolean;
+  isValidPassword: (receivedPassword: string) => boolean;
   getJwtToken: () => void;
   getForgotPasswordToken: () => string;
 }
