@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import { faker } from '@faker-js/faker';
 
 import { connect, clearDatabase, closeDatabase } from '@config/testDB';
+import { userDetails } from '@utils/test-helpers';
 import User from './user';
 
 beforeAll(async () => await connect());
@@ -9,12 +10,6 @@ beforeAll(async () => await connect());
 afterEach(async () => await clearDatabase());
 
 afterAll(async () => await closeDatabase());
-
-const userDetails = {
-  name: faker.name.fullName(),
-  email: faker.internet.email(),
-  password: faker.internet.password(8),
-};
 
 describe('User Model', () => {
   it('Create new user', async () => {
