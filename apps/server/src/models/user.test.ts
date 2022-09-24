@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { faker } from '@faker-js/faker';
 
-import { connect, clearDatabase, closeDatabase } from '@config/testDB';
+import { connect, clearDatabase, closeDatabase } from '@utils/testDB';
 import { userDetails } from '@utils/test-helpers';
 import User from './user';
 
