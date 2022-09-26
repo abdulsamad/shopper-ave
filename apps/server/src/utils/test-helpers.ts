@@ -1,9 +1,7 @@
 import { faker } from '@faker-js/faker';
 
-import { IUser } from '@models/user';
-
 /* istanbul ignore file */
-export const userDetails: IUser = {
+export const userDetails = {
   name: faker.name.fullName(),
   email: faker.internet.email(),
   password: faker.internet.password(8),
@@ -12,11 +10,6 @@ export const userDetails: IUser = {
     id: faker.datatype.uuid(),
     secure_url: faker.internet.url(),
   },
-  forgotPasswordToken: faker.datatype.uuid(),
-  forgotPasswordExpiry: (Date.now() + 120 * 60 * 1000).toString(),
-  isValidPassword: () => true,
-  getJwtToken: () => faker.datatype.uuid(),
-  getForgotPasswordToken: () => faker.datatype.uuid(),
 };
 
 export const userSuccessObj = {
