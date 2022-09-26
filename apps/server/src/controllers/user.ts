@@ -38,6 +38,6 @@ export const signup = async (req: Request, res: Response) => {
     return respondWithCookieToken(user, res, 201);
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ err: 'Something went wrong!' });
+    return res.status(500).json({ err: 'Something went wrong' });
   }
 };
