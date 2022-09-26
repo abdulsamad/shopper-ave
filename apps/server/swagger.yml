@@ -54,9 +54,13 @@ paths:
                 - name
                 - email
                 - password
+              default:
+                  name: "John Doe"
+                  email: "john@example.com"
+                  password: "john@123"
       responses:
         '200': 
-          description: Returns an object with token and user
+          description: OK
           content:
             application/json:
               schema:
