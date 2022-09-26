@@ -37,6 +37,7 @@ describe('User Controllers', () => {
 
       await signup(req, res);
 
+      // ! Trigger an internal server error
       // expect(res.json).toHaveBeenCalledWith(
       //   expect.objectContaining({
       //     err: expect.any(String),
