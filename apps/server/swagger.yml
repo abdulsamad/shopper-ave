@@ -40,24 +40,26 @@ paths:
       requestBody:
         required: true
         content:
-          application/json:
+          multipart/form-data:
             schema:
               type: object
               properties:
                 name:
                   type: string
+                  default: John Doe
                 email:
                   type: string
+                  default: john@example.com
                 password:
                   type: string
+                  default: john@123
+                photo:
+                  type: string
+                  format: binary
               required:
                 - name
                 - email
                 - password
-              default:
-                  name: "John Doe"
-                  email: "john@example.com"
-                  password: "john@123"
       responses:
         '201': 
           description: Created
