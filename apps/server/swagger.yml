@@ -6,7 +6,7 @@ info:
 
 servers:
   - url: "{protocol}://localhost:4000/api/{version}"
-    description: Development version
+    description: Local Development version
     variables:
       version:
         enum:
@@ -19,7 +19,7 @@ servers:
           - https
         default: http
   # - url: https://example.com/api/v1
-  #   description: Production version
+  #   description: Main (Production) server
 
 components:
   securitySchemes:
@@ -30,3 +30,76 @@ components:
     BearerAuth:
       type: http
       scheme: bearer
+
+paths:
+  /signup:
+    post:
+      tags:
+        - Authentication
+      summary: Creates new user and returns the token and user information
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+                - name
+                - email
+                - password
+      responses:
+        '200': 
+          description: Returns an object with token and user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  token:
+                    type: string
+                  user:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      email:
+                        type: string
+                      password:
+                        type: string
+                      role:
+                        type: string
+                      _id:
+                        type: string # MongoDB internal
+                      createdAt:
+                        type: string
+                      updatedAt:
+                        type: string
+                      __v:
+                        type: number # Mongoose internal
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  err:
+                    type: string
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  err:
+                    type: string
