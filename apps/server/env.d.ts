@@ -5,6 +5,9 @@ declare namespace NodeJS {
     JWT_SECRET: string;
     JWT_EXPIRY: string;
     COOKIE_TIME: string;
+    CLOUDINARY_NAME: string;
+    CLOUDINARY_API_KEY: string;
+    CLOUDINARY_API_SECRET: string;
   }
 }
 
