@@ -3,6 +3,7 @@ import { faker } from '@faker-js/faker';
 
 import { connect, clearDatabase, closeDatabase } from '@utils/test-db';
 import { userDetails } from '@utils/test-helpers';
+
 import User from './user';
 
 beforeAll(async () => await connect());

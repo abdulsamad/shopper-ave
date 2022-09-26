@@ -1,14 +1,12 @@
 import request from 'supertest';
-import express from 'express';
 
 import { connect, clearDatabase, closeDatabase } from '@utils/test-db';
+import { app } from '@utils/test-server';
 import { userDetails } from '@utils/test-helpers';
+
 import user from './user';
 
-// TODO: Improvise later
-const app = express();
-
-app.use(express.json());
+// Express Init
 app.use('/', user);
 
 beforeAll(async () => await connect());
@@ -22,5 +20,12 @@ describe('User Routes', () => {
     const response = await request(app).post('/signup').send(userDetails);
 
     expect(response.statusCode).toBe(201);
+    expect(response.body).toEqual(
+      expect.objectContaining({
+        success: true,
+        token: expect.any(String),
+        user: expect.anything(),
+      })
+    );
   });
 });
