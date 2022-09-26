@@ -17,7 +17,7 @@ export const signup = async (req: Request, res: Response) => {
       password,
     });
 
-    return respondWithCookieToken(user, res);
+    return respondWithCookieToken(user, res, 201);
   } catch (err) {
     console.error(err);
     return res.status(500).json({ err: 'Something went wrong!' });
