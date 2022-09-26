@@ -70,25 +70,34 @@ paths:
                 properties:
                   success:
                     type: boolean
+                    default: true
                   token:
                     type: string
+                    default: <token>
                   user:
                     type: object
                     properties:
                       name:
                         type: string
+                        default: John Doe
                       email:
                         type: string
+                        default: john@example.com
                       password:
                         type: string
+                        default: <password_hash>
                       role:
                         type: string
+                        default: user
                       _id:
                         type: string # MongoDB internal
+                        default: 54759eb3c090d83494e2d804
                       createdAt:
                         type: string
+                        default:  2022-09-26T05:53:07.739Z
                       updatedAt:
                         type: string
+                        default: 2022-09-26T05:53:07.739Z
                       __v:
                         type: number # Mongoose internal
         '400':
@@ -100,6 +109,7 @@ paths:
                 properties:
                   err:
                     type: string
+                    default: Name, email and password are required
         '500':
           description: Internal server error
           content:
@@ -109,3 +119,4 @@ paths:
                 properties:
                   err:
                     type: string
+                    default: Something went wrong!
