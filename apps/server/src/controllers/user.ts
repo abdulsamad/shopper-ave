@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { v2 as cloudinary } from 'cloudinary';
 import { UploadedFile } from 'express-fileupload';
+import crypto from 'crypto';
 
 import User from '@models/user';
 import { respondWithCookieToken } from '@utils/respondWithCookieToken';
@@ -59,7 +60,7 @@ export const login = async (req: Request, res: Response) => {
     }
 
     // Validate password with models custom method
-    const isPasswordCorrect = user.isValidPassword(password);
+    const isPasswordCorrect = await user.isValidPassword(password);
 
     if (!isPasswordCorrect) {
       return res.status(400).json({ err: 'Please enter valid credentials ' });
@@ -126,6 +127,36 @@ export const forgotPassword = async (req: Request, res: Response) => {
       await user.save({ validateBeforeSave: false });
     }
 
+    console.error(err);
+    return res.status(500).json({ err: 'Something went wrong' });
+  }
+};
+
+export const passwordReset = async (req: Request, res: Response) => {
+  const { token } = req.params;
+  const { password, confirmPassword } = req.body;
+
+  try {
+    const encryToken = crypto.createHash('sha256').update(token).digest('hex');
+
+    const user = await User.findOne({ forgotPasswordToken: encryToken, forgotPasswordExpiry: { $gt: Date.now() } });
+
+    if (!user) {
+      return res.status(400).json({ err: 'Token is either invalid or expired' });
+    }
+
+    if (password && password !== confirmPassword) {
+      return res.status(400).json({ err: 'Password and confirm password does not match' });
+    }
+
+    user.password = password;
+    user.forgotPasswordToken = undefined;
+    user.forgotPasswordExpiry = undefined;
+
+    await user.save({ validateBeforeSave: false });
+
+    return respondWithCookieToken(user, res);
+  } catch (err) {
     console.error(err);
     return res.status(500).json({ err: 'Something went wrong' });
   }
