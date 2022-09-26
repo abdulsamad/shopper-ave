@@ -41,3 +41,32 @@ export const signup = async (req: Request, res: Response) => {
     return res.status(500).json({ err: 'Something went wrong' });
   }
 };
+
+export const login = async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+
+  try {
+    if (!email || !password) {
+      return res.status(400).json({ err: 'Email and password are required' });
+    }
+
+    // Search user in database
+    const user = await User.findOne({ email }).select('+password');
+
+    if (!user) {
+      return res.status(400).json({ err: 'Please enter valid credentials ' });
+    }
+
+    // Validate password with models custom method
+    const isPasswordCorrect = user.isValidPassword(password);
+
+    if (!isPasswordCorrect) {
+      return res.status(400).json({ err: 'Please enter valid credentials ' });
+    }
+
+    return respondWithCookieToken(user, res);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ err: 'Something went wrong' });
+  }
+};
