@@ -25,7 +25,12 @@ app.use(express.urlencoded({ extended: true }));
 
 // Cookies and file middlewares
 app.use(cookieParser());
-app.use(fileUpload());
+app.use(
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: '/tmp/',
+  })
+);
 
 // Logger middwares
 app.use(morgan('tiny'));
