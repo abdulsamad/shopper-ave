@@ -70,3 +70,21 @@ export const login = async (req: Request, res: Response) => {
     return res.status(500).json({ err: 'Something went wrong' });
   }
 };
+
+export const logout = async (req: Request, res: Response) => {
+  try {
+    // Delete cookie
+    res.cookie('token', null, {
+      expires: new Date(Date.now()),
+      httpOnly: true,
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: 'Logout Success',
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ err: 'Something went wrong' });
+  }
+};
