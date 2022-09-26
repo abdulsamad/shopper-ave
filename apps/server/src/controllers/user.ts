@@ -4,6 +4,7 @@ import { UploadedFile } from 'express-fileupload';
 
 import User from '@models/user';
 import { respondWithCookieToken } from '@utils/respondWithCookieToken';
+import { mailerHelper } from '@utils/email-helper';
 
 export const signup = async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
@@ -84,6 +85,47 @@ export const logout = async (req: Request, res: Response) => {
       message: 'Logout Success',
     });
   } catch (err) {
+    console.error(err);
+    return res.status(500).json({ err: 'Something went wrong' });
+  }
+};
+
+export const forgotPassword = async (req: Request, res: Response) => {
+  const { email } = req.body;
+  let user;
+
+  try {
+    user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(400).json({ err: 'User not found!' });
+    }
+
+    const forgotToken = user.getForgotPasswordToken();
+    await user.save({ validateBeforeSave: false });
+
+    const tokenUrl = `${req.protocol}://${req.hostname}/password/reset/${forgotToken}`;
+    const message = `Copy paste this link in the URL and hit enter \n\n ${tokenUrl}`;
+
+    await mailerHelper({
+      to: email,
+      subject: `Shopper Ave - Password Reset Email`,
+      text: message,
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: 'Email sent successfully',
+    });
+  } catch (err) {
+    // Reset forgot token and expiry in database
+    if (user) {
+      user.forgotPasswordToken = undefined;
+      user.forgotPasswordExpiry = undefined;
+
+      await user.save({ validateBeforeSave: false });
+    }
+
     console.error(err);
     return res.status(500).json({ err: 'Something went wrong' });
   }

@@ -10,8 +10,8 @@ export interface IUser {
   password: string;
   role: string;
   photo: { id: string; secure_url: string };
-  forgotPasswordToken: string;
-  forgotPasswordExpiry: string;
+  forgotPasswordToken: string | undefined;
+  forgotPasswordExpiry: string | undefined;
   isValidPassword: (receivedPassword: string) => boolean;
   getJwtToken: () => void;
   getForgotPasswordToken: () => string;
