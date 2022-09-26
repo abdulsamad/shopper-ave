@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 
 /* istanbul ignore file */
-const mongod = MongoMemoryServer.create();
+export const mongod = MongoMemoryServer.create();
 
 export const connect = async () => {
   const url = (await mongod).getUri();
