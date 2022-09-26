@@ -30,6 +30,34 @@ components:
     BearerAuth:
       type: http
       scheme: bearer
+  schemas:
+  # User schema
+    User:
+      properties:
+        name:
+          type: string
+          default: John Doe
+        email:
+          type: string
+          default: john@example.com
+        password:
+          type: string
+          default: 🤨
+        role:
+          type: string
+          default: user
+        _id:
+          type: string # MongoDB internal
+          default: <MongoDB ObjectId>
+        createdAt:
+          type: string
+          default:  2022-09-26T05:53:07.739Z
+        updatedAt:
+          type: string
+          default: 2022-09-26T05:53:07.739Z
+        __v:
+          type: number # Mongoose internal
+          default: 0
 
 paths:
   /signup:
@@ -75,32 +103,7 @@ paths:
                     type: string
                     default: <token>
                   user:
-                    type: object
-                    properties:
-                      name:
-                        type: string
-                        default: John Doe
-                      email:
-                        type: string
-                        default: john@example.com
-                      password:
-                        type: string
-                        default: 🤨
-                      role:
-                        type: string
-                        default: user
-                      _id:
-                        type: string # MongoDB internal
-                        default: <MongoDB ObjectId>
-                      createdAt:
-                        type: string
-                        default:  2022-09-26T05:53:07.739Z
-                      updatedAt:
-                        type: string
-                        default: 2022-09-26T05:53:07.739Z
-                      __v:
-                        type: number # Mongoose internal
-                        default: 0
+                    $ref: '#/components/schemas/User'
         '400':
           description: Bad request
           content:
@@ -157,32 +160,7 @@ paths:
                     type: string
                     default: <token>
                   user:
-                    type: object
-                    properties:
-                      name:
-                        type: string
-                        default: John Doe
-                      email:
-                        type: string
-                        default: john@example.com
-                      password:
-                        type: string
-                        default: 🤨
-                      role:
-                        type: string
-                        default: user
-                      _id:
-                        type: string # MongoDB internal
-                        default: <MongoDB ObjectId>
-                      createdAt:
-                        type: string
-                        default:  2022-09-26T05:53:07.739Z
-                      updatedAt:
-                        type: string
-                        default: 2022-09-26T05:53:07.739Z
-                      __v:
-                        type: number # Mongoose internal
-                        default: 0
+                    $ref: "#/components/schemas/User"
         '400':
           description: Bad request
           content:
@@ -323,32 +301,7 @@ paths:
                     type: string
                     default: <token>
                   user:
-                    type: object
-                    properties:
-                      name:
-                        type: string
-                        default: John Doe
-                      email:
-                        type: string
-                        default: john@example.com
-                      password:
-                        type: string
-                        default: 🤨
-                      role:
-                        type: string
-                        default: user
-                      _id:
-                        type: string # MongoDB internal
-                        default: <MongoDB ObjectId>
-                      createdAt:
-                        type: string
-                        default:  2022-09-26T05:53:07.739Z
-                      updatedAt:
-                        type: string
-                        default: 2022-09-26T05:53:07.739Z
-                      __v:
-                        type: number # Mongoose internal
-                        default: 0
+                    $ref: '#/components/schemas/User'
         '400':
           description: Bad request
           content:
