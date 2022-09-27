@@ -47,11 +47,11 @@ export const signup = async (req: Request, res: Response) => {
 export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
-  try {
-    if (!email || !password) {
-      return res.status(400).json({ err: 'Email and password are required' });
-    }
+  if (!email || !password) {
+    return res.status(400).json({ err: 'Email and password are required' });
+  }
 
+  try {
     // Search user in database
     const user = await User.findOne({ email }).select('+password');
 
@@ -138,7 +138,6 @@ export const passwordReset = async (req: Request, res: Response) => {
 
   try {
     const encryToken = crypto.createHash('sha256').update(token).digest('hex');
-
     const user = await User.findOne({ forgotPasswordToken: encryToken, forgotPasswordExpiry: { $gt: Date.now() } });
 
     if (!user) {
