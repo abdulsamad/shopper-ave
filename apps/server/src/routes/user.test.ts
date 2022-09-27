@@ -2,7 +2,7 @@ import request from 'supertest';
 
 import { connect, clearDatabase, closeDatabase } from '@utils/test-db';
 import { app } from '@utils/test-server';
-import { userDetails } from '@utils/test-helpers';
+import { userDetailsForAuth } from '@utils/test-helpers';
 
 import user from './user';
 
@@ -17,7 +17,7 @@ afterAll(async () => await closeDatabase());
 
 describe('User Routes', () => {
   it('Sign Up Route', async () => {
-    const response = await request(app).post('/signup').send(userDetails);
+    const response = await request(app).post('/signup').send(userDetailsForAuth);
 
     expect(response.statusCode).toBe(201);
     expect(response.body).toEqual(

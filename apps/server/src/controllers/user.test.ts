@@ -1,7 +1,7 @@
 import { getMockReq, getMockRes } from '@jest-mock/express';
 
 import { connect, clearDatabase, closeDatabase } from '@utils/test-db';
-import { userDetails } from '@utils/test-helpers';
+import { userDetailsForAuth } from '@utils/test-helpers';
 
 import { signup } from './user';
 
@@ -13,7 +13,7 @@ afterAll(async () => await closeDatabase());
 
 describe('User Controllers', () => {
   it('User signs up with new account', async () => {
-    const req = getMockReq({ body: userDetails });
+    const req = getMockReq({ body: userDetailsForAuth });
     const { res } = getMockRes();
 
     await signup(req, res);
@@ -23,15 +23,15 @@ describe('User Controllers', () => {
         success: expect.any(Boolean),
         token: expect.any(String),
         user: expect.objectContaining({
-          name: userDetails.name,
-          email: userDetails.email,
+          name: userDetailsForAuth.name,
+          email: userDetailsForAuth.email,
         }),
       })
     );
   }),
     it('Send error response on database error', async () => {
       // Trigger server error by passing short password (Less then 8 chars)
-      const req = getMockReq({ body: { ...userDetails, password: '123456' } });
+      const req = getMockReq({ body: { ...userDetailsForAuth, password: '123456' } });
       const { res } = getMockRes();
 
       await signup(req, res);
