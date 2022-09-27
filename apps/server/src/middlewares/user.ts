@@ -15,6 +15,7 @@ export const isLoggenIn = async (req: Request, res: Response, next: NextFunction
     const user = await User.findById(decoded);
 
     // Append user object to request.user
+    // Added types for req.user in /env.d.ts
     req.user = user as any;
 
     next();
