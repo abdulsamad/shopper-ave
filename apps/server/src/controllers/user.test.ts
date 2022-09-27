@@ -29,19 +29,6 @@ describe('User Controllers', () => {
       })
     );
   }),
-    it('Send error response on database error', async () => {
-      // Trigger server error by passing short password (Less then 8 chars)
-      const req = getMockReq({ body: { ...userDetailsForAuth, password: '123456' } });
-      const { res } = getMockRes();
-
-      await signup(req, res);
-
-      expect(res.json).toHaveBeenCalledWith(
-        expect.objectContaining({
-          err: expect.any(String),
-        })
-      );
-    }),
     it('Signup failed when required params are not provided', async () => {
       const req = getMockReq({ body: {} });
       const { res } = getMockRes();
