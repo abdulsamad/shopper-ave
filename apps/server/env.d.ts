@@ -19,8 +19,17 @@ declare namespace NodeJS {
 }
 
 // Modifying Express Request
-// declare namespace Express {
-//   export interface Request {
-//     token: number;
-//   }
-// }
+declare namespace Express {
+  export interface Request {
+    user?: {
+      _id: string;
+      __v: number;
+      name: string;
+      email: string;
+      password: '🤨';
+      role: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+  }
+}
