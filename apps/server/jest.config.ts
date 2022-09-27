@@ -1,6 +1,7 @@
 import type { Config } from '@jest/types';
 
 const config: Config.InitialOptions = {
+  setupFiles: ['dotenv/config'],
   preset: 'ts-jest',
   rootDir: 'src',
   coverageDirectory: '<rootDir>/../coverage',

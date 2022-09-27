@@ -7,9 +7,9 @@
     "start": "ts-node -r tsconfig-paths/register --files src/index.ts",
     "dev": "nodemon",
     "build": "npx tsc",
-    "test": "jest --setupFiles dotenv/config",
-    "test:coverage": "jest --coverage --setupFiles dotenv/config",
-    "test:watch": "jest --watch --setupFiles dotenv/config"
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
