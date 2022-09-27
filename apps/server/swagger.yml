@@ -34,6 +34,12 @@ components:
   # User schema
     User:
       properties:
+        _id:
+          type: string # MongoDB internal
+          default: <MongoDB ObjectId>
+        __v:
+          type: number # Mongoose internal
+          default: 0
         name:
           type: string
           default: John Doe
@@ -46,24 +52,26 @@ components:
         role:
           type: string
           default: user
-        _id:
-          type: string # MongoDB internal
-          default: <MongoDB ObjectId>
         createdAt:
           type: string
           default:  2022-09-26T05:53:07.739Z
         updatedAt:
           type: string
           default: 2022-09-26T05:53:07.739Z
-        __v:
-          type: number # Mongoose internal
-          default: 0
+
+tags:
+  - name: Auth
+    description: Authentication Routes
+  - name: Admin
+    description: Admin Routes
+  - name: User
+    description: User Routes
 
 paths:
   /signup:
     post:
       tags:
-        - Authentication
+        - Auth
       summary: Creates new user and returns the token and user information
       requestBody:
         required: true
@@ -127,7 +135,7 @@ paths:
   /login:
     post:
       tags:
-        - Authentication
+        - Auth
       summary: Login user and returns the token and user information
       requestBody:
         required: true
@@ -184,7 +192,7 @@ paths:
   /logout:
     get:
       tags:
-        - Authentication
+        - Auth
       summary: Logout user and returns success message
       responses:
         '200': 
@@ -213,7 +221,7 @@ paths:
   /forgotpassword:
     post:
       tags:
-        - Authentication
+        - Auth
       summary: Send a password reset email
       requestBody:
         required: true
@@ -263,7 +271,7 @@ paths:
   /password/reset/{token}:
     post:
       tags:
-        - Authentication
+        - Auth
       summary: Reset password for user who generated token
       parameters:
         - name: token
