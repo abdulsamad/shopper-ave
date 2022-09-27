@@ -1,4 +1,3 @@
-import { User } from '@utils/types';
 declare namespace NodeJS {
   interface ProcessEnv {
     PORT: string;
@@ -22,6 +21,15 @@ declare namespace NodeJS {
 // Modifying Express Request
 declare namespace Express {
   export interface Request {
-    user?: User;
+    user?: {
+      _id: string;
+      __v: number;
+      name: string;
+      email: string;
+      password: '🤨';
+      role: string;
+      createdAt: string;
+      updatedAt: string;
+    };
   }
 }
