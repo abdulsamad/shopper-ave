@@ -1,7 +1,9 @@
 import { faker } from '@faker-js/faker';
 
+import { User } from './types';
+
 /* istanbul ignore file */
-export const user = {
+export const user: User = {
   __v: 0,
   _id: faker.database.mongodbObjectId(),
   email: faker.internet.email(),
