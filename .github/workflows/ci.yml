@@ -25,24 +25,6 @@ jobs:
       - name: Install dependencies
         run: yarn
 
-      - name: Create environment variables file
-        # Dummy variables for testing env
-        run: |
-          touch .env
-          echo PORT = 4000 >> ./apps/serer/.env
-          echo MONGODB_URI= mongodb://127.0.0.1:27017/shopperAve >> .env
-          echo JWT_SECRET = thisismyjwtsecret >> .env
-          echo JWT_EXPIRY = 7d >> .env
-          echo COOKIE_TIME = 3 >> .env
-          echo CLOUDINARY_NAME = abdulsamad >> .env
-          echo CLOUDINARY_API_KEY = 34534534534 >> .env
-          echo CLOUDINARY_API_SECRET = sjfsdkfjsdf >> .env
-          echo SMTP_HOST = dummysmtp.domain.io >> .env
-          echo SMTP_PORT = 2455 >> .env
-          echo SMTP_USER = sdfsffsfsfsljf >> .env
-          echo SMTP_PASSWORD = fjsdfjljlkj >> .env
-          echo .env
-
       - name: Build
         run: yarn build
 
