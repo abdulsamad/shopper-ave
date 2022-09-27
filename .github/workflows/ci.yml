@@ -24,7 +24,24 @@ jobs:
       
       - name: Install dependencies
         run: yarn
-      
+
+      - name: Create environment variables file
+        run: |
+          touch ./apps/server/.env
+          echo PORT = 4000 >> ./apps/serer/.env
+          echo MONGODB_URI= mongodb://127.0.0.1:27017/shopperAve >> ./apps/serer/.env
+          echo JWT_SECRET = thisismyjwtsecret >> ./apps/serer/.env
+          echo JWT_EXPIRY = 7d >> ./apps/serer/.env
+          echo COOKIE_TIME = 3 >> ./apps/serer/.env
+          echo CLOUDINARY_NAME = abdulsamad >> ./apps/serer/.env
+          echo CLOUDINARY_API_KEY = 34534534534 # Dummy API Key >> ./apps/serer/.env
+          echo CLOUDINARY_API_SECRET = sjfsdkfjsdf # Dummy API Secret >> ./apps/serer/.env
+          echo SMTP_HOST = dummysmtp.domain.io  >> ./apps/serer/.env
+          echo SMTP_PORT = 2455 >> ./apps/serer/.env
+          echo SMTP_USER = sdfsffsfsfsljf >> ./apps/serer/.env
+          echo SMTP_PASSWORD = fjsdfjljlkj   >> ./apps/serer/.env
+          echo ./apps/server/.env
+
       - name: Build
         run: yarn build
 
