@@ -160,3 +160,16 @@ export const passwordReset = async (req: Request, res: Response) => {
     return res.status(500).json({ err: 'Something went wrong' });
   }
 };
+
+export const getLoggedInUserDetails = async (req: Request, res: Response) => {
+  try {
+    const user = await User.findById(req.user?._id);
+
+    res.status(200).json({
+      success: true,
+      user,
+    });
+  } catch (err) {
+    return res.status(500).json({ err: 'Something went wrong' });
+  }
+};
