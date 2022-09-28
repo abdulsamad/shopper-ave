@@ -12,7 +12,7 @@ export const isLoggenIn = async (req: Request, res: Response, next: NextFunction
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.findById(decoded);
+    const user = await User.findById((decoded as any).id);
 
     // Append user object to request.user
     // Added types for req.user in /env.d.ts
