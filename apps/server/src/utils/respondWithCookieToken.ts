@@ -19,7 +19,7 @@ export const respondWithCookieToken = (user: IUser, res: Response, statusCode = 
   // const { password, ...rest } = user._id;
   user.password = '🤨';
 
-  return res.status(statusCode).cookie('token', options).json({
+  return res.status(statusCode).cookie('token', token, options).json({
     success: true,
     token,
     user,
