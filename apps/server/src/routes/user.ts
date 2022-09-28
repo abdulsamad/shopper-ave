@@ -10,6 +10,6 @@ router.route('/login').post(login);
 router.route('/logout').get(logout);
 router.route('/forgotpassword').post(forgotPassword);
 router.route('/password/reset/:token').post(passwordReset);
-router.route('/userdashboard').get(isLoggenIn, getLoggedInUserDetails);
+router.route('/dashboard').get(isLoggenIn, getLoggedInUserDetails);
 
 export default router;
