@@ -1,8 +1,9 @@
 import mongoose from 'mongoose';
 import { faker } from '@faker-js/faker';
 
-import { connect, clearDatabase, closeDatabase } from '@config/testDB';
-import { userDetails } from '@utils/test-helpers';
+import { connect, clearDatabase, closeDatabase } from '@utils/test-db';
+import { userDetailsForAuth } from '@utils/test-helpers';
+
 import User from './user';
 
 beforeAll(async () => await connect());
@@ -13,16 +14,16 @@ afterAll(async () => await closeDatabase());
 
 describe('User Model', () => {
   it('Create new user', async () => {
-    const user = await User.create(userDetails);
+    const user = await User.create(userDetailsForAuth);
 
-    expect(user.name).toEqual(userDetails.name);
-    expect(user.email).toEqual(userDetails.email);
+    expect(user.name).toEqual(userDetailsForAuth.name);
+    expect(user.email).toEqual(userDetailsForAuth.email);
   }),
     it('Name should not exceed length of 80 chars', async () => {
       let error;
 
       try {
-        await User.create({ ...userDetails, name: faker.lorem.lines(81) });
+        await User.create({ ...userDetailsForAuth, name: faker.lorem.lines(81) });
       } catch (err) {
         error = err;
       }
@@ -33,7 +34,7 @@ describe('User Model', () => {
       let error;
 
       try {
-        await User.create({ ...userDetails, password: '1234567' });
+        await User.create({ ...userDetailsForAuth, password: '1234567' });
       } catch (err) {
         error = err;
       }
@@ -52,17 +53,17 @@ describe('User Model', () => {
       expect(error).toBeInstanceOf(mongoose.Error.ValidationError);
     }),
     it('Password is validated with isValidPassword method', async () => {
-      const user = await User.create(userDetails);
+      const user = await User.create(userDetailsForAuth);
 
-      expect(user.isValidPassword(userDetails.password)).toBeTruthy();
+      expect(user.isValidPassword(userDetailsForAuth.password)).toBeTruthy();
     }),
     it('Generate JWT is working', async () => {
-      const user = await User.create(userDetails);
+      const user = await User.create(userDetailsForAuth);
 
       expect(user.getJwtToken()).toBeTruthy();
     }),
     it('Generating forgot password token is working', async () => {
-      const user = await User.create(userDetails);
+      const user = await User.create(userDetailsForAuth);
 
       expect(user.getForgotPasswordToken()).toBeTruthy();
     });

@@ -6,7 +6,7 @@ info:
 
 servers:
   - url: "{protocol}://localhost:4000/api/{version}"
-    description: Development version
+    description: Local Development version
     variables:
       version:
         enum:
@@ -19,7 +19,7 @@ servers:
           - https
         default: http
   # - url: https://example.com/api/v1
-  #   description: Production version
+  #   description: Main (Production) server
 
 components:
   securitySchemes:
@@ -30,3 +30,302 @@ components:
     BearerAuth:
       type: http
       scheme: bearer
+  schemas:
+  # User schema
+    User:
+      properties:
+        _id:
+          type: string # MongoDB internal
+          default: <MongoDB ObjectId>
+        __v:
+          type: integer # Mongoose internal
+          default: 0
+        name:
+          type: string
+          default: John Doe
+        email:
+          type: string
+          default: john@example.com
+        password:
+          type: string
+          default: 🤨
+        role:
+          type: string
+          default: user
+        photo:
+          type: object
+          properties:
+            id:
+              type: string
+              default: <Image UID>
+            secure_url:
+              type: string
+              default: Photo URL
+        forgotPasswordToken: 
+          type: string
+        forgotPasswordExpiry: 
+          type: string
+        createdAt:
+          type: string
+          default:  2022-09-26T05:53:07.739Z
+        updatedAt:
+          type: string
+          default: 2022-09-26T05:53:07.739Z
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              err:
+                type: string
+    Unauthorized:
+      description: Unauthorized
+      content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                err:
+                  type: string
+                  default: You're unauthorized to access this page
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              err:
+                type: string
+                default: Something went wrong
+
+tags:
+  - name: Auth
+    description: Authentication Routes
+  - name: Admin
+    description: Admin Routes
+  - name: User
+    description: User Routes
+
+paths:
+  /signup:
+    post:
+      tags:
+        - Auth
+      summary: Creates new user and returns the token and user information
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  default: John Doe
+                email:
+                  type: string
+                  default: john@example.com
+                password:
+                  type: string
+                  default: john@123
+                photo:
+                  type: string
+                  format: binary
+              required:
+                - name
+                - email
+                - password
+      responses:
+        '201': 
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  token:
+                    type: string
+                    default: <token>
+                  user:
+                    $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: Name, email and password are required # Ignored
+        '500':
+           $ref: '#/components/schemas/InternalServerError'
+  /login:
+    post:
+      tags:
+        - Auth
+      summary: Login user and returns the token and user information
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  default: john@example.com
+                password:
+                  type: string
+                  default: john@123
+              required:
+                - email
+                - password
+      responses:
+        '200': 
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  token:
+                    type: string
+                    default: <token>
+                  user:
+                    $ref: "#/components/schemas/User"
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: Email and password are required # Ignored
+        '500':
+           $ref: '#/components/schemas/InternalServerError'
+  /logout:
+    get:
+      tags:
+        - Auth
+      summary: Logout user and returns success message
+      responses:
+        '200': 
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  message:
+                    type: string
+                    default: Logout success
+        '500':
+           $ref: '#/components/schemas/InternalServerError'
+  /forgotpassword:
+    post:
+      tags:
+        - Auth
+      summary: Send a password reset email
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  default: john@example.com
+                  required: true
+      responses:
+        '200': 
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  message:
+                    type: string
+                    default: Email sent successfully   
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: User not found # Ignored
+        '500':
+           $ref: '#/components/schemas/InternalServerError'
+  /password/reset/{token}:
+    post:
+      tags:
+        - Auth
+      summary: Reset password for user who generated token
+      parameters:
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                  default: john@1234
+                  required: true
+                confirmPassword:
+                  type: string
+                  default: john@example.com
+                  required: true
+      responses:
+        '200': 
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  token:
+                    type: string
+                    default: <token>
+                  user:
+                    $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: Token is either invalid or expired # Ignored
+        '500':
+           $ref: '#/components/schemas/InternalServerError'
+  /dashboard:
+    get:
+      tags:
+        - User
+      summary: Get user details
+      parameters:
+        - in: header
+          name: auth
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  user:
+                    $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
