@@ -372,3 +372,46 @@ paths:
           default2: Both old and new password is required to update password # Ignored
         '500':
           $ref: '#/components/schemas/InternalServerError'
+  /dashboard/update:
+    post:
+      tags:
+        - User
+      summary: Update user profile details
+      parameters:
+        - in: header
+          name: auth
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              minProperties: 1
+              properties:
+                name:
+                  type: string
+                  default: John Doe Sr
+                email:
+                  type: string
+                  default: john@gmail.com
+                photo:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  user:
+                    $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: No data provided to update # Ignored
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
