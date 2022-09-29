@@ -209,8 +209,12 @@ export const updateUser = async (req: Request, res: Response) => {
   const { name, email } = req.body;
   const file = req.files?.photo as UploadedFile;
 
+  if (!name && !email && !file) {
+    return res.status(400).json({ err: 'No data provided to update' });
+  }
+
   // Updated data
-  const updatedData: { [key: string]: any } = {
+  const updatedData: { [key: string]: string | object } = {
     name,
     email,
   };
