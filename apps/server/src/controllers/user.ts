@@ -204,3 +204,53 @@ export const changePassword = async (req: Request, res: Response) => {
     return res.status(500).json({ err: 'Something went wrong' });
   }
 };
+
+export const updateUser = async (req: Request, res: Response) => {
+  const { name, email } = req.body;
+  const file = req.files?.photo as UploadedFile;
+
+  // Updated data
+  const updatedData: { [key: string]: any } = {
+    name,
+    email,
+  };
+
+  try {
+    // Check is file is updated
+    if (file) {
+      const user = await User.findById(req.user?._id);
+
+      if (user) {
+        const imageId = user.photo.id;
+
+        // Delete images on Cloudinary
+        await cloudinary.uploader.destroy(imageId);
+
+        // Upload the new image to Cloudinary
+        const result = await cloudinary.uploader.upload(file.tempFilePath, {
+          folder: 'users',
+          width: 300,
+          crop: 'scale',
+        });
+
+        updatedData.photo = {
+          id: result.public_id,
+          secure_url: result.secure_url,
+        };
+      }
+    }
+
+    const user = await User.findByIdAndUpdate(req.user?._id, updatedData, {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    });
+
+    return res.status(200).json({
+      success: true,
+      user,
+    });
+  } catch (err) {
+    return res.status(500).json({ err: 'Something went wrong' });
+  }
+};

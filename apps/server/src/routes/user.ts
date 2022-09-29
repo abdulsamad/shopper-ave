@@ -8,6 +8,7 @@ import {
   passwordReset,
   getLoggedInUserDetails,
   changePassword,
+  updateUser,
 } from '@controllers/user';
 import { isLoggenIn } from '@middlewares/user';
 
@@ -20,5 +21,6 @@ router.route('/forgotpassword').post(forgotPassword);
 router.route('/password/reset/:token').post(passwordReset);
 router.route('/dashboard').get(isLoggenIn, getLoggedInUserDetails);
 router.route('/password/update').post(isLoggenIn, changePassword);
+router.route('/dashboard/update').post(isLoggenIn, updateUser);
 
 export default router;
