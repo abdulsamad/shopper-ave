@@ -4,7 +4,7 @@ export type User = {
   name: string;
   email: string;
   password: string;
-  role: 'user' | 'admin';
+  role: 'user' | 'admin' | 'manager';
   photo?: { id: string; secure_url: string };
   forgotPasswordToken?: string;
   forgotPasswordExpiry?: string;
