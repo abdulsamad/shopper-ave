@@ -279,3 +279,17 @@ export const adminAllUsers = async (req: Request, res: Response) => {
     return res.status(500).json({ err: 'Something went wrong' });
   }
 };
+
+export const managerAllUsers = async (req: Request, res: Response) => {
+  try {
+    const users = await User.find({ role: 'user' });
+
+    res.status(200).json({
+      success: true,
+      users,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ err: 'Something went wrong' });
+  }
+};

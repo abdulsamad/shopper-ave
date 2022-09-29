@@ -10,6 +10,7 @@ import {
   changePassword,
   updateUser,
   adminAllUsers,
+  managerAllUsers,
 } from '@controllers/user';
 import { checkRole, isLoggenIn } from '@middlewares/user';
 
@@ -33,5 +34,8 @@ router.route('/dashboard/update').post(isLoggenIn, updateUser);
  */
 
 router.route('/admin/users').get(isLoggenIn, checkRole('admin'), adminAllUsers);
+
+// Manager
+router.route('/manager/users').get(isLoggenIn, checkRole('manager'), managerAllUsers);
 
 export default router;
