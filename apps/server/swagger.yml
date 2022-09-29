@@ -329,3 +329,46 @@ paths:
           $ref: '#/components/schemas/Unauthorized'
         '500':
           $ref: '#/components/schemas/InternalServerError'
+  /password/update:
+    post:
+      tags:
+        - User
+      summary: Update user password
+      parameters:
+        - in: header
+          name: auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                oldPassword:
+                  type: string
+                  default: john@123
+                newPassword:
+                  type: string
+                  default: john@124
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  token:
+                    type: string
+                    default: <token>
+                  user:
+                    $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: Old password is incorrect # Ignored
+          default2: Both old and new password is required to update password # Ignored
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
