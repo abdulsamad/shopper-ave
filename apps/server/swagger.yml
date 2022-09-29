@@ -104,10 +104,12 @@ components:
 tags:
   - name: Auth
     description: Authentication Routes
-  - name: Admin
-    description: Admin Routes
   - name: User
     description: User Routes
+  - name: Admin
+    description: Admin Routes
+  - name: Manager
+    description: Read only admin with some filteration
 
 paths:
   /signup:
@@ -370,6 +372,8 @@ paths:
           $ref: '#/components/schemas/BadRequest'
           default: Old password is incorrect # Ignored
           default2: Both old and new password is required to update password # Ignored
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
         '500':
           $ref: '#/components/schemas/InternalServerError'
   /dashboard/update:
@@ -413,5 +417,36 @@ paths:
         '400':
           $ref: '#/components/schemas/BadRequest'
           default: No data provided to update # Ignored
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
         '500':
           $ref: '#/components/schemas/InternalServerError'
+  /admin/users:
+    get:
+      tags:
+        - Admin
+      summary: Get all users
+      parameters:
+        - in: header
+          name: auth
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  users:
+                    type: array
+                    items:
+                      type: object
+                      $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+  
