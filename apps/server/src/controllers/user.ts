@@ -173,3 +173,34 @@ export const getLoggedInUserDetails = async (req: Request, res: Response) => {
     return res.status(500).json({ err: 'Something went wrong' });
   }
 };
+
+export const changePassword = async (req: Request, res: Response) => {
+  const { oldPassword, newPassword } = req.body;
+  const userId = req.user?._id;
+
+  if (!oldPassword || !newPassword) {
+    return res.status(400).json({ err: 'Both old and new password is required to update password' });
+  }
+
+  try {
+    const user = await User.findById(userId).select('+password');
+
+    if (!user) {
+      throw new Error('User not available');
+    }
+
+    const isCorrectOldPassword = await user.isValidPassword(oldPassword);
+
+    if (!isCorrectOldPassword) {
+      return res.status(400).json({ err: 'Old password is incorrect' });
+    }
+
+    user.password = newPassword;
+
+    await user.save();
+
+    respondWithCookieToken(user, res);
+  } catch (err) {
+    return res.status(500).json({ err: 'Something went wrong' });
+  }
+};
