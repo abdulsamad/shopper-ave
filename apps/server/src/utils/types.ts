@@ -3,8 +3,11 @@ export type User = {
   __v: number;
   name: string;
   email: string;
-  password: '🤨';
-  role: string;
+  password: string;
+  role: 'user' | 'admin';
+  photo?: { id: string; secure_url: string };
+  forgotPasswordToken?: string;
+  forgotPasswordExpiry?: string;
   createdAt: string;
   updatedAt: string;
 };
