@@ -449,4 +449,31 @@ paths:
           $ref: '#/components/schemas/Unauthorized'
         '500':
           $ref: '#/components/schemas/InternalServerError'
-  
+  /manager/users:
+    get:
+      tags:
+        - Manager
+      summary: Update user profile details
+      parameters:
+        - in: header
+          name: auth
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  users:
+                    type: array
+                    items:
+                      type: object
+                      $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
