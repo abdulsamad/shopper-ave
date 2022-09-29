@@ -170,6 +170,7 @@ export const getLoggedInUserDetails = async (req: Request, res: Response) => {
       user,
     });
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ err: 'Something went wrong' });
   }
 };
@@ -201,6 +202,7 @@ export const changePassword = async (req: Request, res: Response) => {
 
     respondWithCookieToken(user, res);
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ err: 'Something went wrong' });
   }
 };
@@ -224,7 +226,7 @@ export const updateUser = async (req: Request, res: Response) => {
     if (file) {
       const user = await User.findById(req.user?._id);
 
-      if (user) {
+      if (user && user.photo?.id) {
         const imageId = user.photo.id;
 
         // Delete images on Cloudinary
@@ -255,6 +257,7 @@ export const updateUser = async (req: Request, res: Response) => {
       user,
     });
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ err: 'Something went wrong' });
   }
 };
