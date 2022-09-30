@@ -326,7 +326,7 @@ export const adminUpdateUser = async (req: Request, res: Response) => {
   try {
     // Check is file is updated
     if (file) {
-      const user = await User.findById(req.user?._id);
+      const user = await User.findById(userId);
 
       if (user && user.photo?.id) {
         const imageId = user.photo.id;
