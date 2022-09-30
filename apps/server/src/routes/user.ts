@@ -41,7 +41,7 @@ router
   .route('/admin/user/:id')
   .get(isLoggenIn, checkRole('admin'), adminUser)
   .put(isLoggenIn, checkRole('admin'), adminUpdateUser)
-  .delete(isLoggenIn, checkRole('admin', adminDeleteUser));
+  .delete(isLoggenIn, checkRole('admin'), adminDeleteUser);
 
 // Manager
 router.route('/manager/users').get(isLoggenIn, checkRole('manager'), managerAllUsers);
