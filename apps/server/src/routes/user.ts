@@ -12,6 +12,7 @@ import {
   adminAllUsers,
   managerAllUsers,
   adminUser,
+  adminUpdateUser,
 } from '@controllers/user';
 import { checkRole, isLoggenIn } from '@middlewares/user';
 
@@ -35,7 +36,10 @@ router.route('/dashboard/update').post(isLoggenIn, updateUser);
  */
 
 router.route('/admin/users').get(isLoggenIn, checkRole('admin'), adminAllUsers);
-router.route('/admin/user/:id').get(isLoggenIn, checkRole('admin'), adminUser);
+router
+  .route('/admin/user/:id')
+  .get(isLoggenIn, checkRole('admin'), adminUser)
+  .put(isLoggenIn, checkRole('admin'), adminUpdateUser);
 
 // Manager
 router.route('/manager/users').get(isLoggenIn, checkRole('manager'), managerAllUsers);

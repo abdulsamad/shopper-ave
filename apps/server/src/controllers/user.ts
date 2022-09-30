@@ -304,6 +304,70 @@ export const adminUser = async (req: Request, res: Response) => {
   }
 };
 
+export const adminUpdateUser = async (req: Request, res: Response) => {
+  const userId = req.params.id;
+  const { name, email, role } = req.body;
+  const file = req.files?.photo as UploadedFile;
+
+  const updatedData: { [key: string]: string | object } = {
+    name,
+    email,
+    role,
+  };
+
+  if (!userId) {
+    return res.status(400).json({ err: 'User ID is required to update user' });
+  }
+
+  if (!name && !email && !role) {
+    return res.status(400).json({ err: 'Name, email, photo or role are required to update data' });
+  }
+
+  try {
+    // Check is file is updated
+    if (file) {
+      const user = await User.findById(req.user?._id);
+
+      if (user && user.photo?.id) {
+        const imageId = user.photo.id;
+
+        // Delete images on Cloudinary
+        await cloudinary.uploader.destroy(imageId);
+
+        // Upload the new image to Cloudinary
+        const result = await cloudinary.uploader.upload(file.tempFilePath, {
+          folder: 'users',
+          width: 300,
+          crop: 'scale',
+        });
+
+        updatedData.photo = {
+          id: result.public_id,
+          secure_url: result.secure_url,
+        };
+      }
+    }
+
+    const user = await User.findByIdAndUpdate(userId, updatedData, {
+      new: true,
+      runValidators: true,
+      useFindandModify: false,
+    });
+
+    if (!user) {
+      return res.status(400).json({ err: 'No user found with this ID' });
+    }
+
+    return res.status(201).json({
+      success: true,
+      user,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ err: 'Something went wrong' });
+  }
+};
+
 export const managerAllUsers = async (req: Request, res: Response) => {
   try {
     const users = await User.find({ role: 'user' });
