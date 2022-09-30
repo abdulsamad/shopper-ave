@@ -284,7 +284,7 @@ export const adminUser = async (req: Request, res: Response) => {
   const { id } = req.params;
 
   if (!id) {
-    return res.status(400).json({ err: 'userId is required to get the user' });
+    return res.status(400).json({ err: 'User ID is required to get the user' });
   }
 
   try {
