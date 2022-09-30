@@ -289,7 +289,7 @@ paths:
                   default: john@example.com
                   required: true
       responses:
-        '200': 
+        '201': 
           description: OK
           content:
             application/json:
@@ -338,7 +338,7 @@ paths:
     post:
       tags:
         - User
-      summary: Update user password
+      summary: Change user password
       parameters:
         - in: header
           name: auth
@@ -356,7 +356,7 @@ paths:
                   type: string
                   default: john@124
       responses:
-        '200':
+        '201':
           description: OK
           content:
             application/json:
@@ -405,7 +405,7 @@ paths:
                   type: string
                   format: binary
       responses:
-        '200':
+        '201':
           description: OK
           content:
             application/json:
@@ -490,7 +490,7 @@ paths:
     get:
       tags:
         - Manager
-      summary: Update user profile details
+      summary: Get all users with user role
       parameters:
         - in: header
           name: auth
