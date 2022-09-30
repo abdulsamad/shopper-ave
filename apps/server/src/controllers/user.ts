@@ -154,7 +154,7 @@ export const passwordReset = async (req: Request, res: Response) => {
 
     await user.save({ validateBeforeSave: false });
 
-    return respondWithCookieToken(user, res);
+    return respondWithCookieToken(user, res, 201);
   } catch (err) {
     console.error(err);
     return res.status(500).json({ err: 'Something went wrong' });
@@ -200,7 +200,7 @@ export const changePassword = async (req: Request, res: Response) => {
 
     await user.save();
 
-    respondWithCookieToken(user, res);
+    respondWithCookieToken(user, res, 201);
   } catch (err) {
     console.error(err);
     return res.status(500).json({ err: 'Something went wrong' });
@@ -252,7 +252,7 @@ export const updateUser = async (req: Request, res: Response) => {
       useFindAndModify: false,
     });
 
-    return res.status(200).json({
+    return res.status(201).json({
       success: true,
       user,
     });
