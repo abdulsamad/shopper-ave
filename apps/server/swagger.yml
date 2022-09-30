@@ -539,6 +539,37 @@ paths:
           $ref: '#/components/schemas/Unauthorized'
         '500':
           $ref: '#/components/schemas/InternalServerError'
+    delete:
+      tags:
+        - Admin
+      summary: Delete user
+      parameters:
+        - in: header
+          name: auth
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: User ID is requried to delete a user # Ignored
+          default2: No such user found # Ignored
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
   /manager/users:
     get:
       tags:
