@@ -320,7 +320,9 @@ export const adminUpdateUser = async (req: Request, res: Response) => {
   }
 
   if (!name && !email && !role) {
-    return res.status(400).json({ err: 'Name, email, photo or role are required to update data' });
+    return res
+      .status(400)
+      .json({ err: 'Atleast one property (name, email, photo or role) is required to update data' });
   }
 
   try {
