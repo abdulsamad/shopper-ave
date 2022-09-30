@@ -370,6 +370,38 @@ export const adminUpdateUser = async (req: Request, res: Response) => {
   }
 };
 
+export const adminDeleteUser = async (req: Request, res: Response) => {
+  const userId = req.params.id;
+
+  if (!userId) {
+    return res.status(400).json({ err: 'User ID is requried to delete a user' });
+  }
+
+  try {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(400).json({ err: 'No such user found' });
+    }
+
+    // Delete image from cloudinary
+    const imageId = user.photo?.id;
+
+    if (imageId) {
+      await cloudinary.uploader.destroy(imageId);
+    }
+
+    await user.remove();
+
+    return res.status(200).json({
+      success: true,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ err: 'Something went wrong' });
+  }
+};
+
 export const managerAllUsers = async (req: Request, res: Response) => {
   try {
     const users = await User.find({ role: 'user' });
