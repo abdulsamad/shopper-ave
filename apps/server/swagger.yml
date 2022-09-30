@@ -486,6 +486,59 @@ paths:
           $ref: '#/components/schemas/Unauthorized'
         '500':
           $ref: '#/components/schemas/InternalServerError'
+    put:
+      tags:
+        - Admin
+      summary: Update user details
+      parameters:
+        - in: header
+          name: auth
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  default: Sam Smith
+                email:
+                  type: string
+                  default: sam@example.com
+                role:
+                  type: string
+                  default: user
+                photo:
+                  type: string
+                  format: binary
+      responses:
+        '201':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  user:
+                    $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: User ID is required to update user # Ignored
+          default2: Atleast one property (name, email, photo or role) is required to update data # Ignored
+          default3: No user found with this ID # Ignored
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
   /manager/users:
     get:
       tags:
