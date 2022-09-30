@@ -280,6 +280,30 @@ export const adminAllUsers = async (req: Request, res: Response) => {
   }
 };
 
+export const adminUser = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).json({ err: 'userId is required to get the user' });
+  }
+
+  try {
+    const user = await User.findById(id);
+
+    if (!user) {
+      return res.status(400).json({ err: 'User not found' });
+    }
+
+    return res.status(200).json({
+      success: true,
+      user,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ err: 'Something went wrong' });
+  }
+};
+
 export const managerAllUsers = async (req: Request, res: Response) => {
   try {
     const users = await User.find({ role: 'user' });
