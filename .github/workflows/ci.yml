@@ -32,7 +32,7 @@ jobs:
         run: yarn test
 
       - name: Generate server coverage report
-      - uses: ArtiomTr/jest-coverage-report-action@v2
+        uses: ArtiomTr/jest-coverage-report-action@v2
         id: coverage
         with:
             package-manager: yarn
