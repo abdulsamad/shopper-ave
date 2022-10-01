@@ -4,6 +4,11 @@
 
 An E-Commerce Store
 
+<details>
+	<summary>Technologies</summary>
+	Node and MongoDB
+</details>
+
 ### When will this be completed?
 
 ![I Don't know](https://media.giphy.com/media/cwTtbmUwzPqx2/giphy.gif "I don't know")
