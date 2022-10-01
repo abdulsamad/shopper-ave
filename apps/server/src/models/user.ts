@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 
-import { User } from '@utils/types';
+import { User } from '@types';
 
 export interface IUser extends User {
   isValidPassword: (receivedPassword: string) => Promise<boolean>;

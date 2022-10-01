@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 
 import User from '@models/user';
-import { User as IUser } from '@utils/types';
+import { User as IUser } from '@types';
 
 export const isLoggenIn = async (req: Request, res: Response, next: NextFunction) => {
   const token = req.cookies.token || req.header('Authorization')?.replace('Bearer ', '');
