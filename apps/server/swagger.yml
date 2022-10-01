@@ -513,7 +513,7 @@ paths:
                   default: sam@example.com
                 role:
                   type: string
-                  default: user
+                  enum: [user, admin, manager]
                 photo:
                   type: string
                   format: binary
