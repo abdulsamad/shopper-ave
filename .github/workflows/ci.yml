@@ -1,4 +1,4 @@
-name: Test
+name: Tests
 
 on:
   push:
@@ -30,14 +30,3 @@ jobs:
 
       - name: Run test
         run: yarn test
-
-      - name: Generate server coverage report
-        uses: ArtiomTr/jest-coverage-report-action@v2
-        id: coverage
-        with:
-            package-manager: yarn
-            working-directory: apps/server
-            output: report-markdown
-      - uses: marocchino/sticky-pull-request-comment@v2
-        with:
-            message: ${{ steps.coverage.outputs.report }}
