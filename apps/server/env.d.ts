@@ -21,6 +21,6 @@ declare namespace NodeJS {
 // Modifying Express Request
 declare namespace Express {
   export interface Request {
-    user?: import('@utils/types').User;
+    user?: import('@types').User;
   }
 }

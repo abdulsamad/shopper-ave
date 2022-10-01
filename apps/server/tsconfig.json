@@ -16,7 +16,8 @@
       "@models/*": ["models/*"],
       "@routes/*": ["routes/*"],
       "@seeds/*": ["seeds/*"],
-      "@utils/*": ["utils/*"]
+      "@utils/*": ["utils/*"],
+      "@types": ["types/index"]
     }
   }
 }
