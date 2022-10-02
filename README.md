@@ -6,7 +6,7 @@ An E-Commerce Store
 
 <details>
 	<summary>Technologies</summary>
-	Node and MongoDB
+	Rect, Next.js, Node, Express and MongoDB
 </details>
 
 ### When will this be completed?
