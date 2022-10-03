@@ -7,6 +7,11 @@ interface IMailHelper {
   html?: string;
 }
 
+/**
+ * Sends email via Nodemailer
+ * @param {to, subject, text. html}
+ * @returns {SMTPTransport.SentMessageInfo}
+ */
 export const mailerHelper = async ({ to, subject, text, html }: IMailHelper) => {
   const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
@@ -18,7 +23,7 @@ export const mailerHelper = async ({ to, subject, text, html }: IMailHelper) => 
   });
 
   const message = {
-    from: `"shopperave@contact.com <shopperave@store.com`,
+    from: process.env.SMTP_EMAIL,
     to,
     subject,
     text,
