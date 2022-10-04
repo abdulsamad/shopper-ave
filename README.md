@@ -11,7 +11,7 @@ An E-Commerce Store
 
 <details>
 	<summary>Technologies</summary>
-	Rect, Next.js, Node, Express and MongoDB
+	React, Next.js, Node, Express and MongoDB with TurboRepo
 </details>
 
 ### When will this be completed?
