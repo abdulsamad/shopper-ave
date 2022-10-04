@@ -15,12 +15,13 @@ declare namespace NodeJS {
     SMTP_PORT: string;
     SMTP_USER: string;
     SMTP_PASSWORD: string;
+    SMTP_EMAIL: string;
   }
 }
 
 // Modifying Express Request
 declare namespace Express {
   export interface Request {
-    user?: import('@utils/types').User;
+    user?: import('@types').User;
   }
 }

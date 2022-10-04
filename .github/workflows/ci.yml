@@ -1,14 +1,14 @@
-name: CI Test
+name: Tests
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main ]
   pull_request:
     branches: [ main ]
 
 jobs:
   test:
-    name: Test
+    name: Turborepo Test
     timeout-minutes: 15
     runs-on: ubuntu-latest
 
@@ -25,8 +25,8 @@ jobs:
       - name: Install dependencies
         run: yarn
 
-      - name: Build
-        run: yarn build
+      # - name: Build
+      #   run: yarn build
 
       - name: Run test
         run: yarn test

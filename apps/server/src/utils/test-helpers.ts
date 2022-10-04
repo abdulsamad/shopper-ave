@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 
-import { User } from './types';
+import { User } from '@types';
 
 /* istanbul ignore file */
 export const user: User = {

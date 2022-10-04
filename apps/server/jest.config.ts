@@ -18,6 +18,7 @@ const config: Config.InitialOptions = {
     '@routes/(.*)': ['<rootDir>/routes/$1'],
     '@seeds/(.*)': ['<rootDir>/seeds/$1'],
     '@utils/(.*)': ['<rootDir>/utils/$1'],
+    '@types': ['<rootDir>/types/index'],
   },
 };
 

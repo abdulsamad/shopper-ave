@@ -51,7 +51,10 @@ components:
           default: 🤨
         role:
           type: string
-          default: user
+          oneOf:
+            - 'user'
+            - 'manager'
+            - 'admin'
         photo:
           type: object
           properties:
@@ -104,10 +107,12 @@ components:
 tags:
   - name: Auth
     description: Authentication Routes
-  - name: Admin
-    description: Admin Routes
   - name: User
     description: User Routes
+  - name: Admin
+    description: Admin Routes
+  - name: Manager
+    description: Read only admin with some filteration
 
 paths:
   /signup:
@@ -284,7 +289,7 @@ paths:
                   default: john@example.com
                   required: true
       responses:
-        '200': 
+        '201': 
           description: OK
           content:
             application/json:
@@ -325,6 +330,270 @@ paths:
                     default: true
                   user:
                     $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+  /password/update:
+    post:
+      tags:
+        - User
+      summary: Change user password
+      parameters:
+        - in: header
+          name: auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                oldPassword:
+                  type: string
+                  default: john@123
+                newPassword:
+                  type: string
+                  default: john@124
+      responses:
+        '201':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  token:
+                    type: string
+                    default: <token>
+                  user:
+                    $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: Old password is incorrect # Ignored
+          default2: Both old and new password is required to update password # Ignored
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+  /dashboard/update:
+    post:
+      tags:
+        - User
+      summary: Update user profile details
+      parameters:
+        - in: header
+          name: auth
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              minProperties: 1
+              properties:
+                name:
+                  type: string
+                  default: John Doe Sr
+                email:
+                  type: string
+                  default: john@gmail.com
+                photo:
+                  type: string
+                  format: binary
+      responses:
+        '201':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  user:
+                    $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: No data provided to update # Ignored
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+  /admin/users:
+    get:
+      tags:
+        - Admin
+      summary: Get all users
+      parameters:
+        - in: header
+          name: auth
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  users:
+                    type: array
+                    items:
+                      type: object
+                      $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+  /admin/user/{userId}:
+    get:
+      tags:
+        - Admin
+      summary: Get a single user
+      parameters:
+        - in: header
+          name: auth
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  user:
+                    $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: User ID is required to get the user # Ignored
+          default2: User not found # Ignored
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+    put:
+      tags:
+        - Admin
+      summary: Update user details
+      parameters:
+        - in: header
+          name: auth
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  default: Sam Smith
+                email:
+                  type: string
+                  default: sam@example.com
+                role:
+                  type: string
+                  enum: [user, admin, manager]
+                photo:
+                  type: string
+                  format: binary
+      responses:
+        '201':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  user:
+                    $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: User ID is required to update user # Ignored
+          default2: Atleast one property (name, email, photo or role) is required to update data # Ignored
+          default3: No user found with this ID # Ignored
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+    delete:
+      tags:
+        - Admin
+      summary: Delete user
+      parameters:
+        - in: header
+          name: auth
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: User ID is requried to delete a user # Ignored
+          default2: No such user found # Ignored
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+  /manager/users:
+    get:
+      tags:
+        - Manager
+      summary: Get all users with user role
+      parameters:
+        - in: header
+          name: auth
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  users:
+                    type: array
+                    items:
+                      type: object
+                      $ref: '#/components/schemas/User'
         '401':
           $ref: '#/components/schemas/Unauthorized'
         '500':

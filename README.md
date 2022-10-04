@@ -1,8 +1,18 @@
-## ShopperAve
+<h2>ShopperAve</h2>
+<p>
+  <a href="https://github.com/abdulsamad/shopper-ave/actions"/>
+   <img src="https://github.com/abdulsamad/shopper-ave/actions/workflows/ci.yml/badge.svg" alt="Shopper Ave Tests">
+  </a>
+</h2>
 
 ## :construction: Underconstruction!
 
 An E-Commerce Store
+
+<details>
+	<summary>Technologies</summary>
+	Rect, Next.js, Node, Express and MongoDB
+</details>
 
 ### When will this be completed?
 

@@ -4,14 +4,9 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 
-export interface IUser {
-  name: string;
-  email: string;
-  password: string;
-  role: string;
-  photo: { id: string; secure_url: string };
-  forgotPasswordToken: string | undefined;
-  forgotPasswordExpiry: string | undefined;
+import { User } from '@types';
+
+export interface IUser extends User {
   isValidPassword: (receivedPassword: string) => Promise<boolean>;
   getJwtToken: () => void;
   getForgotPasswordToken: () => string;
@@ -23,6 +18,7 @@ const UserSchema = new mongoose.Schema<IUser>(
       type: String,
       required: [true, 'Please provide a name'],
       maxlength: [80, 'Name should be under 80 characters'],
+      trim: true,
     },
     email: {
       type: String,
