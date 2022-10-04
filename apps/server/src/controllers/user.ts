@@ -5,7 +5,7 @@ import crypto from 'crypto';
 
 import User from '@models/user';
 import { respondWithCookieToken } from '@utils/respondWithCookieToken';
-import { mailerHelper } from '@utils/email-helper';
+import { mailHelper } from '@utils/email-helper';
 
 export const signup = async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
@@ -108,7 +108,7 @@ export const forgotPassword = async (req: Request, res: Response) => {
     const tokenUrl = `${req.protocol}://${req.hostname}/password/reset/${forgotToken}`;
     const message = `Copy paste this link in the URL and hit enter \n\n ${tokenUrl}`;
 
-    await mailerHelper({
+    await mailHelper({
       to: email,
       subject: `Shopper Ave - Password Reset Email`,
       text: message,

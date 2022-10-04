@@ -12,7 +12,7 @@ interface IMailHelper {
  * @param {to, subject, text. html}
  * @returns {SMTPTransport.SentMessageInfo}
  */
-export const mailerHelper = async ({ to, subject, text, html }: IMailHelper) => {
+export const mailHelper = async ({ to, subject, text, html }: IMailHelper) => {
   const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
     port: parseInt(process.env.SMTP_PORT),
