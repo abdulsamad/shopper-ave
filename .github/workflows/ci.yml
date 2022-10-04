@@ -2,7 +2,7 @@ name: Tests
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, develop ]
   pull_request:
     branches: [ main ]
 
@@ -24,9 +24,6 @@ jobs:
       
       - name: Install dependencies
         run: yarn
-
-      - name: Build
-        run: yarn build
 
       - name: Run test
         run: yarn test
