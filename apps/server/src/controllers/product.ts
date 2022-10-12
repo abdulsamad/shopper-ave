@@ -3,6 +3,7 @@ import { v2 as cloudinary } from 'cloudinary';
 import { UploadedFile } from 'express-fileupload';
 
 import Product from '@models/product';
+import WhereClause from '@utils/whereClause';
 
 export const addProduct = async (req: Request, res: Response) => {
   // Images
@@ -42,6 +43,32 @@ export const addProduct = async (req: Request, res: Response) => {
     return res.status(200).json({
       success: true,
       product,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ err: 'Something went wrong' });
+  }
+};
+
+export const getAllProduct = async (req: Request, res: Response) => {
+  const query = req.query;
+
+  try {
+    const resultPerPage = 6;
+    const totalProducts = await Product.countDocuments();
+
+    let products = new WhereClause(Product.find(), query).search().filter();
+
+    const filteredProductNumber = products.length;
+
+    products.pager(resultPerPage);
+    products = await products.base;
+
+    return res.status(200).json({
+      success: true,
+      products,
+      filteredProductNumber,
+      totalProducts,
     });
   } catch (err) {
     console.error(err);
