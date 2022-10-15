@@ -9,6 +9,7 @@ import path from 'path';
 
 import home from '@routes/home';
 import user from '@routes/user';
+import product from '@routes/product';
 
 // Initialize dotenv
 dotenv.config();
@@ -38,5 +39,6 @@ app.use(morgan('tiny'));
 // Router middleware
 app.use('/api/v1', home);
 app.use('/api/v1', user);
+app.use('/api/v1', product);
 
 export default app;
