@@ -1,11 +1,6 @@
 import mongoose from 'mongoose';
 
-import { IUser } from '@models/user';
 import { Product as IProduct } from '@types';
-
-// export interface IProduct extends Product {
-//   //
-// }
 
 const ProductSchema = new mongoose.Schema<IProduct>(
   {
