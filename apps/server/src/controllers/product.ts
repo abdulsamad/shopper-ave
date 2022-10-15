@@ -57,7 +57,7 @@ export const getAllProduct = async (req: Request, res: Response) => {
     const resultPerPage = 6;
     const totalProducts = await Product.countDocuments();
 
-    let products = new WhereClause(Product.find(), query).search().filter();
+    let products: any = new WhereClause(Product.find(), query).search().filter();
 
     const filteredProductNumber = products.length;
 

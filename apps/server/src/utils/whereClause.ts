@@ -1,13 +1,16 @@
-import mongoose from 'mongoose';
+type baseType = any;
+type bigQueryType = any;
 
 /**
- * base - {Product.find()}
+ * Class for filtering and pagination for mongoose model find
+ * base - @mongoose {Model.find()}
+ * bigQuery - Request query object
  */
 class WhereClause {
-  base: any;
-  bigQuery: any;
+  base: baseType;
+  bigQuery: bigQueryType;
 
-  constructor(base: any, bigQuery: any) {
+  constructor(base: baseType, bigQuery: bigQueryType) {
     this.base = base;
     this.bigQuery = bigQuery;
   }
@@ -40,13 +43,14 @@ class WhereClause {
     const jsonOfCopyQ = JSON.parse(stringOfCopyQuery);
 
     this.base = this.base.find(jsonOfCopyQ);
+    return this;
   }
 
   pager(resultPerPage: number) {
     let currentPage = 1;
 
     if (this.bigQuery.page) {
-      currentPage = this.bigQuery.page;
+      currentPage = Number(this.bigQuery.page);
     }
 
     // Skip formula
@@ -55,3 +59,5 @@ class WhereClause {
     return this;
   }
 }
+
+export default WhereClause;
