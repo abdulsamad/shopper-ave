@@ -6,7 +6,7 @@ type bigQueryType = any;
  * base - @mongoose {Model.find()}
  * bigQuery - Request query object
  */
-class WhereClause {
+export class WhereClause {
   base: baseType;
   bigQuery: bigQueryType;
 
