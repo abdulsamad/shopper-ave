@@ -75,3 +75,17 @@ export const getAllProduct = async (req: Request, res: Response) => {
     return res.status(500).json({ err: 'Something went wrong' });
   }
 };
+
+export const adminGetAllProduct = async (req: Request, res: Response) => {
+  try {
+    const products = await Product.find();
+
+    res.status(200).json({
+      success: true,
+      products,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ err: 'Something went wrong' });
+  }
+};
