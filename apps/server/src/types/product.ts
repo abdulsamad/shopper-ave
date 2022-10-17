@@ -1,12 +1,10 @@
-import { User } from './user';
-
 export type photo = {
   id: string;
   secure_url: string;
 };
 
 export type review = {
-  user: User;
+  user: string;
   name: string;
   rating: number;
   comment: string;
