@@ -13,11 +13,10 @@ export const isLoggedIn = async (req: Request, res: Response, next: NextFunction
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.findById((decoded as any).id);
+    const user = await User.findById((decoded as jwt.JwtPayload)?.id);
 
     // Append user object to request.user
-    // Added types for req.user in /env.d.ts
-    req.user = user as any;
+    req.user = user as IUser;
 
     next();
   } catch (err) {
