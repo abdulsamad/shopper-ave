@@ -20,22 +20,23 @@ export const addProduct = async (req: Request, res: Response) => {
   }
 
   try {
-    const imageArray = [];
+    const imagesArray = [];
 
     if (files) {
-      for (let i = 0; i < photos.length; i++) {
-        const { public_id, secure_url } = await cloudinary.uploader.upload(photos[i].tempFilePath, {
-          folder: 'products',
+      // TODO: Add promise.all to improve performance
+      for (const photo of photos) {
+        const { public_id, secure_url } = await cloudinary.uploader.upload(photo.tempFilePath, {
+          folder: process.env.PRODUCT_FOLDER_NAME,
         });
 
-        imageArray.push({
+        imagesArray.push({
           id: public_id,
           secure_url: secure_url,
         });
       }
     }
 
-    req.body.photos = imageArray;
+    req.body.photos = imagesArray;
     req.body.user = req.user?._id;
 
     const product = await Product.create(req.body);
@@ -57,6 +58,7 @@ export const getAllProduct = async (req: Request, res: Response) => {
     const resultPerPage = 6;
     const totalProducts = await Product.countDocuments();
 
+    // ! Add explicit types for Whereclause class
     let products: any = new WhereClause(Product.find(), query).search().filter();
 
     const filteredProductNumber = products.length;
@@ -93,6 +95,68 @@ export const getProduct = async (req: Request, res: Response) => {
     return res.status(200).json({
       success: true,
       product,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ err: 'Something went wrong' });
+  }
+};
+
+export const adminUpdateProduct = async (req: Request, res: Response) => {
+  const productId = req.params.id;
+
+  if (!productId) {
+    return res.status(400).json({ err: 'Product ID is required to update a product' });
+  }
+
+  try {
+    const product = await Product.findById(productId);
+
+    if (!product) {
+      return res.status(400).json({ err: `No product found with ${productId} ID` });
+    }
+
+    // Images
+    const files = req.files;
+    const imagesArray = [];
+
+    if (files) {
+      const photos = files.photos as UploadedFile[];
+
+      if (!photos) {
+        return res.status(400).json({ err: 'Atleast one image is required for a product' });
+      }
+
+      // Destroy the exisiting images
+      for (const photo of product.photos) {
+        await cloudinary.uploader.destroy(photo.id);
+      }
+
+      // Upload and save the images
+      // TODO: Add promise.all to improve performance
+      for (const photo of photos) {
+        const { public_id, secure_url } = await cloudinary.uploader.upload(photo.tempFilePath, {
+          folder: process.env.PRODUCT_FOLDER_NAME,
+        });
+
+        imagesArray.push({
+          id: public_id,
+          secure_url: secure_url,
+        });
+      }
+    }
+
+    req.body.photos = imagesArray;
+
+    const updatedProduct = await Product.findByIdAndUpdate(productId, req.body, {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    });
+
+    return res.status(200).json({
+      success: true,
+      product: updatedProduct,
     });
   } catch (err) {
     console.error(err);
