@@ -10,6 +10,7 @@ import path from 'path';
 import home from '@routes/home';
 import user from '@routes/user';
 import product from '@routes/product';
+import payment from '@routes/payment';
 
 // Initialize dotenv
 dotenv.config();
@@ -40,5 +41,6 @@ app.use(morgan('tiny'));
 app.use('/api/v1', home);
 app.use('/api/v1', user);
 app.use('/api/v1', product);
+app.use('/api/v1', payment);
 
 export default app;
