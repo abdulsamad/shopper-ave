@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import User from '@models/user';
 import { User as IUser } from '@types';
 
-export const isLoggenIn = async (req: Request, res: Response, next: NextFunction) => {
+export const isLoggedIn = async (req: Request, res: Response, next: NextFunction) => {
   const token = req.cookies.token || req.header('Authorization')?.replace('Bearer ', '');
 
   if (!token) {

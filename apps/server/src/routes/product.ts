@@ -8,7 +8,7 @@ import {
   adminUpdateProduct,
   adminDeleteProduct,
 } from '@controllers/product';
-import { checkRole, isLoggenIn } from '@middlewares/user';
+import { checkRole, isLoggedIn } from '@middlewares/user';
 
 const router = express.Router();
 
@@ -23,12 +23,12 @@ router.route('/product/:id').get(getProduct);
  * ### ADMIN ###
  */
 
-router.route('/admin/products').get(isLoggenIn, checkRole('admin'), adminGetAllProduct);
-router.route('/admin/product').get(isLoggenIn, checkRole('admin'), getProduct);
+router.route('/admin/products').get(isLoggedIn, checkRole('admin'), adminGetAllProduct);
+router.route('/admin/product').get(isLoggedIn, checkRole('admin'), getProduct);
 router
   .route('/admin/product:id')
-  .put(isLoggenIn, checkRole('admin'), adminUpdateProduct)
-  .delete(isLoggenIn, checkRole('admin'), adminDeleteProduct);
-router.route('/admin/product/add').post(isLoggenIn, checkRole('admin'), addProduct);
+  .put(isLoggedIn, checkRole('admin'), adminUpdateProduct)
+  .delete(isLoggedIn, checkRole('admin'), adminDeleteProduct);
+router.route('/admin/product/add').post(isLoggedIn, checkRole('admin'), addProduct);
 
 export default router;
