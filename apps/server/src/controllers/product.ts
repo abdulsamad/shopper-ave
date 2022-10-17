@@ -103,6 +103,60 @@ export const getProduct = async (req: Request, res: Response) => {
   }
 };
 
+export const addReview = async (req: Request, res: Response) => {
+  const { rating, comment, productId } = req.body;
+
+  if (!rating && !comment && !productId) {
+    return res.status(400).json({ err: 'Rating, comment and product ID are required to add a review' });
+  }
+
+  if (!req.user) {
+    return res.status(401).json({ err: 'User is not logged in' });
+  }
+
+  try {
+    const review = {
+      user: req.user._id,
+      name: req.user.name,
+      rating: Number(rating),
+      comment,
+    };
+
+    const product = await Product.findById(productId);
+
+    if (!product) {
+      return res.status(500).json({ err: 'Product not available' });
+    }
+
+    const alreadyReviewed = product.reviews.find((review) => review.user.toString() === req.user?._id);
+
+    if (alreadyReviewed) {
+      product.reviews.forEach((review) => {
+        if (review.user.toString() === req.user?._id) {
+          review.comment = comment;
+          review.rating = rating;
+        }
+      });
+    } else {
+      product.reviews.push(review);
+      product.numberOfReviews = product.reviews.length;
+    }
+
+    // Rating
+    product.ratings = product.reviews.reduce((acc, value) => value.rating + acc, 0) / product.reviews.length;
+
+    // Save
+    await product.save({ validateBeforeSave: false });
+
+    return res.status(200).json({
+      success: true,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ err: 'Something went wrong' });
+  }
+};
+
 /*
  * ### ADMIN ###
  */
