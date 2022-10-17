@@ -114,10 +114,13 @@ export const addReview = async (req: Request, res: Response) => {
     return res.status(401).json({ err: 'User is not logged in' });
   }
 
+  // Extract user details
+  const { name, _id: userId } = req.user;
+
   try {
     const review = {
-      user: req.user._id,
-      name: req.user.name,
+      user: userId,
+      name: name,
       rating: Number(rating),
       comment,
     };
@@ -128,11 +131,11 @@ export const addReview = async (req: Request, res: Response) => {
       return res.status(500).json({ err: 'Product not available' });
     }
 
-    const alreadyReviewed = product.reviews.find((review) => review.user.toString() === req.user?._id);
+    const alreadyReviewed = product.reviews.find((review) => review.user.toString() === userId);
 
     if (alreadyReviewed) {
       product.reviews.forEach((review) => {
-        if (review.user.toString() === req.user?._id) {
+        if (review.user.toString() === userId) {
           review.comment = comment;
           review.rating = rating;
         }
@@ -142,6 +145,7 @@ export const addReview = async (req: Request, res: Response) => {
       product.numberOfReviews = product.reviews.length;
     }
 
+    // TODO: Add a model prehook for doing this
     // Rating
     product.ratings = product.reviews.reduce((acc, value) => value.rating + acc, 0) / product.reviews.length;
 
@@ -150,6 +154,71 @@ export const addReview = async (req: Request, res: Response) => {
 
     return res.status(200).json({
       success: true,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ err: 'Something went wrong' });
+  }
+};
+
+export const deleteReview = async (req: Request, res: Response) => {
+  const { productId } = req.query;
+
+  try {
+    const product = await Product.findById(productId);
+
+    if (!product) {
+      return res.status(400).json({ err: 'Product not available' });
+    }
+
+    const reviews = product.reviews.filter((review) => review.user === req.user?._id);
+
+    // TODO: Add a model pre hook
+    // Update ratings and reviews
+    const numberOfReviews = reviews.length;
+    const ratings = product.reviews.reduce((acc, value) => value.rating + acc, 0) / product.reviews.length;
+
+    // Update the product
+    await Product.findByIdAndUpdate(
+      productId,
+      {
+        reviews,
+        ratings,
+        numberOfReviews,
+      },
+      {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false,
+      }
+    );
+
+    return {
+      success: true,
+    };
+  } catch (err) {
+    console.error();
+    return res.status(500).json({ err: 'Something went wrong' });
+  }
+};
+
+export const getReviewForProduct = async (req: Request, res: Response) => {
+  const productId = req.query.productId;
+
+  if (!productId) {
+    return res.status(400).json({ err: 'Product ID is required to get reviews' });
+  }
+
+  try {
+    const product = await Product.findById(productId);
+
+    if (!product) {
+      return res.status(500).json({ err: 'Product is not available' });
+    }
+
+    return res.status(200).json({
+      success: true,
+      reviews: product.reviews,
     });
   } catch (err) {
     console.error(err);
