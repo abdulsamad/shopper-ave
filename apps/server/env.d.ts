@@ -17,6 +17,9 @@ declare namespace NodeJS {
     SMTP_USER: string;
     SMTP_PASSWORD: string;
     SMTP_EMAIL: string;
+    // Stripe
+    STRIPE_API_KEY: string;
+    STRIPE_SECRET: string;
   }
 }
 
