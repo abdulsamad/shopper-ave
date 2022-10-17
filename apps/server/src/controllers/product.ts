@@ -102,6 +102,8 @@ export const getProduct = async (req: Request, res: Response) => {
   }
 };
 
+// Admin
+
 export const adminUpdateProduct = async (req: Request, res: Response) => {
   const productId = req.params.id;
 
@@ -157,6 +159,38 @@ export const adminUpdateProduct = async (req: Request, res: Response) => {
     return res.status(200).json({
       success: true,
       product: updatedProduct,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ err: 'Something went wrong' });
+  }
+};
+
+export const adminDeleteProduct = async (req: Request, res: Response) => {
+  const productId = req.params.id;
+
+  if (!productId) {
+    return res.status(400).json({ err: 'Product ID is required to update a product' });
+  }
+
+  try {
+    const product = await Product.findById(productId);
+
+    if (!product) {
+      return res.status(400).json({ err: `No product found with ${productId} ID` });
+    }
+
+    // Destroy the exisiting images
+    for (const photo of product.photos) {
+      await cloudinary.uploader.destroy(photo.id);
+    }
+
+    const deletedProduct = await product.remove();
+
+    return res.status(200).json({
+      success: true,
+      product: deletedProduct,
+      message: 'Product was deleted',
     });
   } catch (err) {
     console.error(err);
