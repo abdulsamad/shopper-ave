@@ -3,13 +3,16 @@ import Stripe from 'stripe';
 
 // Load stripe
 const stripe = new Stripe(process.env.STRIPE_SECRET, {
+  appInfo: { name: 'Shopper Ave' },
   apiVersion: '2022-08-01',
 });
 
 export const sendStripeKey = (req: Request, res: Response) => {
   try {
+    const stripeKey = process.env.STRIPE_API_KEY;
+
     return res.status(200).json({
-      stripeKey: process.env.STRIPE_API_KEY,
+      stripeKey,
     });
   } catch (err) {
     console.error(err);
