@@ -76,11 +76,35 @@ export const getAllProduct = async (req: Request, res: Response) => {
   }
 };
 
+export const getProduct = async (req: Request, res: Response) => {
+  const productId = req.params.id;
+
+  if (!productId) {
+    return res.status(400).json({ err: 'Product ID is required to get a product' });
+  }
+
+  try {
+    const product = await Product.findById(productId);
+
+    if (!product) {
+      return res.status(400).json({ err: `No product found with ${productId} ID` });
+    }
+
+    return res.status(200).json({
+      success: true,
+      product,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ err: 'Something went wrong' });
+  }
+};
+
 export const adminGetAllProduct = async (req: Request, res: Response) => {
   try {
     const products = await Product.find();
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       products,
     });
