@@ -102,7 +102,9 @@ export const getProduct = async (req: Request, res: Response) => {
   }
 };
 
-// Admin
+/*
+ * ### ADMIN ###
+ */
 
 export const adminUpdateProduct = async (req: Request, res: Response) => {
   const productId = req.params.id;
