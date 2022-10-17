@@ -1,0 +1,46 @@
+import { Request, Response } from 'express';
+import Stripe from 'stripe';
+
+// Load stripe
+const stripe = new Stripe(process.env.STRIPE_SECRET, {
+  apiVersion: '2022-08-01',
+});
+
+export const sendStripeKey = (req: Request, res: Response) => {
+  try {
+    return res.status(200).json({
+      stripeKey: process.env.STRIPE_API_KEY,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ err: 'Something went wrong' });
+  }
+};
+
+export const capturePayment = async (req: Request, res: Response) => {
+  const { amount } = req.body;
+
+  if (!amount) {
+    return res.status(400).json({ err: 'Amount is required for payment' });
+  }
+
+  try {
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: req.body.amount,
+      currency: 'INR',
+
+      // Optional
+      metadata: {
+        integration_check: 'accept_a_payment',
+      },
+    });
+
+    return res.status(200).json({
+      success: true,
+      client_secret: paymentIntent.client_secret,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ err: 'Something went wrong' });
+  }
+};
