@@ -23,9 +23,10 @@ export const addProduct = async (req: Request, res: Response) => {
     const imagesArray = [];
 
     if (files) {
-      // TODO: Add promise.all to improve performance
-      for (const photo of photos) {
-        const { public_id, secure_url } = await cloudinary.uploader.upload(photo.tempFilePath, {
+      // TODO: Refactor with promise.all to improve performance
+      // Upload and save the images
+      for (let i = 0; i < photos.length; i++) {
+        const { public_id, secure_url } = await cloudinary.uploader.upload(photos[i].tempFilePath, {
           folder: process.env.PRODUCT_FOLDER_NAME,
         });
 
@@ -132,14 +133,14 @@ export const adminUpdateProduct = async (req: Request, res: Response) => {
       }
 
       // Destroy the exisiting images
-      for (const photo of product.photos) {
-        await cloudinary.uploader.destroy(photo.id);
+      for (let i = 0; i < product.photos.length; i++) {
+        await cloudinary.uploader.destroy(product.photos[i].id);
       }
 
+      // TODO: Refactor with promise.all to improve performance
       // Upload and save the images
-      // TODO: Add promise.all to improve performance
-      for (const photo of photos) {
-        const { public_id, secure_url } = await cloudinary.uploader.upload(photo.tempFilePath, {
+      for (let i = 0; i < photos.length; i++) {
+        const { public_id, secure_url } = await cloudinary.uploader.upload(photos[i].tempFilePath, {
           folder: process.env.PRODUCT_FOLDER_NAME,
         });
 
