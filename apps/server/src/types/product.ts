@@ -1,14 +1,14 @@
-export type photo = {
+export interface photo {
   id: string;
   secure_url: string;
-};
+}
 
-export type review = {
+export interface review {
   user: string;
   name: string;
   rating: number;
   comment: string;
-};
+}
 
 export type Product = {
   _id: string;

@@ -1,21 +1,21 @@
 import DateConstructor from 'mongoose';
 
-export type ShippingInfo = {
+export interface ShippingInfo {
   address: string;
   city: string;
   phoneNo: string;
   postalCode: string;
   state: string;
   country: string;
-};
+}
 
-export type OrderItem = {
+export interface OrderItem {
   name: string;
   quantity: number;
   image: string;
   price: number;
   product: any;
-};
+}
 
 export type PaymentInfo = {
   id: string;
