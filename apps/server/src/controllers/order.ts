@@ -113,6 +113,7 @@ export const adminUpdateOrder = async (req: Request, res: Response) => {
 
     order.orderStatus = orderStatus;
 
+    // TODO: Check later for asynchronous concurrency issue
     order.orderItems.forEach(async ({ product, quantity }) => {
       await updateProductstock(product, quantity);
     });
@@ -126,6 +127,28 @@ export const adminUpdateOrder = async (req: Request, res: Response) => {
   } catch (err) {
     console.error();
     return res.status(500).json({ err: 'Something went wrong' });
+  }
+};
+
+const updateProductstock = async (productId: Types.ObjectId, quantity: number) => {
+  try {
+    const product = await Product.findById(productId);
+
+    if (!product) {
+      throw new Error('Product not found');
+    }
+
+    const stock = product.stock;
+
+    if (stock < quantity) {
+      throw new Error('Product stock is less than required quanity');
+    }
+
+    product.stock = stock - quantity;
+
+    await product.save({ validateBeforeSave: false });
+  } catch (err) {
+    console.error(err);
   }
 };
 
@@ -148,22 +171,5 @@ export const adminDeleteOrder = async (req: Request, res: Response) => {
   } catch (err) {
     console.error(err);
     return res.status(500).json({ err: 'Something went wrong' });
-  }
-};
-
-const updateProductstock = async (productId: Types.ObjectId, quantity: number) => {
-  try {
-    const product = await Product.findById(productId);
-
-    if (!product) {
-      throw new Error('Product not found');
-    }
-
-    // TODO: Check whether the stock is available beforehand
-    product.stock = product.stock - quantity;
-
-    await product.save({ validateBeforeSave: false });
-  } catch (err) {
-    console.error(err);
   }
 };
