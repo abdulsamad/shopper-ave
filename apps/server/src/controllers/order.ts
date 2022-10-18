@@ -72,3 +72,97 @@ export const getUserOrders = async (req: Request, res: Response) => {
     return res.status(500).json({ err: 'Something went wrong' });
   }
 };
+
+/*
+ * ### ADMIN ###
+ */
+
+export const adminGetAllOrders = async (req: Request, res: Response) => {
+  try {
+    const orders = await Order.find();
+
+    return res.status(200).json({
+      success: true,
+      orders,
+    });
+  } catch (err) {
+    console.error();
+    return res.status(500).json({ err: 'Something went wrong' });
+  }
+};
+
+export const adminUpdateOrder = async (req: Request, res: Response) => {
+  const orderId = req.params.orderId;
+  const orderStatus = req.body.orderStatus;
+
+  if (!orderStatus || !orderId) {
+    return res.status(400).json({ err: '' });
+  }
+
+  try {
+    const order = await Order.findById(orderId);
+
+    if (!order) {
+      return res.status(400).json({ err: 'No order found with given ID' });
+    }
+
+    if (order.orderStatus === 'delivered') {
+      return res.status(400).json({ err: 'Order is already delivered' });
+    }
+
+    order.orderStatus = orderStatus;
+
+    order.orderItems.forEach(async ({ product, quantity }) => {
+      await updateProductstock(product, quantity);
+    });
+
+    await order.save();
+
+    return res.status(200).json({
+      success: true,
+      order,
+    });
+  } catch (err) {
+    console.error();
+    return res.status(500).json({ err: 'Something went wrong' });
+  }
+};
+
+export const adminDeleteOrder = async (req: Request, res: Response) => {
+  const orderId = req.params.orderId;
+
+  try {
+    const order = await Order.findById(orderId);
+
+    if (!order) {
+      return res.status(400).json({ err: 'No order found with provided ID' });
+    }
+
+    const removedOrder = await order.remove();
+
+    return res.status(200).json({
+      success: true,
+      order: removedOrder,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ err: 'Something went wrong' });
+  }
+};
+
+const updateProductstock = async (productId: string, quantity: number) => {
+  try {
+    const product = await Product.findById(productId);
+
+    if (!product) {
+      throw new Error('Product not found');
+    }
+
+    // TODO: Check whether the stock is available beforehand
+    product.stock = product.stock - quantity;
+
+    await product.save({ validateBeforeSave: false });
+  } catch (err) {
+    console.error(err);
+  }
+};

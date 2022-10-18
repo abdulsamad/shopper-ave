@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
 
-const OrderSchema = new mongoose.Schema(
+import { Order as IOrder } from '@types';
+
+const OrderSchema = new mongoose.Schema<IOrder>(
   {
     shippingInfo: {
       address: {

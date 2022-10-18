@@ -14,7 +14,7 @@ export type OrderItem = {
   quantity: number;
   image: string;
   price: number;
-  product: object;
+  product: any;
 };
 
 export type PaymentInfo = {
