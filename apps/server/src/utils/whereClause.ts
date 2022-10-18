@@ -1,9 +1,15 @@
 type baseType = any;
-type bigQueryType = any;
+type bigQueryType = {
+  search?: string;
+  limit?: string;
+  page?: string;
+  lt?: string;
+  gt?: string;
+};
 
 /**
- * Class for filtering and pagination for mongoose model find
- * base - @mongoose {Model.find()}
+ * Class for filtering and pagination for product model find
+ * base - @mongoose {Product.find()}
  * bigQuery - Request query object
  */
 export class WhereClause {
