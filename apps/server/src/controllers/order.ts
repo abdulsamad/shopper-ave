@@ -39,7 +39,7 @@ export const getOrder = async (req: Request, res: Response) => {
   }
 
   try {
-    const order = await Order.findById(orderId);
+    const order = await Order.findById(orderId).populate('user', 'name email photo.secure_url role');
 
     if (!order) {
       return res.status(400).json({ err: 'Order ID is not valid' });
