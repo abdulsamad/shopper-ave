@@ -106,7 +106,7 @@ export const getProduct = async (req: Request, res: Response) => {
 export const addReview = async (req: Request, res: Response) => {
   const { rating, comment, productId } = req.body;
 
-  if (!rating && !comment && !productId) {
+  if (!rating || !comment || !productId) {
     return res.status(400).json({ err: 'Rating, comment and product ID are required to add a review' });
   }
 
