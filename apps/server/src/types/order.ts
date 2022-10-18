@@ -1,4 +1,4 @@
-import DateConstructor from 'mongoose';
+import { Types } from 'mongoose';
 
 export interface ShippingInfo {
   address: string;
@@ -14,7 +14,7 @@ export interface OrderItem {
   quantity: number;
   image: string;
   price: number;
-  product: any;
+  product: Types.ObjectId;
 }
 
 export type PaymentInfo = {
@@ -23,7 +23,7 @@ export type PaymentInfo = {
 
 export type Order = {
   shippingInfo: ShippingInfo;
-  user: object;
+  user: Types.ObjectId;
   orderItems: OrderItem[];
   paymentInfo: PaymentInfo;
   taxAmount: number;

@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { Types } from 'mongoose';
 
 import Order from '@models/order';
 import Product from '@models/product';
@@ -150,7 +151,7 @@ export const adminDeleteOrder = async (req: Request, res: Response) => {
   }
 };
 
-const updateProductstock = async (productId: string, quantity: number) => {
+const updateProductstock = async (productId: Types.ObjectId, quantity: number) => {
   try {
     const product = await Product.findById(productId);
 

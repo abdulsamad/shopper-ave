@@ -1,3 +1,5 @@
+import { Types } from 'mongoose';
+
 export interface photo {
   id: string;
   secure_url: string;
@@ -23,5 +25,5 @@ export type Product = {
   ratings: number;
   numberOfReviews: number;
   reviews: review[];
-  user: object;
+  user: Types.ObjectId;
 };
