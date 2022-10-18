@@ -54,3 +54,21 @@ export const getOrder = async (req: Request, res: Response) => {
     return res.status(500).json({ err: 'Something went wrong' });
   }
 };
+
+export const getUserOrders = async (req: Request, res: Response) => {
+  try {
+    const orders = await Order.find({ user: req.user?._id });
+
+    if (!orders) {
+      return res.status(400).json({ err: `No orders found for ${req.user?.name}` });
+    }
+
+    return res.status(200).json({
+      success: true,
+      orders,
+    });
+  } catch (err) {
+    console.error();
+    return res.status(500).json({ err: 'Something went wrong' });
+  }
+};
