@@ -33,10 +33,10 @@ const ProductSchema = new mongoose.Schema<IProduct>(
     ],
     category: {
       type: String,
-      required: [true, 'Please select a valid category'],
+      required: [true, 'Please provide a category'],
       enum: {
-        values: ['T-Shirt', 'Electronics', 'Hoodie'],
-        message: 'Please select a valid category',
+        values: ['t-shirt', 'electronics', 'hoodie'],
+        message: 'Please pass a valid category',
       },
     },
     stock: {
