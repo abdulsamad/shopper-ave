@@ -29,6 +29,6 @@ export type Order = {
   taxAmount: number;
   shippingAmount: number;
   totalAmount: number;
-  orderStatus: string;
+  orderStatus: 'processing' | 'dispatched' | 'out_for_delivery' | 'delivered' | 'canceled';
   deliveredAt: DateConstructor;
 };

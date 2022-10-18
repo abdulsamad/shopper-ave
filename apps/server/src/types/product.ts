@@ -19,7 +19,7 @@ export type Product = {
   price: number;
   description: string;
   photos: photo[];
-  category: string;
+  category: 't-shirt' | 'electronics' | 'hoodie';
   stock: number;
   brand: string;
   ratings: number;
