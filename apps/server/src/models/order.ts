@@ -79,12 +79,11 @@ const OrderSchema = new mongoose.Schema<IOrder>(
     },
     orderStatus: {
       type: String,
-      required: true,
-      enum: {
-        values: ['processing', 'dispatched', 'out_for_delivery', 'delivered', 'cancelled'],
-        message: 'Please select a valid order status',
-      },
       default: 'processing',
+      enum: {
+        values: ['processing', 'dispatched', 'out_for_delivery', 'delivered', 'canceled'],
+        message: 'Please pass a valid order status',
+      },
     },
     deliveredAt: {
       type: Date,

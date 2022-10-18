@@ -36,6 +36,10 @@ const UserSchema = new mongoose.Schema<IUser>(
     role: {
       type: String,
       default: 'user',
+      enum: {
+        values: ['user', 'admin', 'manager'],
+        message: 'Please pass a valid role',
+      },
     },
     photo: {
       id: {
