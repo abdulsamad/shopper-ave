@@ -147,6 +147,9 @@ components:
         comment:
           type: string
           default: Amazing Hoodie!
+        _id:
+          type: string # MongoDB internal
+          default: <MongoDB ObjectId>
     BadRequest:
       description: Bad request
       content:
@@ -715,5 +718,32 @@ paths:
                     items:
                       type: object
                       $ref: '#/components/schemas/Product'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+  /product/{productId}:
+    get:
+      tags:
+        - User
+      parameters:
+        - in: path
+          name: productId
+          required: true
+          schema:
+            type: string
+      summary: Get a product detail
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  product:
+                    type: object
+                    $ref: '#/components/schemas/Product'
         '500':
           $ref: '#/components/schemas/InternalServerError'
