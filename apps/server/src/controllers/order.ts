@@ -97,7 +97,7 @@ export const adminUpdateOrder = async (req: Request, res: Response) => {
   const orderStatus = req.body.orderStatus;
 
   if (!orderStatus || !orderId) {
-    return res.status(400).json({ err: '' });
+    return res.status(400).json({ err: 'Order ID and status is required to update order' });
   }
 
   try {
