@@ -193,9 +193,9 @@ export const deleteReview = async (req: Request, res: Response) => {
       }
     );
 
-    return {
+    return res.status(200).json({
       success: true,
-    };
+    });
   } catch (err) {
     console.error();
     return res.status(500).json({ err: 'Something went wrong' });
