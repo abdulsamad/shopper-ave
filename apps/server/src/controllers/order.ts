@@ -93,7 +93,7 @@ export const adminGetAllOrders = async (req: Request, res: Response) => {
 };
 
 export const adminUpdateOrder = async (req: Request, res: Response) => {
-  const orderId = req.params.orderId;
+  const orderId = req.params.id;
   const orderStatus = req.body.orderStatus;
 
   if (!orderStatus || !orderId) {
@@ -153,7 +153,7 @@ const updateProductstock = async (productId: Types.ObjectId, quantity: number) =
 };
 
 export const adminDeleteOrder = async (req: Request, res: Response) => {
-  const orderId = req.params.orderId;
+  const orderId = req.params.id;
 
   try {
     const order = await Order.findById(orderId);
