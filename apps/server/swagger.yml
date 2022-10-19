@@ -853,3 +853,28 @@ paths:
         '500':
           $ref: '#/components/schemas/InternalServerError'
           default: Product not available # Ignored
+  /admin/products:
+    get:
+      tags:
+       - Admin
+      summary: Get all products
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  products:
+                    type: array
+                    items:
+                      type: object
+                      $ref: '#/components/schemas/Product'
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
