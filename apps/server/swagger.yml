@@ -720,33 +720,6 @@ paths:
                       $ref: '#/components/schemas/Product'
         '500':
           $ref: '#/components/schemas/InternalServerError'
-  /product/{productId}:
-    get:
-      tags:
-        - User
-      summary: Get a product detail
-      parameters:
-        - in: path
-          name: productId
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    default: true
-                  product:
-                    type: object
-                    $ref: '#/components/schemas/Product'
-        '500':
-          $ref: '#/components/schemas/InternalServerError'
   /product/review:
     put:
       tags:
@@ -808,5 +781,32 @@ paths:
                     default: true
         '401':
           $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+  /product/{productId}:
+    get:
+      tags:
+        - User
+      summary: Get a product detail
+      parameters:
+        - in: path
+          name: productId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  product:
+                    type: object
+                    $ref: '#/components/schemas/Product'
         '500':
           $ref: '#/components/schemas/InternalServerError'
