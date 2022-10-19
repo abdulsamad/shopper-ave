@@ -22,7 +22,7 @@ export const createOrder = async (req: Request, res: Response) => {
       user: req.user?._id,
     });
 
-    return res.status(200).json({
+    return res.status(201).json({
       success: true,
       order,
     });

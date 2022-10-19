@@ -42,7 +42,7 @@ export const addProduct = async (req: Request, res: Response) => {
 
     const product = await Product.create(req.body);
 
-    return res.status(200).json({
+    return res.status(201).json({
       success: true,
       product,
     });
@@ -152,7 +152,7 @@ export const addReview = async (req: Request, res: Response) => {
     // Save
     await product.save({ validateBeforeSave: false });
 
-    return res.status(200).json({
+    return res.status(201).json({
       success: true,
     });
   } catch (err) {

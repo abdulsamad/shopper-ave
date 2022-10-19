@@ -38,7 +38,7 @@ export const capturePayment = async (req: Request, res: Response) => {
       },
     });
 
-    return res.status(200).json({
+    return res.status(201).json({
       success: true,
       client_secret: paymentIntent.client_secret,
     });
