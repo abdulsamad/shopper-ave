@@ -202,7 +202,7 @@ export const deleteReview = async (req: Request, res: Response) => {
   }
 };
 
-export const getReviewForProduct = async (req: Request, res: Response) => {
+export const getProductReview = async (req: Request, res: Response) => {
   const productId = req.query.productId;
 
   if (!productId) {
