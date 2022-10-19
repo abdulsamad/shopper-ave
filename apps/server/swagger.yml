@@ -663,7 +663,7 @@ paths:
                     default: true
         '400':
           $ref: '#/components/schemas/BadRequest'
-          default: User ID is requried to delete a user # Ignored
+          default: User ID is required to delete a user # Ignored
           default2: No such user found # Ignored
         '401':
           $ref: '#/components/schemas/Unauthorized'
@@ -724,13 +724,13 @@ paths:
     get:
       tags:
         - User
+      summary: Get a product detail
       parameters:
         - in: path
           name: productId
           required: true
           schema:
             type: string
-      summary: Get a product detail
       responses:
         '200':
           description: OK
@@ -745,5 +745,68 @@ paths:
                   product:
                     type: object
                     $ref: '#/components/schemas/Product'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+  /product/review:
+    put:
+      tags:
+        - User
+      summary: Add a product review for logged in user
+      parameters:
+        - in: header
+          name: auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                rating:
+                  type: number
+                  default: 4
+                comment:
+                  type: string
+                  default: Amazing product
+                productId:
+                  type: string
+      responses:
+        '201':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+    delete:
+      tags:
+        - User
+      summary: Delete a review of a product for a logged in user
+      parameters:
+        - in: query
+          name: productId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
         '500':
           $ref: '#/components/schemas/InternalServerError'
