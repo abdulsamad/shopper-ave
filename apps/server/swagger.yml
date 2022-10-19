@@ -694,4 +694,26 @@ paths:
           $ref: '#/components/schemas/Unauthorized'
         '500':
           $ref: '#/components/schemas/InternalServerError'
-  
+  /products:
+    get:
+      tags:
+       - User
+      summary: Get all products
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  products:
+                    type: array
+                    items:
+                      type: object
+                      $ref: '#/components/schemas/Product'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
