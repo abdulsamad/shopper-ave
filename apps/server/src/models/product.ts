@@ -49,6 +49,10 @@ const ProductSchema = new mongoose.Schema<IProduct>(
     },
     ratings: {
       type: Number,
+      enum: {
+        values: [0, 1, 2, 3, 4, 5],
+        message: 'Please pass a valid rating',
+      },
       default: 0,
     },
     numberOfReviews: {
