@@ -146,7 +146,7 @@ components:
           default: 5
         comment:
           type: string
-          default: Amazing Hoodie!
+          default: Amazing Product!
         _id:
           type: string # MongoDB internal
           default: <MongoDB ObjectId>
@@ -795,6 +795,12 @@ paths:
       tags:
         - User
       summary: Get all reviews for a product
+      parameters:
+        - in: query
+          name: productId
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: OK
@@ -806,6 +812,10 @@ paths:
                   success:
                     type: boolean
                     default: true
+                  reviews:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Review'
         '400':
           $ref: '#/components/schemas/BadRequest'
           default: Product ID is required to get reviews # Ignored
