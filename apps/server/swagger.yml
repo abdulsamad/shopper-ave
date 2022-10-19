@@ -754,10 +754,14 @@ paths:
                   success:
                     type: boolean
                     default: true
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: Rating, comment and product ID are required to add a review # Ignored
         '401':
           $ref: '#/components/schemas/Unauthorized'
         '500':
           $ref: '#/components/schemas/InternalServerError'
+          default: Product not available # Ignored
     delete:
       tags:
         - User
@@ -781,8 +785,33 @@ paths:
                     default: true
         '401':
           $ref: '#/components/schemas/Unauthorized'
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: Product not available # Ignored
         '500':
           $ref: '#/components/schemas/InternalServerError'
+  /product/reviews:
+    get:
+      tags:
+        - User
+      summary: Get all reviews for a product
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: Product ID is required to get reviews # Ignored
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+          default: Product not available # Ignored
   /product/{productId}:
     get:
       tags:
@@ -808,5 +837,9 @@ paths:
                   product:
                     type: object
                     $ref: '#/components/schemas/Product'
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: Product ID is required to get a product # Ignored
         '500':
           $ref: '#/components/schemas/InternalServerError'
+          default: Product not available # Ignored
