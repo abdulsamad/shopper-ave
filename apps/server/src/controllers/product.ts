@@ -213,7 +213,7 @@ export const getReviewForProduct = async (req: Request, res: Response) => {
     const product = await Product.findById(productId);
 
     if (!product) {
-      return res.status(500).json({ err: 'Product is not available' });
+      return res.status(500).json({ err: 'Product not available' });
     }
 
     return res.status(200).json({
