@@ -20,9 +20,9 @@ const router = express.Router();
  */
 
 router.route('/products').get(getAllProduct);
-router.route('/product/:id').get(getProduct);
 router.route('/product/review').put(isLoggedIn, addReview).delete(isLoggedIn, deleteReview);
 router.route('/product/reviews').get(getReviewForProduct);
+router.route('/product/:id').get(getProduct);
 
 /*
  * ### ADMIN ###
