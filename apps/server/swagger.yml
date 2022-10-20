@@ -1245,3 +1245,38 @@ paths:
           $ref: '#/components/schemas/Unauthorized'
         '500':
           $ref: '#/components/schemas/InternalServerError'
+  /order/{orderId}:
+    get:
+      tags:
+        - User
+      summary: Get an order
+      parameters:
+        - in: path
+          name: orderId
+          required: true
+          schema:
+            type: string
+        - in: header
+          name: auth
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  order:
+                    $ref: '#/components/schemas/Order'
+                    default: Populating on user field with some user data on this route # Ignored
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: Order ID is required to get an order # Ignored
+          default2: Order ID is not valid # Ignored
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
