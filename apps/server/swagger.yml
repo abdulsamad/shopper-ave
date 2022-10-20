@@ -276,6 +276,8 @@ tags:
     description: Admin Routes
   - name: Manager
     description: Read only admin with some filteration
+  - name: Payment
+    description: Payment Routes
 
 paths:
   /:
@@ -1121,6 +1123,65 @@ paths:
           $ref: '#/components/schemas/BadRequest'
           default: Image is required for a product # Ignored
           default2: Atleast one image is required for a product # Ignored
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+  /payment/stripekey:
+    get:
+      tags:
+        - Payment
+      summary: Get stripe API key
+      parameters:
+        - in: header
+          name: auth
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  stripeKey:
+                    type: string
+                    default: pk_dummy_b2038663-8d5c-5d89-b6d6-71cd5784100f
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+  /payment/capturestripe:
+    post:
+      tags:
+        - Payment
+      summary: Send and pay amount in lowest currency unit
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - amount
+              properties:
+                amount:
+                  type: number 
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  amount:
+                    type: number
+                  client_secret:
+                    type: string
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: Amount is required for payment # Ignored
         '401':
           $ref: '#/components/schemas/Unauthorized'
         '500':
