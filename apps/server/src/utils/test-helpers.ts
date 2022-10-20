@@ -54,6 +54,34 @@ export const productDetails = (
   user: userId,
 });
 
+export const orderDetails = ({ userId, productId }: { userId: string; productId: string }) => ({
+  shippingInfo: {
+    address: faker.address.streetAddress(),
+    city: faker.address.city(),
+    phoneNo: faker.phone.number(),
+    postalCode: faker.address.zipCodeByState('Ontario'),
+    state: faker.address.state(),
+    country: faker.address.country(),
+  },
+  user: userId,
+  orderItems: [
+    {
+      name: faker.commerce.productName(),
+      quantity: faker.datatype.number({ max: 5 }),
+      image: faker.image.imageUrl(),
+      price: faker.commerce.price(),
+      product: productId,
+    },
+  ],
+  paymentInfo: {
+    id: faker.datatype.uuid,
+  },
+  taxAmount: faker.datatype.number({ max: 40 }),
+  shippingAmount: faker.datatype.number({ max: 40 }),
+  totalAmount: faker.datatype.number({ max: 40 }),
+  orderStatus: 'processing',
+});
+
 export const userSuccessObj = {
   success: true,
   token:
