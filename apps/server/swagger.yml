@@ -112,6 +112,9 @@ components:
         brand:
           type: string
           default: Nike
+        stock:
+          type: number
+          default: 40
         ratings:
           type: number
           default: 0
@@ -874,6 +877,168 @@ paths:
                     items:
                       type: object
                       $ref: '#/components/schemas/Product'
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+  /admin/product/{productId}:
+    get:
+      tags:
+       - Admin
+      summary: Get all products for admin
+      parameters:
+        - in: path
+          name: productId
+          required: true
+          schema:
+            type: string
+        - in: header
+          name: auth
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  products:
+                    type: array
+                    items:
+                      type: object
+                      $ref: '#/components/schemas/Product'
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+    put:
+      tags:
+        - Admin
+      summary: Update product 
+      parameters:
+        - in: path
+          name: productId
+          required: true
+          schema:
+            type: string
+        - in: header
+          name: auth
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  product:
+                    $ref: '#/components/schemas/Product'
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: Product ID is required to updated a product # Ignored
+          default2: No product found with 43970687-389d-560a-9ea0-15fdf2071097 ID # Ignored
+          default3: Atleast one image is required for a product # Ignored
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+          default: Product not available # Ignored
+    delete:
+      tags:
+        - Admin
+      summary: Delete a product
+      parameters:
+        - in: path
+          name: productId
+          required: true
+          schema:
+            type: string
+        - in: header
+          name: auth
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  product:
+                    $ref: '#/components/schemas/Product'
+                  message:
+                    type: string
+                    deafult: Product was deleted
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: Product ID is required to delete a product # Ignored
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+  /admin/product/add:
+    post:
+      tags:
+        - Admin
+      summary: Add a product
+      parameters:
+        - in: header
+          name: auth
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  default: Green Hoodie XL
+                price:
+                  type: string
+                  default: 999
+                description:
+                  type: string
+                  default: Awesome hoodie with an awesome fabric quality
+                photos:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                category:
+                  type: string
+                  default: hoodie
+                brand:
+                  type: string
+                  default: Nike
+                stock:
+                  type: number
+                  default: 40
+      responses:
+        '201':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  product:
+                    $ref: '#/components/schemas/Product'
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: Image is required for a product # Ignored
+          default2: Atleast one image is required for a product
         '401':
           $ref: '#/components/schemas/Unauthorized'
         '500':
