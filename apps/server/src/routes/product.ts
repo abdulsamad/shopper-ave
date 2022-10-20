@@ -29,9 +29,9 @@ router.route('/product/:id').get(getProduct);
  */
 
 router.route('/admin/products').get(isLoggedIn, checkRole('admin'), adminGetAllProduct);
-router.route('/admin/product').get(isLoggedIn, checkRole('admin'), getProduct);
 router
   .route('/admin/product/:id')
+  .get(isLoggedIn, checkRole('admin'), getProduct)
   .put(isLoggedIn, checkRole('admin'), adminUpdateProduct)
   .delete(isLoggedIn, checkRole('admin'), adminDeleteProduct);
 router.route('/admin/product/add').post(isLoggedIn, checkRole('admin'), addProduct);
