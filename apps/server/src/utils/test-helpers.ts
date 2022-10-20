@@ -24,6 +24,36 @@ export const userDetailsForAuth = {
   },
 };
 
+export const productDetails = (
+  userId: string
+): {
+  name: string;
+  price: number;
+  description: string;
+  photos: {
+    id: string;
+    secure_url: string;
+  }[];
+  category: string;
+  stock: number;
+  brand: string;
+  user: string;
+} => ({
+  name: faker.commerce.product(),
+  price: Number(faker.commerce.price(999, 99999)),
+  description: faker.commerce.productAdjective(),
+  photos: [
+    {
+      id: faker.datatype.uuid(),
+      secure_url: faker.image.imageUrl(),
+    },
+  ],
+  category: 'hoodie',
+  stock: 40,
+  brand: 'Nike',
+  user: userId,
+});
+
 export const userSuccessObj = {
   success: true,
   token:
