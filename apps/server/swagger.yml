@@ -429,6 +429,8 @@ paths:
                   type: string
                   default: john@example.com
                   required: true
+              required:
+                - email
       responses:
         '200': 
           description: OK
@@ -474,6 +476,9 @@ paths:
                   type: string
                   default: john@example.com
                   required: true
+              required:
+                - password
+                - confirmPassword
       responses:
         '201': 
           description: Created
@@ -541,6 +546,9 @@ paths:
                 newPassword:
                   type: string
                   default: john@124
+              required:
+                - oldPassword
+                - newPassword
       responses:
         '201':
           description: Created
@@ -690,6 +698,7 @@ paths:
           multipart/form-data:
             schema:
               type: object
+              minProperties: 1
               properties:
                 name:
                   type: string
@@ -830,6 +839,10 @@ paths:
                   default: Amazing product
                 productId:
                   type: string
+              required:
+                - rating
+                - comment
+                - productId
       responses:
         '201':
           description: Created
@@ -1106,6 +1119,14 @@ paths:
                 stock:
                   type: number
                   default: 40
+              required:
+                - name
+                - price
+                - description
+                - photos
+                - category
+                - brand
+                - stock
       responses:
         '201':
           description: Created
@@ -1160,11 +1181,12 @@ paths:
           multipart/form-data:
             schema:
               type: object
-              required:
-                - amount
               properties:
                 amount:
-                  type: number 
+                  type: number
+                  default: 999999
+              required:
+                - amount
       responses:
         '200':
           description: OK
@@ -1257,6 +1279,13 @@ paths:
                 totalAmount:
                   type: number
                   default: 999
+              required:
+                - shippingInfo
+                - orderItems
+                - paymentInfo
+                - taxAmount
+                - shippingAmount
+                - totalAmount
       responses:
         '201':
           description: Created
@@ -1392,6 +1421,8 @@ paths:
                 orderStatus:
                   type: string
                   default: delivered
+              required:
+                - orderStatus
       responses:
         '200':
           description: OK
