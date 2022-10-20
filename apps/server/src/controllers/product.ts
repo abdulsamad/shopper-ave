@@ -184,6 +184,14 @@ export const getProductReview = async (req: Request, res: Response) => {
  */
 
 export const addProduct = async (req: Request, res: Response) => {
+  const { name, price, description, category, brand, stock } = req.body;
+
+  if (!name || !price || !description || !category || !brand || !stock) {
+    return res
+      .status(400)
+      .json({ err: 'name, price, description, category, brand, and stock are required to create a new product' });
+  }
+
   // Images
   const files = req.files;
 
@@ -215,10 +223,16 @@ export const addProduct = async (req: Request, res: Response) => {
       }
     }
 
-    req.body.photos = imagesArray;
-    req.body.user = req.user?._id;
-
-    const product = await Product.create(req.body);
+    const product = await Product.create({
+      name,
+      price,
+      description,
+      category,
+      brand,
+      stock,
+      photos: imagesArray,
+      user: req.user?._id,
+    });
 
     return res.status(201).json({
       success: true,

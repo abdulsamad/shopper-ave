@@ -1039,8 +1039,9 @@ paths:
                     $ref: '#/components/schemas/Product'
         '400':
           $ref: '#/components/schemas/BadRequest'
-          default: Image is required for a product # Ignored
-          default2: Atleast one image is required for a product # Ignored
+          default: name, price, description, category, brand, and stock are required to create a new product # Ignored
+          default2: Image is required for a product # Ignored
+          default3: Atleast one image is required for a product # Ignored
         '401':
           $ref: '#/components/schemas/Unauthorized'
         '500':
