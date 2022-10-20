@@ -5,53 +5,6 @@ import { UploadedFile } from 'express-fileupload';
 import Product from '@models/product';
 import WhereClause from '@utils/whereClause';
 
-export const addProduct = async (req: Request, res: Response) => {
-  // Images
-  const files = req.files;
-
-  if (!files) {
-    return res.status(400).json({ err: 'Image is required for a product' });
-  }
-
-  const photos = files.photos as UploadedFile[];
-
-  if (!photos) {
-    return res.status(400).json({ err: 'Atleast one image is required for a product' });
-  }
-
-  try {
-    const imagesArray = [];
-
-    if (files) {
-      // TODO: Refactor with promise.all to improve performance
-      // Upload and save the images
-      for (let i = 0; i < photos.length; i++) {
-        const { public_id, secure_url } = await cloudinary.uploader.upload(photos[i].tempFilePath, {
-          folder: process.env.PRODUCT_FOLDER_NAME,
-        });
-
-        imagesArray.push({
-          id: public_id,
-          secure_url: secure_url,
-        });
-      }
-    }
-
-    req.body.photos = imagesArray;
-    req.body.user = req.user?._id;
-
-    const product = await Product.create(req.body);
-
-    return res.status(201).json({
-      success: true,
-      product,
-    });
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ err: 'Something went wrong' });
-  }
-};
-
 export const getAllProduct = async (req: Request, res: Response) => {
   const query = req.query;
 
@@ -229,6 +182,53 @@ export const getProductReview = async (req: Request, res: Response) => {
 /*
  * ### ADMIN ###
  */
+
+export const addProduct = async (req: Request, res: Response) => {
+  // Images
+  const files = req.files;
+
+  if (!files) {
+    return res.status(400).json({ err: 'Image is required for a product' });
+  }
+
+  const photos = files.photos as UploadedFile[];
+
+  if (!photos) {
+    return res.status(400).json({ err: 'Atleast one image is required for a product' });
+  }
+
+  try {
+    const imagesArray = [];
+
+    if (files) {
+      // TODO: Refactor with promise.all to improve performance
+      // Upload and save the images
+      for (let i = 0; i < photos.length; i++) {
+        const { public_id, secure_url } = await cloudinary.uploader.upload(photos[i].tempFilePath, {
+          folder: process.env.PRODUCT_FOLDER_NAME,
+        });
+
+        imagesArray.push({
+          id: public_id,
+          secure_url: secure_url,
+        });
+      }
+    }
+
+    req.body.photos = imagesArray;
+    req.body.user = req.user?._id;
+
+    const product = await Product.create(req.body);
+
+    return res.status(201).json({
+      success: true,
+      product,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ err: 'Something went wrong' });
+  }
+};
 
 export const adminUpdateProduct = async (req: Request, res: Response) => {
   const productId = req.params.id;
