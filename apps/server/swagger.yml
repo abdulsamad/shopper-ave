@@ -52,9 +52,10 @@ components:
         role:
           type: string
           oneOf:
-            - 'user'
-            - 'manager'
-            - 'admin'
+            - user
+            - manager
+            - admin
+          default: user
         photo:
           type: object
           properties:
@@ -123,7 +124,7 @@ components:
           default: 0
         user:
           type: string # MongoDB internal
-          default: <MongoDB ObjectId>
+          default: <MongoDB ObjectId> (Could also be populated with user data)
         reviews:
           type: array
           items:
@@ -139,8 +140,8 @@ components:
       type: object
       properties:
         user:
-          type: string # MongoDB internal
-          default: <MongoDB ObjectId>
+          type: string 
+          default: <MongoDB ObjectId> (Could also be populated with user data) # MongoDB internal
         name:
           type: string
           default: John Doe
@@ -151,8 +152,8 @@ components:
           type: string
           default: Amazing Product!
         _id:
-          type: string # MongoDB internal
-          default: <MongoDB ObjectId>
+          type: string 
+          default: <MongoDB ObjectId> # MongoDB internal
     # Order schema
     Order:
       type: object
@@ -162,7 +163,7 @@ components:
           properties:
             address:
               type: string
-              default: Range Road 260, Lesser River No. 124
+              default: 123 Main Street
             city:
               type: string
               default: Toronto
@@ -179,8 +180,8 @@ components:
               type: string
               default: Canada
         user:
-          type: string
-          default: <MongoDB ObjectId> # Mongo Internal
+          type: string # MongoDB Internal
+          default: <MongoDB ObjectId> (Could also be populated with user data) 
         orderItems:
           type: array
           items:
@@ -199,8 +200,8 @@ components:
                 type: number
                 default: 999
               product:
-                type: string
-                default: <MongoDB ObjectId> # Mongo Internal
+                type: string # MongoDB Internal
+                default: <MongoDB ObjectId> (Could also be populated with product data) 
         paymentInfo:
           type: object
           properties:
@@ -218,7 +219,7 @@ components:
           default: 999
         orderStatus:
           type: string
-          enum:
+          oneOf:
             - processing
             - dispatched
             - out_for_delivery
@@ -1144,7 +1145,7 @@ paths:
                   properties:
                     address:
                       type: string
-                      default: Range Road 260, Lesser River No. 124
+                      default: 123 Main Street
                     city:
                       type: string
                       default: Toronto
