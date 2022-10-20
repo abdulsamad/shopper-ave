@@ -60,6 +60,7 @@ const OrderSchema = new mongoose.Schema<IOrder>(
         },
       },
     ],
+    // Optional Metadata for payment
     paymentInfo: {
       id: {
         type: String,

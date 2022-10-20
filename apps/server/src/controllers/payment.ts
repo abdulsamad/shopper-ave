@@ -32,7 +32,7 @@ export const capturePayment = async (req: Request, res: Response) => {
       amount: req.body.amount,
       currency: 'INR',
 
-      // Optional
+      // Optional metadata for payment on stripe
       metadata: {
         integration_check: 'accept_a_payment',
       },
