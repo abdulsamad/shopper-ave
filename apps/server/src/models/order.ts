@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import validator from 'validator';
 
 import { Order as IOrder } from '@types';
 
@@ -15,10 +16,12 @@ const OrderSchema = new mongoose.Schema<IOrder>(
       },
       phoneNo: {
         type: String,
+        validator: [validator.isMobilePhone, 'Please enter a valid phone number'],
         required: true,
       },
       postalCode: {
         type: String,
+        validator: [validator.isPostalCode, 'Please enter a valid postal code'],
         required: true,
       },
       state: {
