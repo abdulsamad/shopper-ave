@@ -1280,3 +1280,108 @@ paths:
           $ref: '#/components/schemas/Unauthorized'
         '500':
           $ref: '#/components/schemas/InternalServerError'
+  /admin/orders:
+    get:
+      tags:
+        - Admin
+      summary: Get all orders
+      parameters:
+        - in: header
+          name: auth
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  orders:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Order'
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+  /admin/order/{orderId}:
+    put:
+      tags:
+        - Admin
+      summary: Update an order status
+      parameters:
+        - in: path
+          name: orderId
+          required: true
+          schema:
+            type: string
+        - in: header
+          name: auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                orderStatus:
+                  type: string
+                  default: delivered
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  order:
+                      $ref: '#/components/schemas/Order'
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: Order ID and status is required to update order # Ignored
+          default2: No order found with given ID # Ignored
+          default3: Order is already delivered # Ignored
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+    delete:
+      tags:
+        - Admin
+      summary: Delete an order
+      parameters:
+        - in: path
+          name: orderId
+          required: true
+          schema:
+            type: string
+        - in: header
+          name: auth
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  order:
+                      $ref: '#/components/schemas/Order'
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: No order found with this order ID # Ignored
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+    
