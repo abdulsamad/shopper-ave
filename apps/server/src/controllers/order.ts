@@ -130,6 +130,7 @@ export const adminUpdateOrder = async (req: Request, res: Response) => {
   }
 };
 
+// Helper method to update stock on
 const updateProductstock = async (productId: Types.ObjectId, quantity: number) => {
   try {
     const product = await Product.findById(productId);
@@ -159,10 +160,12 @@ export const adminDeleteOrder = async (req: Request, res: Response) => {
     const order = await Order.findById(orderId);
 
     if (!order) {
-      return res.status(400).json({ err: 'No order found with provided ID' });
+      return res.status(400).json({ err: 'No order found with this order ID' });
     }
 
     const removedOrder = await order.remove();
+
+    // TODO: Increase stock quantity again
 
     return res.status(200).json({
       success: true,
