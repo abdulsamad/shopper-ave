@@ -7,6 +7,6 @@ const router = express.Router();
 
 router.route('/payment/stripekey').get(isLoggedIn, sendStripeKey);
 
-router.route('/payment/capturestripe').get(capturePayment);
+router.route('/payment/capturestripe').get(isLoggedIn, capturePayment);
 
 export default router;
