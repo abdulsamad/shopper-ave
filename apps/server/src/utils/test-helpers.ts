@@ -24,21 +24,7 @@ export const userDetailsForAuth = {
   },
 };
 
-export const productDetails = (
-  userId: string
-): {
-  name: string;
-  price: number;
-  description: string;
-  photos: {
-    id: string;
-    secure_url: string;
-  }[];
-  category: string;
-  stock: number;
-  brand: string;
-  user: string;
-} => ({
+export const productDetails = (userId: string) => ({
   name: faker.commerce.product(),
   price: Number(faker.commerce.price(999, 99999)),
   description: faker.commerce.productDescription(),
