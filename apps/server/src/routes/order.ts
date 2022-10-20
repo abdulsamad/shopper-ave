@@ -12,6 +12,10 @@ import { isLoggedIn, checkRole } from '@middlewares/user';
 
 const router = express.Router();
 
+/*
+ * ### User ###
+ */
+
 router.route('/order/create').post(isLoggedIn, createOrder);
 router.route('/order/myorder').get(isLoggedIn, getUserOrders);
 router.route('/order/:id').get(isLoggedIn, getOrder);
