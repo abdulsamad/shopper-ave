@@ -153,6 +153,87 @@ components:
         _id:
           type: string # MongoDB internal
           default: <MongoDB ObjectId>
+    # Order schema
+    Order:
+      type: object
+      properties:
+        shippingInfo:
+          type: object
+          properties:
+            address:
+              type: string
+              default: Range Road 260, Lesser River No. 124
+            city:
+              type: string
+              default: Toronto
+            phoneNo:
+              type: string
+              default: 613-555-0172
+            postalCode:
+              type: string
+              default: M1R 0E9
+            state:
+              type: string
+              default: Ontario
+            country:
+              type: string
+              default: Canada
+        user:
+          type: string
+          default: <MongoDB ObjectId> # Mongo Internal
+        orderItems:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                default: Green Hoodie XL
+              quantity:
+                type: number
+                default: 40
+              image:
+                type: string
+                default: http://itobotuje.am/vovpe
+              price:
+                type: number
+                default: 999
+              product:
+                type: string
+                default: <MongoDB ObjectId> # Mongo Internal
+        paymentInfo:
+          type: object
+          properties:
+            id:
+              type: string
+              default: 31daf730-508d-5020-ad23-9072d035e046
+        taxAmount:
+          type: number
+          default: 40
+        shippingAmount:
+          type: number
+          default: 20
+        totalAmount:
+          type: number
+          default: 999
+        orderStatus:
+          type: string
+          enum:
+            - processing
+            - dispatched
+            - out_for_delivery
+            - delivered
+            - canceled
+          default: processing
+        deliveredAt:
+          type: string
+          default: 2022-09-26T05:53:07.739Z
+        createdAt:
+          type: string
+          default: 2022-09-26T05:53:07.739Z
+        updatedAt:
+          type: string
+          default: 2022-09-26T05:53:07.739Z
     BadRequest:
       description: Bad request
       content:
@@ -392,7 +473,7 @@ paths:
                   required: true
       responses:
         '201': 
-          description: OK
+          description: Created
           content:
             application/json:
               schema:
@@ -459,7 +540,7 @@ paths:
                   default: john@124
       responses:
         '201':
-          description: OK
+          description: Created
           content:
             application/json:
               schema:
@@ -508,7 +589,7 @@ paths:
                   format: binary
       responses:
         '201':
-          description: OK
+          description: Created
           content:
             application/json:
               schema:
@@ -621,7 +702,7 @@ paths:
                   format: binary
       responses:
         '201':
-          description: OK
+          description: Created
           content:
             application/json:
               schema:
@@ -748,7 +829,7 @@ paths:
                   type: string
       responses:
         '201':
-          description: OK
+          description: Created
           content:
             application/json:
               schema:
@@ -976,7 +1057,7 @@ paths:
                     $ref: '#/components/schemas/Product'
                   message:
                     type: string
-                    deafult: Product was deleted
+                    default: Product was deleted
         '400':
           $ref: '#/components/schemas/BadRequest'
           default: Product ID is required to delete a product # Ignored
@@ -1024,7 +1105,7 @@ paths:
                   default: 40
       responses:
         '201':
-          description: OK
+          description: Created
           content:
             application/json:
               schema:
@@ -1038,7 +1119,98 @@ paths:
         '400':
           $ref: '#/components/schemas/BadRequest'
           default: Image is required for a product # Ignored
-          default2: Atleast one image is required for a product
+          default2: Atleast one image is required for a product # Ignored
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+  /order/create:
+    post:
+      tags:
+        - User
+      summary: Create an order
+      parameters:
+        - in: header
+          name: auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                shippingInfo:
+                  type: object
+                  properties:
+                    address:
+                      type: string
+                      default: Range Road 260, Lesser River No. 124
+                    city:
+                      type: string
+                      default: Toronto
+                    phoneNo:
+                      type: string
+                      default: 613-555-0172
+                    postalCode:
+                      type: string
+                      default: M1R 0E9
+                    state:
+                      type: string
+                      default: Ontario
+                    country:
+                      type: string
+                      default: Canada
+                orderItems:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        default: Green Hoodie XL
+                      quantity:
+                        type: number
+                        default: 40
+                      image:
+                        type: string
+                        default: http://itobotuje.am/vovpe
+                      price:
+                        type: number
+                        default: 999
+                      product:
+                        type: string
+                        default: <MongoDB ObjectId of a Product> # Mongo Internal
+                paymentInfo:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      default: 31daf730-508d-5020-ad23-9072d035e046
+                taxAmount:
+                  type: number
+                  default: 40
+                shippingAmount:
+                  type: number
+                  default: 20
+                totalAmount:
+                  type: number
+                  default: 999
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  order:
+                    $ref: '#/components/schemas/Order'
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: Order cannot be processed without all details # Ignored
         '401':
           $ref: '#/components/schemas/Unauthorized'
         '500':
