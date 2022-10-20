@@ -296,7 +296,7 @@ export const adminDeleteProduct = async (req: Request, res: Response) => {
   const productId = req.params.id;
 
   if (!productId) {
-    return res.status(400).json({ err: 'Product ID is required to update a product' });
+    return res.status(400).json({ err: 'Product ID is required to delete a product' });
   }
 
   try {
