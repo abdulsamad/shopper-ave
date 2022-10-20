@@ -1,5 +1,4 @@
 import request from 'supertest';
-import { faker } from '@faker-js/faker';
 
 import { connect, closeDatabase } from '@utils/test-db';
 import { app } from '@utils/test-server';

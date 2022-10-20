@@ -11,7 +11,7 @@ servers:
       version:
         enum:
           - v1
-          - v2
+          # - v2
         default: v1
       protocol:
         enum:
@@ -52,9 +52,10 @@ components:
         role:
           type: string
           oneOf:
-            - 'user'
-            - 'manager'
-            - 'admin'
+            - user
+            - manager
+            - admin
+          default: user
         photo:
           type: object
           properties:
@@ -71,6 +72,166 @@ components:
         createdAt:
           type: string
           default:  2022-09-26T05:53:07.739Z
+        updatedAt:
+          type: string
+          default: 2022-09-26T05:53:07.739Z
+  # Product schema
+    Product:
+      properties:
+        _id:
+          type: string # MongoDB internal
+          default: <MongoDB ObjectId>
+        __v:
+          type: number # Mongoose internal
+          default: 0
+        name:
+          type: string
+          default: Green Hoodie XL
+        price:
+          type: number
+          default: 999
+        description:
+          type: string
+          default: Awesome hoodie with an awesome fabric quality
+        photos:
+          type: array
+          items:
+            type: object
+            properties:
+                id:
+                  type: string
+                  default: <Image UID>
+                secure_url:
+                  type: string
+                  default: Photo URL
+                _id:
+                  type: string # MongoDB internal
+                  default: <MongoDB ObjectId>
+        category:
+          type: string
+          default: hoodie
+        brand:
+          type: string
+          default: Nike
+        stock:
+          type: number
+          default: 40
+        ratings:
+          type: number
+          default: 0
+        numberOfReviews:
+          type: number
+          default: 0
+        user:
+          type: string # MongoDB internal
+          default: <MongoDB ObjectId> (Could also be populated with user data)
+        reviews:
+          type: array
+          items:
+            $ref: '#/components/schemas/Review'
+        createdAt:
+          type: string
+          default:  2022-09-26T05:53:07.739Z
+        updatedAt:
+          type: string
+          default: 2022-09-26T05:53:07.739Z
+    # Review schema
+    Review:
+      type: object
+      properties:
+        user:
+          type: string 
+          default: <MongoDB ObjectId> (Could also be populated with user data) # MongoDB internal
+        name:
+          type: string
+          default: John Doe
+        rating:
+          type: number
+          default: 5
+        comment:
+          type: string
+          default: Amazing Product!
+        _id:
+          type: string 
+          default: <MongoDB ObjectId> # MongoDB internal
+    # Order schema
+    Order:
+      type: object
+      properties:
+        shippingInfo:
+          type: object
+          properties:
+            address:
+              type: string
+              default: 123 Main Street
+            city:
+              type: string
+              default: Toronto
+            phoneNo:
+              type: string
+              default: 613-555-0172
+            postalCode:
+              type: string
+              default: M1R 0E9
+            state:
+              type: string
+              default: Ontario
+            country:
+              type: string
+              default: Canada
+        user:
+          type: string # MongoDB Internal
+          default: <MongoDB ObjectId> (Could also be populated with user data) 
+        orderItems:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                default: Green Hoodie XL
+              quantity:
+                type: number
+                default: 40
+              image:
+                type: string
+                default: http://itobotuje.am/vovpe
+              price:
+                type: number
+                default: 999
+              product:
+                type: string # MongoDB Internal
+                default: <MongoDB ObjectId> (Could also be populated with product data) 
+        paymentInfo:
+          type: object
+          properties:
+            id:
+              type: string
+              default: 31daf730-508d-5020-ad23-9072d035e046
+        taxAmount:
+          type: number
+          default: 40
+        shippingAmount:
+          type: number
+          default: 20
+        totalAmount:
+          type: number
+          default: 999
+        orderStatus:
+          type: string
+          oneOf:
+            - processing
+            - dispatched
+            - out_for_delivery
+            - delivered
+            - canceled
+          default: processing
+        deliveredAt:
+          type: string
+          default: 2022-09-26T05:53:07.739Z
+        createdAt:
+          type: string
+          default: 2022-09-26T05:53:07.739Z
         updatedAt:
           type: string
           default: 2022-09-26T05:53:07.739Z
@@ -105,16 +266,41 @@ components:
                 default: Something went wrong
 
 tags:
+  - name: Welcome
+    description: Welcome Route
   - name: Auth
     description: Authentication Routes
   - name: User
     description: User Routes
   - name: Admin
     description: Admin Routes
+  - name: Payment
+    description: Payment Routes
   - name: Manager
     description: Read only admin with some filteration
 
 paths:
+  /:
+    get:
+      tags:
+        - Welcome
+      summary: Check API is working
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  message:
+                    type: string
+                    default: Welcome to the Shopper Ave API
+        '500':
+           $ref: '#/components/schemas/InternalServerError'
   /signup:
     post:
       tags:
@@ -243,6 +429,8 @@ paths:
                   type: string
                   default: john@example.com
                   required: true
+              required:
+                - email
       responses:
         '200': 
           description: OK
@@ -288,9 +476,12 @@ paths:
                   type: string
                   default: john@example.com
                   required: true
+              required:
+                - password
+                - confirmPassword
       responses:
         '201': 
-          description: OK
+          description: Created
           content:
             application/json:
               schema:
@@ -355,9 +546,12 @@ paths:
                 newPassword:
                   type: string
                   default: john@124
+              required:
+                - oldPassword
+                - newPassword
       responses:
         '201':
-          description: OK
+          description: Created
           content:
             application/json:
               schema:
@@ -406,7 +600,7 @@ paths:
                   format: binary
       responses:
         '201':
-          description: OK
+          description: Created
           content:
             application/json:
               schema:
@@ -504,6 +698,7 @@ paths:
           multipart/form-data:
             schema:
               type: object
+              minProperties: 1
               properties:
                 name:
                   type: string
@@ -519,7 +714,7 @@ paths:
                   format: binary
       responses:
         '201':
-          description: OK
+          description: Created
           content:
             application/json:
               schema:
@@ -564,7 +759,7 @@ paths:
                     default: true
         '400':
           $ref: '#/components/schemas/BadRequest'
-          default: User ID is requried to delete a user # Ignored
+          default: User ID is required to delete a user # Ignored
           default2: No such user found # Ignored
         '401':
           $ref: '#/components/schemas/Unauthorized'
@@ -594,6 +789,690 @@ paths:
                     items:
                       type: object
                       $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+  /products:
+    get:
+      tags:
+       - User
+      summary: Get all products
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  products:
+                    type: array
+                    items:
+                      type: object
+                      $ref: '#/components/schemas/Product'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+  /product/review:
+    put:
+      tags:
+        - User
+      summary: Add a product review for logged in user
+      parameters:
+        - in: header
+          name: auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                rating:
+                  type: number
+                  default: 4
+                comment:
+                  type: string
+                  default: Amazing product
+                productId:
+                  type: string
+              required:
+                - rating
+                - comment
+                - productId
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: Rating, comment and product ID are required to add a review # Ignored
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+          default: Product not available # Ignored
+    delete:
+      tags:
+        - User
+      summary: Delete a review of a product for a logged in user
+      parameters:
+        - in: query
+          name: productId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: Product not available # Ignored
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+  /product/reviews:
+    get:
+      tags:
+        - User
+      summary: Get all reviews for a product
+      parameters:
+        - in: query
+          name: productId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  reviews:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Review'
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: Product ID is required to get reviews # Ignored
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+          default: Product not available # Ignored
+  /product/{productId}:
+    get:
+      tags:
+        - User
+      summary: Get a product detail
+      parameters:
+        - in: path
+          name: productId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  product:
+                    type: object
+                    $ref: '#/components/schemas/Product'
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: Product ID is required to get a product # Ignored
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+          default: Product not available # Ignored
+  /admin/products:
+    get:
+      tags:
+       - Admin
+      summary: Get all products
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  products:
+                    type: array
+                    items:
+                      type: object
+                      $ref: '#/components/schemas/Product'
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+  /admin/product/add:
+    post:
+      tags:
+        - Admin
+      summary: Add a product
+      parameters:
+        - in: header
+          name: auth
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  default: Green Hoodie XL
+                price:
+                  type: string
+                  default: 999
+                description:
+                  type: string
+                  default: Awesome hoodie with an awesome fabric quality
+                photos:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                category:
+                  type: string
+                  default: hoodie
+                brand:
+                  type: string
+                  default: Nike
+                stock:
+                  type: number
+                  default: 40
+              required:
+                - name
+                - price
+                - description
+                - photos
+                - category
+                - brand
+                - stock
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  product:
+                    $ref: '#/components/schemas/Product'
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: Image is required for a product # Ignored
+          default2: Atleast one image is required for a product # Ignored
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+  /admin/product/{productId}:
+    get:
+      tags:
+       - Admin
+      summary: Get all products for admin
+      parameters:
+        - in: path
+          name: productId
+          required: true
+          schema:
+            type: string
+        - in: header
+          name: auth
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  products:
+                    type: array
+                    items:
+                      type: object
+                      $ref: '#/components/schemas/Product'
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+    put:
+      tags:
+        - Admin
+      summary: Update product 
+      parameters:
+        - in: path
+          name: productId
+          required: true
+          schema:
+            type: string
+        - in: header
+          name: auth
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  product:
+                    $ref: '#/components/schemas/Product'
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: Product ID is required to updated a product # Ignored
+          default2: No product found with 43970687-389d-560a-9ea0-15fdf2071097 ID # Ignored
+          default3: Atleast one image is required for a product # Ignored
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+          default: Product not available # Ignored
+    delete:
+      tags:
+        - Admin
+      summary: Delete a product
+      parameters:
+        - in: path
+          name: productId
+          required: true
+          schema:
+            type: string
+        - in: header
+          name: auth
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  product:
+                    $ref: '#/components/schemas/Product'
+                  message:
+                    type: string
+                    default: Product was deleted
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: Product ID is required to delete a product # Ignored
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+  /payment/stripekey:
+    get:
+      tags:
+        - Payment
+      summary: Get stripe API key
+      parameters:
+        - in: header
+          name: auth
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  stripeKey:
+                    type: string
+                    default: pk_dummy_b2038663-8d5c-5d89-b6d6-71cd5784100f
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+  /payment/capturestripe:
+    post:
+      tags:
+        - Payment
+      summary: Send and pay amount in lowest currency unit
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: number
+                  default: 999999
+              required:
+                - amount
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  amount:
+                    type: number
+                  client_secret:
+                    type: string
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: Amount is required for payment # Ignored
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+  /order/create:
+    post:
+      tags:
+        - User
+      summary: Create an order
+      parameters:
+        - in: header
+          name: auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                shippingInfo:
+                  type: object
+                  properties:
+                    address:
+                      type: string
+                      default: 123 Main Street
+                    city:
+                      type: string
+                      default: Toronto
+                    phoneNo:
+                      type: string
+                      default: 613-555-0172
+                    postalCode:
+                      type: string
+                      default: M1R 0E9
+                    state:
+                      type: string
+                      default: Ontario
+                    country:
+                      type: string
+                      default: Canada
+                orderItems:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        default: Green Hoodie XL
+                      quantity:
+                        type: number
+                        default: 40
+                      image:
+                        type: string
+                        default: http://itobotuje.am/vovpe
+                      price:
+                        type: number
+                        default: 999
+                      product:
+                        type: string
+                        default: <MongoDB ObjectId of a Product> # Mongo Internal
+                paymentInfo:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      default: 31daf730-508d-5020-ad23-9072d035e046
+                taxAmount:
+                  type: number
+                  default: 40
+                shippingAmount:
+                  type: number
+                  default: 20
+                totalAmount:
+                  type: number
+                  default: 999
+              required:
+                - shippingInfo
+                - orderItems
+                - paymentInfo
+                - taxAmount
+                - shippingAmount
+                - totalAmount
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  order:
+                    $ref: '#/components/schemas/Order'
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: Order cannot be processed without all details # Ignored
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+  /order/myorder:
+    get:
+      tags:
+        - User
+      summary: Get all orders for logged in user
+      parameters:
+        - in: header
+          name: auth
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  orders:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Order'
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: No orders found for b97d7340-fb56-5d7c-b454-4c43c36c7732 # Ignored
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+  /order/{orderId}:
+    get:
+      tags:
+        - User
+      summary: Get an order
+      parameters:
+        - in: path
+          name: orderId
+          required: true
+          schema:
+            type: string
+        - in: header
+          name: auth
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  order:
+                    $ref: '#/components/schemas/Order'
+                    default: Populating on user field with some user data on this route # Ignored
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: Order ID is required to get an order # Ignored
+          default2: Order ID is not valid # Ignored
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+  /admin/orders:
+    get:
+      tags:
+        - Admin
+      summary: Get all orders
+      parameters:
+        - in: header
+          name: auth
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  orders:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Order'
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+  /admin/order/{orderId}:
+    put:
+      tags:
+        - Admin
+      summary: Update an order status
+      parameters:
+        - in: path
+          name: orderId
+          required: true
+          schema:
+            type: string
+        - in: header
+          name: auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                orderStatus:
+                  type: string
+                  default: delivered
+              required:
+                - orderStatus
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  order:
+                      $ref: '#/components/schemas/Order'
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: Order ID and status is required to update order # Ignored
+          default2: No order found with given ID # Ignored
+          default3: Order is already delivered # Ignored
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+    delete:
+      tags:
+        - Admin
+      summary: Delete an order
+      parameters:
+        - in: path
+          name: orderId
+          required: true
+          schema:
+            type: string
+        - in: header
+          name: auth
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  order:
+                      $ref: '#/components/schemas/Order'
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: No order found with this order ID # Ignored
         '401':
           $ref: '#/components/schemas/Unauthorized'
         '500':

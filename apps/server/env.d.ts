@@ -2,6 +2,7 @@ declare namespace NodeJS {
   interface ProcessEnv {
     PORT: string;
     MONGODB_URI: string;
+    PRODUCT_FOLDER_NAME: string;
     // Authentication
     JWT_SECRET: string;
     JWT_EXPIRY: string;
@@ -16,6 +17,9 @@ declare namespace NodeJS {
     SMTP_USER: string;
     SMTP_PASSWORD: string;
     SMTP_EMAIL: string;
+    // Stripe
+    STRIPE_API_KEY: string;
+    STRIPE_SECRET: string;
   }
 }
 

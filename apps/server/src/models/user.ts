@@ -36,6 +36,10 @@ const UserSchema = new mongoose.Schema<IUser>(
     role: {
       type: String,
       default: 'user',
+      enum: {
+        values: ['user', 'admin', 'manager'],
+        message: 'Please pass a valid role',
+      },
     },
     photo: {
       id: {
@@ -51,7 +55,7 @@ const UserSchema = new mongoose.Schema<IUser>(
   { timestamps: true }
 );
 
-// Encrypt paword before save
+// Encrypt password before save
 UserSchema.pre('save', async function (next) {
   /* istanbul ignore next */
   // Return next if password is not modified
