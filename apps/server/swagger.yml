@@ -274,10 +274,10 @@ tags:
     description: User Routes
   - name: Admin
     description: Admin Routes
-  - name: Manager
-    description: Read only admin with some filteration
   - name: Payment
     description: Payment Routes
+  - name: Manager
+    description: Read only admin with some filteration
 
 paths:
   /:
