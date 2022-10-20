@@ -978,6 +978,73 @@ paths:
           $ref: '#/components/schemas/Unauthorized'
         '500':
           $ref: '#/components/schemas/InternalServerError'
+  /admin/product/add:
+    post:
+      tags:
+        - Admin
+      summary: Add a product
+      parameters:
+        - in: header
+          name: auth
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  default: Green Hoodie XL
+                price:
+                  type: string
+                  default: 999
+                description:
+                  type: string
+                  default: Awesome hoodie with an awesome fabric quality
+                photos:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                category:
+                  type: string
+                  default: hoodie
+                brand:
+                  type: string
+                  default: Nike
+                stock:
+                  type: number
+                  default: 40
+              required:
+                - name
+                - price
+                - description
+                - photos
+                - category
+                - brand
+                - stock
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  product:
+                    $ref: '#/components/schemas/Product'
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: Image is required for a product # Ignored
+          default2: Atleast one image is required for a product # Ignored
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
   /admin/product/{productId}:
     get:
       tags:
@@ -1077,73 +1144,6 @@ paths:
         '400':
           $ref: '#/components/schemas/BadRequest'
           default: Product ID is required to delete a product # Ignored
-        '401':
-          $ref: '#/components/schemas/Unauthorized'
-        '500':
-          $ref: '#/components/schemas/InternalServerError'
-  /admin/product/add:
-    post:
-      tags:
-        - Admin
-      summary: Add a product
-      parameters:
-        - in: header
-          name: auth
-      requestBody:
-        required: true
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  default: Green Hoodie XL
-                price:
-                  type: string
-                  default: 999
-                description:
-                  type: string
-                  default: Awesome hoodie with an awesome fabric quality
-                photos:
-                  type: array
-                  items:
-                    type: string
-                    format: binary
-                category:
-                  type: string
-                  default: hoodie
-                brand:
-                  type: string
-                  default: Nike
-                stock:
-                  type: number
-                  default: 40
-              required:
-                - name
-                - price
-                - description
-                - photos
-                - category
-                - brand
-                - stock
-      responses:
-        '201':
-          description: Created
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    default: true
-                  product:
-                    $ref: '#/components/schemas/Product'
-        '400':
-          $ref: '#/components/schemas/BadRequest'
-          default: Image is required for a product # Ignored
-          default2: Atleast one image is required for a product # Ignored
         '401':
           $ref: '#/components/schemas/Unauthorized'
         '500':
