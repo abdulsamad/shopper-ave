@@ -41,7 +41,7 @@ export const productDetails = (
 } => ({
   name: faker.commerce.product(),
   price: Number(faker.commerce.price(999, 99999)),
-  description: faker.commerce.productAdjective(),
+  description: faker.commerce.productDescription(),
   photos: [
     {
       id: faker.datatype.uuid(),
