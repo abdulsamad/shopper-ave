@@ -166,6 +166,7 @@ export const adminDeleteOrder = async (req: Request, res: Response) => {
     const removedOrder = await order.remove();
 
     // TODO: Increase stock quantity again
+    // Product.findByIdAndUpdate(order)
 
     return res.status(200).json({
       success: true,
