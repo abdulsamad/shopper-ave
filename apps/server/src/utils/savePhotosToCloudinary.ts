@@ -6,23 +6,28 @@ export interface IPhoto {
   secure_url: string;
 }
 
-const savePhotosToCloudinary = async (
-  photos: UploadedFile | UploadedFile[],
+// Save single image
+export const savePhotoToCloudinary = async (
+  photos: UploadedFile,
+  cloudinaryOptions: UploadApiOptions
+): Promise<IPhoto> => {
+  const { public_id, secure_url } = await cloudinary.uploader.upload(photos.tempFilePath, cloudinaryOptions);
+
+  return {
+    id: public_id,
+    secure_url: secure_url,
+  };
+};
+
+// Save multiple images
+export const savePhotosToCloudinary = async (
+  photos: UploadedFile[],
   cloudinaryOptions: UploadApiOptions
 ): Promise<IPhoto[]> => {
   const imagesArray: IPhoto[] = [];
 
-  if (Array.isArray(photos)) {
-    for (let i = 0; i < photos.length; i++) {
-      const { public_id, secure_url } = await cloudinary.uploader.upload(photos[i].tempFilePath, cloudinaryOptions);
-
-      imagesArray.push({
-        id: public_id,
-        secure_url: secure_url,
-      });
-    }
-  } else {
-    const { public_id, secure_url } = await cloudinary.uploader.upload(photos.tempFilePath, cloudinaryOptions);
+  for (let i = 0; i < photos.length; i++) {
+    const { public_id, secure_url } = await cloudinary.uploader.upload(photos[i].tempFilePath, cloudinaryOptions);
 
     imagesArray.push({
       id: public_id,
