@@ -997,7 +997,7 @@ paths:
                   type: string
                   default: Green Hoodie XL
                 price:
-                  type: string
+                  type: number
                   default: 999
                 description:
                   type: string
@@ -1091,6 +1091,30 @@ paths:
             type: string
         - in: header
           name: auth
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                price:
+                  type: number
+                description:
+                  type: string
+                photos:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                category:
+                  type: string
+                brand:
+                  type: string
+                stock:
+                  type: number
       responses:
         '200':
           description: OK
