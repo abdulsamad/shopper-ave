@@ -26,15 +26,17 @@ export const savePhotosToCloudinary = async (
 
   // Save Multiple Images
   if (Array.isArray(photos)) {
-    // TODO: Refactor with promise.all to improve performance
-    for (let i = 0; i < photos.length; i++) {
-      const { public_id, secure_url } = await cloudinary.uploader.upload(photos[i].tempFilePath, options);
+    // Promise.all for better performance
+    await Promise.all(
+      photos.map(async (photo) => {
+        const { public_id, secure_url } = await cloudinary.uploader.upload(photo.tempFilePath, options);
 
-      imagesArray.push({
-        id: public_id,
-        secure_url: secure_url,
-      });
-    }
+        imagesArray.push({
+          id: public_id,
+          secure_url: secure_url,
+        });
+      })
+    );
 
     return imagesArray;
   }
