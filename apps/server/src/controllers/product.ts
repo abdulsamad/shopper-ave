@@ -4,7 +4,7 @@ import { UploadedFile } from 'express-fileupload';
 
 import Product from '@models/product';
 import WhereClause from '@utils/whereClause';
-import savePhotosToCloudinary, { IPhoto } from '@utils/savePhotosToCloudinary';
+import savePhotosToCloudinary from '@utils/savePhotosToCloudinary';
 
 export const getAllProduct = async (req: Request, res: Response) => {
   const query = req.query;
