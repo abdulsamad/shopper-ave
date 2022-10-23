@@ -4,6 +4,7 @@ import { UploadedFile } from 'express-fileupload';
 
 import Product from '@models/product';
 import WhereClause from '@utils/whereClause';
+import savePhotosToCloudinary, { IPhoto } from '@utils/savePhotosToCloudinary';
 
 export const getAllProduct = async (req: Request, res: Response) => {
   const query = req.query;
@@ -206,22 +207,10 @@ export const addProduct = async (req: Request, res: Response) => {
   }
 
   try {
-    const imagesArray = [];
-
-    if (files) {
-      // TODO: Refactor with promise.all to improve performance
-      // Upload and save the images
-      for (let i = 0; i < photos.length; i++) {
-        const { public_id, secure_url } = await cloudinary.uploader.upload(photos[i].tempFilePath, {
-          folder: process.env.PRODUCT_FOLDER_NAME,
-        });
-
-        imagesArray.push({
-          id: public_id,
-          secure_url: secure_url,
-        });
-      }
-    }
+    // Upload and save the images
+    const imagesArray = await savePhotosToCloudinary(photos, {
+      folder: process.env.PRODUCT_IMAGES_FOLDER_NAME,
+    });
 
     const product = await Product.create({
       name,
@@ -246,6 +235,7 @@ export const addProduct = async (req: Request, res: Response) => {
 
 export const adminUpdateProduct = async (req: Request, res: Response) => {
   const productId = req.params.id;
+  const { name, price, description, category, brand, stock } = req.body;
 
   if (!productId) {
     return res.status(400).json({ err: 'Product ID is required to update a product' });
@@ -260,7 +250,6 @@ export const adminUpdateProduct = async (req: Request, res: Response) => {
 
     // Images
     const files = req.files;
-    const imagesArray = [];
 
     if (files) {
       const photos = files.photos as UploadedFile[];
@@ -274,23 +263,23 @@ export const adminUpdateProduct = async (req: Request, res: Response) => {
         await cloudinary.uploader.destroy(product.photos[i].id);
       }
 
-      // TODO: Refactor with promise.all to improve performance
       // Upload and save the images
-      for (let i = 0; i < photos.length; i++) {
-        const { public_id, secure_url } = await cloudinary.uploader.upload(photos[i].tempFilePath, {
-          folder: process.env.PRODUCT_FOLDER_NAME,
-        });
-
-        imagesArray.push({
-          id: public_id,
-          secure_url: secure_url,
-        });
-      }
+      req.body.photos = await savePhotosToCloudinary(photos, {
+        folder: process.env.PRODUCT_IMAGES_FOLDER_NAME,
+      });
     }
 
-    req.body.photos = imagesArray;
+    //  Updated properties
+    const newProductData = {
+      name,
+      price,
+      description,
+      category,
+      brand,
+      stock,
+    };
 
-    const updatedProduct = await Product.findByIdAndUpdate(productId, req.body, {
+    const updatedProduct = await Product.findByIdAndUpdate(productId, newProductData, {
       new: true,
       runValidators: true,
       useFindAndModify: false,
