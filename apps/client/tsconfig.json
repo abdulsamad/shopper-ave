@@ -21,7 +21,7 @@
       "@api/*": ["api/*"],
       "@types/*": ["types/*"],
       "@utils/*": ["utils/*"],
-      "@store/*": ["src/store/*"],
+      "@store/*": ["store/*"],
       "@styles/*": ["styles/*"]
     }
   },
