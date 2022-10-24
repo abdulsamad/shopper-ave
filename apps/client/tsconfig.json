@@ -15,12 +15,13 @@
     "jsx": "preserve",
     "incremental": true,
     "types": ["cypress", "node"],
-    "baseUrl": ".",
+    "baseUrl": "src",
     "paths": {
       "@components/*": ["components/*"],
+      "@api/*": ["api/*"],
       "@types/*": ["types/*"],
       "@utils/*": ["utils/*"],
-      "@store/*": ["store/*"],
+      "@store/*": ["src/store/*"],
       "@styles/*": ["styles/*"]
     }
   },
