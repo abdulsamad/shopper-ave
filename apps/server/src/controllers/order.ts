@@ -1,8 +1,7 @@
 import { Request, Response } from 'express';
-import { Types } from 'mongoose';
 
 import Order from '@models/order';
-import Product from '@models/product';
+import updateProductstock from '@utils/updateProductStock';
 
 export const createOrder = async (req: Request, res: Response) => {
   const { shippingInfo, orderItems, paymentInfo, taxAmount, shippingAmount, totalAmount } = req.body;
@@ -21,6 +20,12 @@ export const createOrder = async (req: Request, res: Response) => {
       totalAmount,
       user: req.user?._id,
     });
+
+    await Promise.all(
+      order.orderItems.map(async ({ product, quantity }) => {
+        await updateProductstock(product, quantity);
+      })
+    );
 
     return res.status(201).json({
       success: true,
@@ -111,12 +116,15 @@ export const adminUpdateOrder = async (req: Request, res: Response) => {
       return res.status(400).json({ err: 'Order is already delivered' });
     }
 
-    order.orderStatus = orderStatus;
+    if (orderStatus === 'canceled') {
+      await Promise.all(
+        order.orderItems.map(async ({ product, quantity }) => {
+          await updateProductstock(product, quantity, true);
+        })
+      );
+    }
 
-    // TODO: Check later for asynchronous concurrency issue
-    order.orderItems.forEach(async ({ product, quantity }) => {
-      await updateProductstock(product, quantity);
-    });
+    order.orderStatus = orderStatus;
 
     await order.save();
 
@@ -127,29 +135,6 @@ export const adminUpdateOrder = async (req: Request, res: Response) => {
   } catch (err) {
     console.error();
     return res.status(500).json({ err: 'Something went wrong' });
-  }
-};
-
-// Helper method to update stock on
-const updateProductstock = async (productId: Types.ObjectId, quantity: number) => {
-  try {
-    const product = await Product.findById(productId);
-
-    if (!product) {
-      throw new Error('Product not found');
-    }
-
-    const stock = product.stock;
-
-    if (stock < quantity) {
-      throw new Error('Product stock is less than required quanity');
-    }
-
-    product.stock = stock - quantity;
-
-    await product.save({ validateBeforeSave: false });
-  } catch (err) {
-    console.error(err);
   }
 };
 
@@ -166,6 +151,19 @@ export const adminDeleteOrder = async (req: Request, res: Response) => {
     const removedOrder = await order.remove();
 
     // TODO: Increase stock quantity again
+    // order.orderItems.map(async ({ product, quantity }) => {
+    //   await Product.findByIdAndUpdate(
+    //     product,
+    //     {
+    //       stock: quantity,
+    //     },
+    //     {
+    //       new: true,
+    //       runValidators: true,
+    //       useFindAndModify: false,
+    //     }
+    //   );
+    // });
 
     return res.status(200).json({
       success: true,

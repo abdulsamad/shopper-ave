@@ -8,15 +8,18 @@ const ProductSchema = new mongoose.Schema<IProduct>(
       type: String,
       required: [true, 'Please provide product name'],
       trim: true,
-      maxlength: [120, 'Product name should not be more than 120 characters'],
+      minlength: [3, 'Product name should be more than 3 characters'],
+      maxlength: [240, 'Product name should not be more than 120 characters'],
     },
     price: {
       type: Number,
       required: [true, 'Please provide product price'],
+      minlength: [1, 'Product price should be more the one digit'],
       maxlength: [7, 'Product price should not be more than a million'],
     },
     description: {
       type: String,
+      minlength: [10, 'Product description should be more than 10 characters'],
       required: [true, 'Please provide product description'],
     },
     photos: [
@@ -34,6 +37,7 @@ const ProductSchema = new mongoose.Schema<IProduct>(
     category: {
       type: String,
       required: [true, 'Please provide a category'],
+      maxlength: [40, 'Category length should be less than 40 characters'],
       enum: {
         values: ['t-shirt', 'electronics', 'hoodie'],
         message: 'Please pass a valid category',
@@ -49,6 +53,7 @@ const ProductSchema = new mongoose.Schema<IProduct>(
     },
     ratings: {
       type: Number,
+      maxlength: 1,
       enum: {
         values: [0, 1, 2, 3, 4, 5],
         message: 'Please pass a valid rating',

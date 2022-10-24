@@ -997,7 +997,7 @@ paths:
                   type: string
                   default: Green Hoodie XL
                 price:
-                  type: string
+                  type: number
                   default: 999
                 description:
                   type: string
@@ -1039,8 +1039,9 @@ paths:
                     $ref: '#/components/schemas/Product'
         '400':
           $ref: '#/components/schemas/BadRequest'
-          default: Image is required for a product # Ignored
-          default2: Atleast one image is required for a product # Ignored
+          default: name, price, description, category, brand, and stock are required to create a new product # Ignored
+          default2: Image is required for a product # Ignored
+          default3: Atleast one image is required for a product # Ignored
         '401':
           $ref: '#/components/schemas/Unauthorized'
         '500':
@@ -1090,6 +1091,30 @@ paths:
             type: string
         - in: header
           name: auth
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                price:
+                  type: number
+                description:
+                  type: string
+                photos:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                category:
+                  type: string
+                brand:
+                  type: string
+                stock:
+                  type: number
       responses:
         '200':
           description: OK
