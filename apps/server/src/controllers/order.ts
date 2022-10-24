@@ -1,8 +1,7 @@
 import { Request, Response } from 'express';
-import { Types } from 'mongoose';
 
 import Order from '@models/order';
-import Product from '@models/product';
+import updateProductstock from '@utils/updateProductStock';
 
 export const createOrder = async (req: Request, res: Response) => {
   const { shippingInfo, orderItems, paymentInfo, taxAmount, shippingAmount, totalAmount } = req.body;
@@ -35,40 +34,6 @@ export const createOrder = async (req: Request, res: Response) => {
   } catch (err) {
     console.error();
     return res.status(500).json({ err: 'Something went wrong' });
-  }
-};
-
-/**
- * Update the product stock quantity in the database
- * @param productId Product's MongoDB ObjectId
- * @param quantity Product's quantity
- * @param increment Whether product stock should increment or decrement
- */
-const updateProductstock = async (productId: Types.ObjectId, quantity: number, increment = false) => {
-  try {
-    const product = await Product.findById(productId);
-
-    if (!product) {
-      throw new Error('Product not found');
-    }
-
-    const stock = product.stock;
-
-    if (increment) {
-      // Increment the stock quantity (e.g Order is canceled)
-      product.stock = stock + quantity;
-    } else {
-      // Decrement the stock quantity (e.g Order is created)
-      if (stock < quantity) {
-        throw new Error('Product stock is less than required quanity');
-      }
-
-      product.stock = stock - quantity;
-    }
-
-    await product.save({ validateBeforeSave: false });
-  } catch (err) {
-    console.error(err);
   }
 };
 
