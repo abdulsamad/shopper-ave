@@ -14,7 +14,15 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "types": ["cypress", "node"]
+    "types": ["cypress", "node"],
+    "baseUrl": "'.",
+    "paths": {
+      "@components/*": ["components/*"],
+      "@types/*": ["types/*"],
+      "@utils/*": ["utils/*"],
+      "@store/*": ["store/*"],
+      "@styles/*": ["styles/*"]
+    }
   },
   "include": ["next-env.d.ts", "cypress.d.ts", "**/*.ts", "**/*.tsx", "tailwind.config.js"],
   "exclude": ["node_modules"]
