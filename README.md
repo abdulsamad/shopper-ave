@@ -1,8 +1,3 @@
-## ShopperAve
+## MERN E-Commerce 
 
-## :construction: Underconstruction!
-
-An E-Commerce Store
-
-### When will this be completed?
-![I Don't know](https://media.giphy.com/media/cwTtbmUwzPqx2/giphy.gif "I don't know")
+Thought of building with Gatsby but later on decided to with Next.js
