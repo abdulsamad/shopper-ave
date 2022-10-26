@@ -1,3 +1,3 @@
 ## MERN E-Commerce 
 
-Thought of building with Gatsby but later on decided to go with Next.js
+I considered using Gatsby, but eventually settled on Next.js and started again from scratch.
