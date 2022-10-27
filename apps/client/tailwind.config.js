@@ -8,6 +8,12 @@ module.exports = {
       secondary: '#012C01',
       danger: '#F44336',
       info: '#2196F3',
+      white: '#fff',
+      black: '#000',
+      gray: '#9E9E9E',
+      amber: '#FFC107',
+      indigo: '#3F51B5',
+      teal: '#009688',
     },
     fontFamily: {
       sans: ['Inter', 'Open Sans', 'sans-serif'],
