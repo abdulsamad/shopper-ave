@@ -22,7 +22,8 @@
       "@types/*": ["types/*"],
       "@utils/*": ["utils/*"],
       "@store/*": ["store/*"],
-      "@styles/*": ["styles/*"]
+      "@styles/*": ["styles/*"],
+      "@hooks/*": ["hooks/*"]
     }
   },
   "include": ["next-env.d.ts", "cypress.d.ts", "**/*.ts", "**/*.tsx", "tailwind.config.js"],
