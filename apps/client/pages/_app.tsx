@@ -1,16 +1,17 @@
 import type { AppProps } from 'next/app';
 
-import ThemeProvider from '@components/theme';
 import Navbar from '@components/navbar';
-import Footer from '@components/footer';
+
+// Global Styles
+import '@styles/index.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ThemeProvider>
+    <>
+      <h1 className="text-center">Hello World!</h1>
       <Navbar />
       <Component {...pageProps} />
-      <Footer />
-    </ThemeProvider>
+    </>
   );
 }
 
