@@ -3248,6 +3248,18 @@ electron-to-chromium@^1.4.251:
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.284.tgz#61046d1e4cab3a25238f6bf7413795270f125592"
   integrity sha512-M8WEXFuKXMYMVr45fo8mq0wUrrJHheiKZf6BArTKk9ZBYCKJEOU5H8cdWgDT+qCVZf7Na4lVUaZsA+h6uA9+PA==
 
+embla-carousel-react@^7.0.4:
+  version "7.0.4"
+  resolved "https://registry.yarnpkg.com/embla-carousel-react/-/embla-carousel-react-7.0.4.tgz#e5fe99db334e33f08f753fec65507c3aabb86f63"
+  integrity sha512-pSnxrvsLMt3TwVS8uqYMZGfJvRLy+3rcg3JOImVDgvNEtEbbzXoL8tR34Dph6Jh38e/Z9IZW7jVX0igu/haLyQ==
+  dependencies:
+    embla-carousel "7.0.4"
+
+embla-carousel@7.0.4:
+  version "7.0.4"
+  resolved "https://registry.yarnpkg.com/embla-carousel/-/embla-carousel-7.0.4.tgz#2ca87d51da3a45d1ba6d0caee576a05340d42242"
+  integrity sha512-2/EO9Zh6yT1EiTNkCUhbYfAqe6PVODSYFZQxTeuLGFYYNTKTkHvalfuFVIdEDmtxbbGepuYtLqCmk6yzJfJeyw==
+
 emittery@^0.13.1:
   version "0.13.1"
   resolved "https://registry.yarnpkg.com/emittery/-/emittery-0.13.1.tgz#c04b8c3457490e0847ae51fced3af52d338e3dad"
@@ -6444,6 +6456,11 @@ react-dom@18.2.0:
   dependencies:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
+
+react-hook-form@^7.39.0:
+  version "7.39.0"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.39.0.tgz#5dfdfef0d3ba367bb9842728e8e8332af9457adf"
+  integrity sha512-rekW5NMBVG0nslE2choOKThy0zxLWQeoew87yTLwb3C9F91LaXwu/dhfFL/D3hdnSMnrTG60gVN/v6rvCrSOTw==
 
 react-is@^16.13.1:
   version "16.13.1"
