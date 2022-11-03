@@ -2,6 +2,7 @@
 
 module.exports = {
   content: ['pages/**/*.{js,ts,jsx,tsx}', 'src/**/*.{js,ts,jsx,tsx}'],
+  darkMode: true,
   theme: {
     colors: {
       primary: '#388C3C',
@@ -18,6 +19,12 @@ module.exports = {
     fontFamily: {
       sans: ['Inter', 'Open Sans', 'sans-serif'],
       serif: ['Merriweather', 'serif'],
+    },
+    extend: {
+      spacing: {
+        128: '32rem',
+        144: '36rem',
+      },
     },
   },
 };
