@@ -34,28 +34,11 @@ const DropdownItemVariant: Variants = {
 const MobileNav = ({ opened, toggleMenu }: IMobileNav) => {
   return (
     <motion.nav
-      className="flex items-center justify-between px-4 py-4"
+      className="flex items-center px-4 py-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}>
-      <h1 className="text-2xl font-bold">ShopperAve</h1>
-      <AnimatePresence>
-        {opened && (
-          <motion.ul
-            initial="hidden"
-            animate="show"
-            exit="hidden"
-            variants={dropdownVariants}
-            className="absolute top-[60px] left-1/2 flex w-full -translate-x-1/2 flex-col items-center space-y-2 bg-white py-2 shadow-md">
-            {navLinks.map(({ path, text }) => (
-              <motion.li key={path} className="w-full text-center" variants={DropdownItemVariant}>
-                <Link href={path}>{text}</Link>
-              </motion.li>
-            ))}
-          </motion.ul>
-        )}
-      </AnimatePresence>
       <div className="overflow-hidden">
-        <button className="h-100 w-100 p-3" onClick={toggleMenu}>
+        <button className="h-100 w-100 mr-2 p-1" onClick={toggleMenu}>
           <div className="space-y-[5px]">
             <motion.div
               animate={{
@@ -80,6 +63,23 @@ const MobileNav = ({ opened, toggleMenu }: IMobileNav) => {
           </div>
         </button>
       </div>
+      <h1 className="text-2xl font-bold">ShopperAve</h1>
+      <AnimatePresence>
+        {opened && (
+          <motion.ul
+            initial="hidden"
+            animate="show"
+            exit="hidden"
+            variants={dropdownVariants}
+            className="absolute top-[60px] left-1/2 flex w-full -translate-x-1/2 flex-col items-center space-y-2 bg-white py-2 shadow-md">
+            {navLinks.map(({ path, text }) => (
+              <motion.li key={path} className="w-full text-center" variants={DropdownItemVariant}>
+                <Link href={path}>{text}</Link>
+              </motion.li>
+            ))}
+          </motion.ul>
+        )}
+      </AnimatePresence>
     </motion.nav>
   );
 };
