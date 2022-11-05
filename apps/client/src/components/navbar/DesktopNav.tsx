@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ShoppingCartIcon, UserCircleIcon } from '@heroicons/react/24/outline';
 
+import { navLinks } from './navLinks';
+
 const DesktopNav = () => (
   <motion.nav
     className="flex items-center justify-between px-12 py-4"
@@ -10,8 +12,11 @@ const DesktopNav = () => (
     animate={{ opacity: 1 }}>
     <h1 className="text-2xl font-bold">ShopperAve</h1>
     <div className="flex space-x-6">
-      <Link href="/">Home</Link>
-      <Link href="/">Collections</Link>
+      {navLinks.map(({ text, path }) => (
+        <Link key={path} href={path}>
+          {text}
+        </Link>
+      ))}
     </div>
     <div className="space-x-1">
       <button className="p-1">

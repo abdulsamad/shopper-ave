@@ -2,6 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import { AnimatePresence, motion, Variants } from 'framer-motion';
 
+import { navLinks } from './navLinks';
+
 interface IMobileNav {
   opened: boolean;
   toggleMenu: () => void;
@@ -43,13 +45,12 @@ const MobileNav = ({ opened, toggleMenu }: IMobileNav) => {
             animate="show"
             exit="hidden"
             variants={dropdownVariants}
-            className="absolute top-[60px] left-1/2 flex w-full -translate-x-1/2 flex-col items-center bg-white shadow-md">
-            <motion.li className="w-full pt-2 text-center" variants={DropdownItemVariant}>
-              <Link href="/">Home</Link>
-            </motion.li>
-            <motion.li className="w-full py-2 text-center" variants={DropdownItemVariant}>
-              <Link href="/collection">Collection</Link>
-            </motion.li>
+            className="absolute top-[60px] left-1/2 flex w-full -translate-x-1/2 flex-col items-center space-y-2 bg-white py-2 shadow-md">
+            {navLinks.map(({ path, text }) => (
+              <motion.li key={path} className="w-full text-center" variants={DropdownItemVariant}>
+                <Link href={path}>{text}</Link>
+              </motion.li>
+            ))}
           </motion.ul>
         )}
       </AnimatePresence>
