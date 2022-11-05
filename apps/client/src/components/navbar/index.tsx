@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ShoppingCartIcon, UserCircleIcon } from '@heroicons/react/24/outline';
 
+import HamburgerIcon from './HamburgerIcon';
 import { navLinks } from './navLinks';
 import { DropdownItemVariant, dropdownVariants } from './framer-variants';
 
@@ -20,29 +21,11 @@ const Index = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}>
         <div className="flex">
-          <button className="h-100 w-100 mr-2 p-1 md:hidden" onClick={toggleMenu}>
-            <div className="space-y-[5px]">
-              <motion.div
-                animate={{
-                  rotateZ: opened ? '45deg' : '0deg',
-                  translateY: opened ? 6.5 : 0,
-                  transition: { delay: 0.1 },
-                }}
-                className="h-[1.5px] w-5 rounded-full bg-black"
-              />
-              <motion.div
-                animate={{ opacity: opened ? 0 : 1, scaleX: opened ? 0 : 1 }}
-                className="h-[1.5px] w-5 rounded-full bg-black"
-              />
-              <motion.div
-                animate={{
-                  rotateZ: opened ? '-45deg' : '0deg',
-                  translateY: opened ? -6.5 : 0,
-                  transition: { delay: 0.25 },
-                }}
-                className="h-[1.5px] w-5 rounded-full bg-black"
-              />
-            </div>
+          <button
+            aria-label="Navigation Menu"
+            className="h-100 w-100 mr-2 p-1 md:hidden"
+            onClick={toggleMenu}>
+            <HamburgerIcon opened={opened} />
           </button>
           <h1 className="text-2xl font-bold">ShopperAve</h1>
         </div>
