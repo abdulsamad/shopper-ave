@@ -2,27 +2,31 @@ import React from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import AutoPlay from 'embla-carousel-autoplay';
 
+const bannerImages = [
+  {
+    src: 'https://source.unsplash.com/random/1920x1080',
+  },
+  {
+    src: 'https://source.unsplash.com/random/1921x1081',
+  },
+  {
+    src: 'https://source.unsplash.com/random/1922x1082',
+  },
+];
+
 const Index = () => {
   const [emblaRef] = useEmblaCarousel({ loop: true }, [AutoPlay()]);
 
   return (
     <section className="embla h-full overflow-hidden" ref={emblaRef}>
       <div className="embla__container flex h-full">
-        <div className="embla__slide shrink-0 grow-0 basis-full">
-          <div className="flex h-full items-center justify-center">
-            <img src="https://source.unsplash.com/random/1920x1080" alt="" />
+        {bannerImages.map(({ src }) => (
+          <div key={src} className="embla__slide shrink-0 grow-0 basis-full">
+            <div className="flex h-full items-center justify-center">
+              <img src={src} className="w-full object-cover" alt="Banner" />
+            </div>
           </div>
-        </div>
-        <div className="embla__slide shrink-0 grow-0 basis-full">
-          <div className="flex h-full items-center justify-center">
-            <img src="https://source.unsplash.com/random/1920x1080" alt="" />
-          </div>
-        </div>
-        <div className="embla__slide shrink-0 grow-0 basis-full">
-          <div className="flex h-full items-center justify-center">
-            <img src="https://source.unsplash.com/random/1920x1080" alt="" />
-          </div>
-        </div>
+        ))}
       </div>
     </section>
   );
