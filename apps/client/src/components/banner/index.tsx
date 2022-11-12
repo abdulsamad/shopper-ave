@@ -1,8 +1,9 @@
 import React from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
+import AutoPlay from 'embla-carousel-autoplay';
 
 const Index = () => {
-  const [emblaRef] = useEmblaCarousel({ loop: true });
+  const [emblaRef] = useEmblaCarousel({ loop: true }, [AutoPlay()]);
 
   return (
     <section className="embla h-full overflow-hidden" ref={emblaRef}>
