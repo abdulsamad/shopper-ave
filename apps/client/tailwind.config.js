@@ -15,6 +15,7 @@ module.exports = {
       amber: '#FFC107',
       indigo: '#3F51B5',
       teal: '#009688',
+      cyan: '#00BCD4',
     },
     fontFamily: {
       sans: ['Inter', 'Open Sans', 'sans-serif'],
