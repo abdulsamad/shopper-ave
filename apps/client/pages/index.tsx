@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 
 import Banner from '@components/banner';
+import Sidebar from '@components/sidebar';
 
 const Home: NextPage = () => {
   return (
@@ -18,9 +19,7 @@ const Home: NextPage = () => {
         <section className="col-span-4 flex h-[60px] w-full">
           <div className="flex w-full items-center justify-center">Ad</div>
         </section>
-        <aside className="bg-danger h-[500px] w-full">
-          <div className="flex h-full w-full items-center justify-center">Sidebar</div>
-        </aside>
+        <Sidebar />
         <section className="bg-info col-span-3 h-[500px] w-full">
           <div className="flex h-full w-full items-center justify-center">Product</div>
         </section>
