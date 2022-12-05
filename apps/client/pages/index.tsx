@@ -12,9 +12,8 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="grid grid-cols-4 place-items-center">
-        <section className="bg-primary col-span-4 h-[300px] w-full">
+        <section className="col-span-4 h-[300px] w-full">
           <Banner />
-          {/* <div className="flex h-full w-full items-center justify-center">Banner</div> */}
         </section>
         <section className="col-span-4 flex h-[60px] w-full">
           <div className="flex w-full items-center justify-center">Ad</div>
