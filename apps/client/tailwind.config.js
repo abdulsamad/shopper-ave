@@ -16,6 +16,8 @@ module.exports = {
       indigo: '#3F51B5',
       teal: '#009688',
       cyan: '#00BCD4',
+      transparent: 'transparent',
+      current: 'currentColor',
     },
     fontFamily: {
       sans: ['Inter', 'Open Sans', 'sans-serif'],
