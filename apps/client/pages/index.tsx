@@ -12,7 +12,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="grid grid-cols-4 place-items-center">
-        <section className="col-span-4 h-[300px] w-full">
+        <section className="col-span-4 h-[500px] w-full">
           <Banner />
         </section>
         <section className="col-span-4 flex h-[60px] w-full">
