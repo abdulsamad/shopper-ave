@@ -19,7 +19,7 @@ const Index = () => {
   const [emblaRef] = useEmblaCarousel({ loop: true }, [AutoPlay()]);
 
   return (
-    <section className="embla h-[500px] w-full overflow-hidden" ref={emblaRef}>
+    <div className="embla h-[500px] w-full overflow-hidden" ref={emblaRef}>
       <div className="embla__container flex h-full">
         {bannerImages.map(({ src }) => (
           <div key={src} className="embla__slide shrink-0 grow-0 basis-full">
@@ -35,7 +35,7 @@ const Index = () => {
           </div>
         ))}
       </div>
-    </section>
+    </div>
   );
 };
 
