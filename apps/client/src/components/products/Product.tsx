@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import Image from 'next/image';
 
 interface IProduct {
   id: string;
@@ -20,7 +21,7 @@ const Product = ({ id, title, image, category, price }: IProduct) => {
   return (
     <div className="text-center" key={id}>
       <div className="h-[150px] w-full overflow-hidden object-contain">
-        <img src={image} alt={title} width={200} className="mx-auto" />
+        <Image className="mx-auto" src={image} alt={title} height={200} width={200} />
       </div>
       <div className="my-4">
         <h3 className="font-bold">{title}</h3>

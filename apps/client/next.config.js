@@ -9,6 +9,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: '**.unsplash.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'fakestoreapi.com',
+      },
     ],
   },
 };
