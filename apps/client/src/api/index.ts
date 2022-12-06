@@ -1,7 +1,13 @@
 import axios from 'axios';
 
 export const welcome = async () => {
-  const req = await axios.post('/');
-  const res = await req.data;
-  return res;
+  const res = await axios.post('/');
+  const data = await res.data;
+  return data;
+};
+
+export const logout = async () => {
+  const res = await axios.get('/logout');
+  const data = await res.data;
+  return data;
 };

@@ -1,15 +1,25 @@
 import create from 'zustand';
 import { devtools } from 'zustand/middleware';
 
+import { logout } from '@api/index';
+
 export interface IRootStore {
-  products: object[];
-  addProduct: (product: object) => void;
+  isAuthenticated: boolean;
+  user: null | object;
+  token: null | object;
+  logout: () => void;
 }
 
 export const useRootStore = create<IRootStore>()(
   devtools((set) => ({
-    products: [],
-    addProduct: (product) => set((state) => ({ products: [product, ...state.products] })),
+    isAuthenticated: false,
+    user: null,
+    token: null,
+    logout: async () => {
+      await logout();
+
+      set(() => ({ isAuthenticated: false, token: null, user: null }));
+    },
   }))
 );
 
