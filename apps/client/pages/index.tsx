@@ -4,6 +4,7 @@ import Head from 'next/head';
 import Banner from '@components/banner';
 import Sidebar from '@components/sidebar';
 import Products from '@components/products';
+import Ad from '@components/ad';
 
 const Home: NextPage = () => {
   return (
@@ -17,11 +18,13 @@ const Home: NextPage = () => {
         <section className="col-span-4">
           <Banner />
         </section>
-        <section className="col-span-4 flex h-[60px] w-full bg-cyan-400">
-          <div className="flex w-full items-center justify-center">Ad</div>
+        <section className="col-span-4 flex h-[60px]">
+          <Ad />
         </section>
-        <Sidebar />
-        <section className="col-span-3">
+        <aside className="fixed top-0 left-0 h-full w-[250px] sm:opacity-0 lg:relative lg:opacity-100">
+          <Sidebar />
+        </aside>
+        <section className="col-span-4 lg:col-span-3">
           <Products />
         </section>
       </main>
