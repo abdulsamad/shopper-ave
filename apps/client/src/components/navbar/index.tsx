@@ -27,7 +27,9 @@ const Index = () => {
             onClick={toggleMenu}>
             <HamburgerIcon opened={opened} />
           </button>
-          <h1 className="text-2xl font-bold">ShopperAve</h1>
+          <Link href="/">
+            <h1 className="text-2xl font-bold">ShopperAve</h1>
+          </Link>
         </div>
         {/* Mobile Dropdown Menu*/}
         <AnimatePresence>
@@ -54,7 +56,17 @@ const Index = () => {
             </Link>
           ))}
         </div>
-        <div className="space-x-1">
+        <div className="flex items-center space-x-1">
+          <Link
+            href="/login"
+            className="inline-flex items-center rounded-lg bg-gray-200 py-1 px-3 text-sm font-semibold text-gray-900 hover:bg-gray-300">
+            Log In
+          </Link>
+          <Link
+            href="/register"
+            className="bg-primary hover:bg-primary-500 inline-flex items-center rounded-lg py-1 px-3 text-sm font-semibold text-white">
+            Register
+          </Link>
           <button className="p-1">
             <ShoppingCartIcon className="h-6 w-6" />
             <div className="sr-only">Cart</div>
