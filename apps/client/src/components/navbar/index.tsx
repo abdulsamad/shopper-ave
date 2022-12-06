@@ -15,7 +15,7 @@ const Index = () => {
   }, []);
 
   return (
-    <header>
+    <header className="container mx-auto">
       <motion.nav
         className="flex items-center justify-between px-4 py-4"
         initial={{ opacity: 0 }}
