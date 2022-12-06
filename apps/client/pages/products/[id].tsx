@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import Product from '@components/product';
+import Product from '@components/user/product';
 
 const Index = () => {
   const router = useRouter();

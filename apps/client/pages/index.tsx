@@ -1,10 +1,10 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
-import Banner from '@components/banner';
-import Sidebar from '@components/sidebar';
-import Products from '@components/products';
-import Ad from '@components/ad';
+import Banner from '@components/user/banner';
+import Sidebar from '@components/user/sidebar';
+import Products from '@components/user/products';
+import Ad from '@components/user/ad';
 
 const Home: NextPage = () => {
   return (
