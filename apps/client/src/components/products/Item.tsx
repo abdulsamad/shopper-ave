@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface IProduct {
   id: string;
@@ -9,7 +10,7 @@ interface IProduct {
   category: string;
 }
 
-const Product = ({ id, title, image, category, price }: IProduct) => {
+const Item = ({ id, title, image, category, price }: IProduct) => {
   const formatCurrency = useCallback((price: number) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -19,7 +20,7 @@ const Product = ({ id, title, image, category, price }: IProduct) => {
   }, []);
 
   return (
-    <div className="text-center" key={id}>
+    <Link className="text-center" href={`/products/${encodeURIComponent(id)}`}>
       <div className="h-[150px] w-full overflow-hidden object-contain">
         <Image className="mx-auto" src={image} alt={title} height={200} width={200} />
       </div>
@@ -30,8 +31,8 @@ const Product = ({ id, title, image, category, price }: IProduct) => {
           <span className="ml-4 capitalize">{category}</span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
-export default Product;
+export default Item;

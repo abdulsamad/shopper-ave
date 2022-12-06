@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 
-import Product from './Product';
+import Item from './Item';
 
 const getProducts = async (): Promise<any[]> => {
   const res = await axios.get('https://fakestoreapi.com/products');
@@ -24,7 +24,7 @@ const Products = () => {
   return (
     <div className="grid grid-cols-2 place-items-center gap-5 p-5 lg:grid-cols-4">
       {data.map(({ id, title, image, price, category }) => (
-        <Product key={id} id={id} title={title} image={image} price={price} category={category} />
+        <Item key={id} id={id} title={title} image={image} price={price} category={category} />
       ))}
     </div>
   );
