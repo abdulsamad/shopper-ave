@@ -21,7 +21,7 @@ const Home: NextPage = () => {
         <section className="col-span-4 flex h-[60px]">
           <Ad />
         </section>
-        <aside className="fixed top-0 left-0 h-full w-[250px] sm:opacity-0 lg:relative lg:opacity-100">
+        <aside className="fixed top-0 left-0 hidden h-full w-[250px] lg:relative lg:flex">
           <Sidebar />
         </aside>
         <section className="col-span-4 lg:col-span-3">
