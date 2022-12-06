@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-interface IProduct {
+interface ItemProps {
   id: string;
   title: string;
   image: string;
@@ -10,7 +10,7 @@ interface IProduct {
   category: string;
 }
 
-const Item = ({ id, title, image, category, price }: IProduct) => {
+const Item = ({ id, title, image, category, price }: ItemProps) => {
   const formatCurrency = useCallback((price: number) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
