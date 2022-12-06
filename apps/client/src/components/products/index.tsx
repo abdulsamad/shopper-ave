@@ -4,8 +4,8 @@ import { useQuery } from '@tanstack/react-query';
 
 import Item from './Item';
 
-const getProducts = async (): Promise<any[]> => {
-  const res = await axios.get('https://fakestoreapi.com/products');
+const getProducts = async (): Promise<any> => {
+  const res = await axios.get('https://dummyjson.com/products');
   return res.data;
 };
 
@@ -21,10 +21,12 @@ const Products = () => {
     return <div className="animate-bounce p-5 text-center">Loading...</div>;
   }
 
+  console.log({ data });
+
   return (
     <div className="grid grid-cols-2 place-items-center gap-5 p-5 lg:grid-cols-4">
-      {data.map(({ id, title, image, price, category }) => (
-        <Item key={id} id={id} title={title} image={image} price={price} category={category} />
+      {data.products.map(({ id, title, images, price, category }: any) => (
+        <Item key={id} id={id} title={title} image={images[0]} price={price} category={category} />
       ))}
     </div>
   );
