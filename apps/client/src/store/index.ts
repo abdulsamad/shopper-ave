@@ -7,7 +7,9 @@ export interface IRootStore {
   isAuthenticated: boolean;
   user: null | object;
   token: null | object;
-  logout: () => void;
+  actions: {
+    logout: () => void;
+  };
 }
 
 export const useRootStore = create<IRootStore>()(
@@ -15,10 +17,12 @@ export const useRootStore = create<IRootStore>()(
     isAuthenticated: false,
     user: null,
     token: null,
-    logout: async () => {
-      await logout();
+    actions: {
+      logout: async () => {
+        await logout();
 
-      set(() => ({ isAuthenticated: false, token: null, user: null }));
+        set(() => ({ isAuthenticated: false, token: null, user: null }));
+      },
     },
   }))
 );
