@@ -1,30 +1,7 @@
-import create from 'zustand';
-import { devtools } from 'zustand/middleware';
+import { useAuthStore } from './auth';
 
-import { logout } from '@api/index';
-
-export interface IRootStore {
-  isAuthenticated: boolean;
-  user: null | object;
-  token: null | object;
-  actions: {
-    logout: () => void;
-  };
-}
-
-export const useRootStore = create<IRootStore>()(
-  devtools((set) => ({
-    isAuthenticated: false,
-    user: null,
-    token: null,
-    actions: {
-      logout: async () => {
-        await logout();
-
-        set(() => ({ isAuthenticated: false, token: null, user: null }));
-      },
-    },
-  }))
-);
-
-export default useRootStore;
+// Auth
+export const useAuthActions = () => useAuthStore((state) => state.actions);
+export const useIsAuthenticated = () => useAuthStore((state) => state.isAuthenticated);
+export const useToken = () => useAuthStore((state) => state.token);
+export const useUser = () => useAuthStore((state) => state.user);

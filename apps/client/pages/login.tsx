@@ -4,6 +4,8 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
+import { useAuthActions } from '@store/index';
+
 import Button from '@utils/Button';
 import Input from '@utils/Input';
 
@@ -15,26 +17,28 @@ const loginSchema = z.object({
 type loginSchemaType = z.infer<typeof loginSchema>;
 
 const Login: NextPage = () => {
+  const { login } = useAuthActions();
+
   const {
     handleSubmit,
     control,
     formState: { errors },
   } = useForm<loginSchemaType>({
-    defaultValues: {
-      email: '',
-      password: '',
-    },
+    defaultValues: { email: '', password: '' },
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit: SubmitHandler<loginSchemaType> = useCallback(async (data) => {
-    console.log(data);
-  }, []);
+  const onSubmit: SubmitHandler<loginSchemaType> = useCallback(
+    async ({ email, password }) => {
+      login({ email, password });
+    },
+    [login]
+  );
 
   return (
     <section className="my-5">
       <div className="mx-auto max-w-full px-5 md:w-[500px]">
-        <form className="" onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <Input
             type="email"
             label="Email"
