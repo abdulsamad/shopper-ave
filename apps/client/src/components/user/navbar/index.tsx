@@ -8,7 +8,7 @@ import {
   UserPlusIcon,
 } from '@heroicons/react/24/outline';
 
-import { useRootStore } from '@store/index';
+import { useIsAuthenticated, useUser } from '@store/index';
 
 import HamburgerIcon from './HamburgerIcon';
 import { navLinks } from './navLinks';
@@ -17,7 +17,8 @@ import { LinkButton } from '@utils/Button';
 
 const Index = () => {
   const [opened, setOpened] = useState(false);
-  const isAuthenticated = useRootStore((state) => state.isAuthenticated);
+  const isAuthenticated = useIsAuthenticated();
+  const user = useUser();
 
   const toggleMenu = useCallback(() => {
     setOpened((open) => !open);
@@ -65,8 +66,10 @@ const Index = () => {
             </Link>
           ))}
         </div>
+        {/* // TODO: Fix user greeting */}
         {isAuthenticated ? (
           <div className="flex items-center space-x-1">
+            <p className="mr-5">Hi, {user && 'name' in user && user.name}</p>
             <button className="p-1">
               <ShoppingCartIcon className="h-6 w-6" />
               <div className="sr-only">Cart</div>
