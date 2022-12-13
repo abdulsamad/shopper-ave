@@ -1,38 +1,42 @@
 import create from 'zustand';
 import { devtools } from 'zustand/middleware';
 
-import { logout } from '@api/index';
+import { login, loginReqData, register, registerReqData, logout } from '@api/index';
 
-export interface IRootStore {
+export interface IAuthStore {
   isAuthenticated: boolean;
   user: null | object;
-  token: null | object;
+  token: null | string;
   actions: {
-    login: ({ email, password }: { email: string; password: string }) => void;
-    register: ({
-      email,
-      password,
-      name,
-    }: {
-      email: string;
-      password: string;
-      name: string;
-    }) => void;
+    login: ({ email, password }: loginReqData) => Promise<void>;
+    register: ({ email, password, name }: registerReqData) => Promise<void>;
     logout: () => void;
   };
 }
 
-export const useAuthStore = create<IRootStore>()(
+export const useAuthStore = create<IAuthStore>()(
   devtools((set) => ({
     isAuthenticated: false,
     user: null,
     token: null,
     actions: {
-      login: async ({ email, password }) => {
-        console.log({ email, password });
+      login: async (data) => {
+        try {
+          const { user, token } = await login(data);
+
+          set(() => ({ user, token, isAuthenticated: true }));
+        } catch (err) {
+          set(() => ({ user: null, token: null, isAuthenticated: false }));
+        }
       },
-      register: async ({ email, password, name }) => {
-        console.log({ email, password, name });
+      register: async (data) => {
+        try {
+          const { user, token } = await register(data);
+
+          set(() => ({ user, token, isAuthenticated: true }));
+        } catch (err) {
+          set(() => ({ user: null, token: null, isAuthenticated: false }));
+        }
       },
       logout: async () => {
         await logout();
