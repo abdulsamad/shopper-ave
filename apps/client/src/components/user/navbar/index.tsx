@@ -5,6 +5,7 @@ import {
   ShoppingCartIcon,
   UserCircleIcon,
   ArrowRightOnRectangleIcon,
+  UserPlusIcon,
 } from '@heroicons/react/24/outline';
 
 import { useRootStore } from '@store/index';
@@ -81,6 +82,7 @@ const Index = () => {
               <ArrowRightOnRectangleIcon className="mr-1.5 h-5 w-5" /> Log In
             </LinkButton>
             <LinkButton className="bg-primary text-white" href="/register">
+              <UserPlusIcon className="mr-1.5 h-5 w-5" />
               Register
             </LinkButton>
           </div>
