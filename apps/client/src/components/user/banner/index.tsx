@@ -5,13 +5,13 @@ import AutoPlay from 'embla-carousel-autoplay';
 
 const bannerImages = [
   {
-    src: 'https://source.unsplash.com/random/1080x502',
+    src: 'https://res.cloudinary.com/abdulsamad/image/upload/v1666595994/products/dlr157h1tx8pfbm97gug.jpg',
   },
   {
-    src: 'https://source.unsplash.com/random/1080x500',
+    src: 'https://res.cloudinary.com/abdulsamad/image/upload/v1670931462/products/pf1rlaxbezpy1ntygwfo.jpg',
   },
   {
-    src: 'https://source.unsplash.com/random/1080x500',
+    src: 'https://res.cloudinary.com/abdulsamad/image/upload/v1666515085/products/muxx1yzmsbeyhysxzzyh.jpg',
   },
 ];
 
