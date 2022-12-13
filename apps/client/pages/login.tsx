@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect, useCallback } from 'react';
 import type { NextPage } from 'next';
-import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { useAuthActions } from '@store/index';
+import { useAuthActions, useIsAuthenticated } from '@store/index';
 
 import Button from '@utils/Button';
 import Input from '@utils/Input';
@@ -18,7 +19,9 @@ type loginSchemaType = z.infer<typeof loginSchema>;
 
 const Login: NextPage = () => {
   const { login } = useAuthActions();
+  const isAuthenticated = useIsAuthenticated();
 
+  const router = useRouter();
   const {
     handleSubmit,
     control,
@@ -28,10 +31,27 @@ const Login: NextPage = () => {
     resolver: zodResolver(loginSchema),
   });
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push('/');
+    }
+  }, [isAuthenticated, router]);
+
+  const onSubmit: SubmitHandler<loginSchemaType> = useCallback(
+    async (data) => {
+      try {
+        const res = await login(data);
+      } catch (err) {
+        console.log('error hai');
+      }
+    },
+    [login]
+  );
+
   return (
     <section className="my-5">
       <div className="mx-auto max-w-full px-5 md:w-[500px]">
-        <form onSubmit={handleSubmit(login)}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <Input
             type="email"
             label="Email"

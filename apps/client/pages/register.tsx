@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect, useCallback } from 'react';
 import type { NextPage } from 'next';
-import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { useAuthActions } from '@store/index';
+import { useAuthActions, useIsAuthenticated } from '@store/index';
 
 import Button from '@utils/Button';
 import Input from '@utils/Input';
@@ -18,16 +19,18 @@ const RegisterSchema = z.object({
   password: z.string().min(8, 'Password should be atleast 8 characters long'),
 });
 
-type RegisterSchemaType = z.infer<typeof RegisterSchema>;
+type registerSchemaType = z.infer<typeof RegisterSchema>;
 
 const Register: NextPage = () => {
   const { register } = useAuthActions();
+  const isAuthenticated = useIsAuthenticated();
 
+  const router = useRouter();
   const {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<RegisterSchemaType>({
+  } = useForm<registerSchemaType>({
     defaultValues: {
       name: '',
       email: '',
@@ -36,10 +39,23 @@ const Register: NextPage = () => {
     resolver: zodResolver(RegisterSchema),
   });
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push('/');
+    }
+  }, [isAuthenticated, router]);
+
+  const onSubmit: SubmitHandler<registerSchemaType> = useCallback(
+    async (data) => {
+      const res = await register(data);
+    },
+    [register]
+  );
+
   return (
     <section className="my-5">
       <div className="mx-auto max-w-full px-5 md:w-[500px]">
-        <form className="" onSubmit={handleSubmit(register)}>
+        <form className="" onSubmit={handleSubmit(onSubmit)}>
           <Input
             type="text"
             label="Name"
