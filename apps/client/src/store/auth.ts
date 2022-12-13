@@ -8,7 +8,7 @@ export interface IAuthStore {
   user: null | object;
   token: null | string;
   actions: {
-    login: ({ email, password }: loginReqData) => Promise<any>;
+    login: ({ email, password }: loginReqData) => Promise<void>;
     register: ({ email, password, name }: registerReqData) => Promise<void>;
     logout: () => void;
   };
@@ -26,10 +26,8 @@ export const useAuthStore = create<IAuthStore>()(
             const { user, token } = await login(data);
 
             set(() => ({ user, token, isAuthenticated: true }));
-            return { user, token };
           } catch (err) {
             set(() => ({ user: null, token: null, isAuthenticated: false }));
-            return err;
           }
         },
         register: async (data) => {
