@@ -39,11 +39,7 @@ const Login: NextPage = () => {
 
   const onSubmit: SubmitHandler<loginSchemaType> = useCallback(
     async (data) => {
-      try {
-        const res = await login(data);
-      } catch (err) {
-        console.log('error hai');
-      }
+      await login(data);
     },
     [login]
   );

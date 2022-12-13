@@ -54,8 +54,24 @@ export const register = async ({
   return data;
 };
 
-export const logout = async () => {
+export interface logoutResData {
+  success: boolean;
+  message: string;
+}
+
+export const logout = async (): Promise<logoutResData> => {
   const res = await axiosInstance.get('/logout');
+  const data = await res.data;
+  return data;
+};
+
+export interface getProductsRes {
+  success: boolean;
+  product: object[];
+}
+
+export const getProducts = async () => {
+  const res = await axiosInstance.get('/products');
   const data = await res.data;
   return data;
 };
