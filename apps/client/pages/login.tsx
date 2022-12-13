@@ -51,7 +51,9 @@ const Login: NextPage = () => {
             control={control}
             error={errors.password}
           />
-          <Button className="bg-primary hover:bg-primary-500 mt-2 px-4 py-2 text-white">
+          <Button
+            type="submit"
+            className="bg-primary hover:bg-primary-500 mt-2 px-4 py-2 text-white">
             Log In
           </Button>
         </form>
