@@ -24,7 +24,14 @@ const Index = () => {
         {bannerImages.map(({ src }) => (
           <div key={src} className="embla__slide shrink-0 grow-0 basis-full">
             <div className="flex h-full items-center justify-center">
-              <Image src={src} className="object-cover" alt="Banner" fill priority />
+              <Image
+                src={src}
+                className="object-cover"
+                alt="Banner"
+                height={500}
+                width={1920}
+                priority
+              />
             </div>
           </div>
         ))}
