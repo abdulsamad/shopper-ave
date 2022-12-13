@@ -1,5 +1,5 @@
 import React from 'react';
-import { Controller, Control, RegisterOptions, FieldValues } from 'react-hook-form';
+import { Controller, Control, RegisterOptions, FieldValues, FieldError } from 'react-hook-form';
 
 interface InputProps {
   label: string;
@@ -11,6 +11,8 @@ interface InputProps {
     RegisterOptions<FieldValues, string>,
     'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'
   >;
+  error?: FieldError | undefined;
+  defaultValue?: unknown;
   type?: string;
   className?: string;
 }
@@ -21,6 +23,8 @@ const Input = ({
   id,
   control,
   rules,
+  error,
+  defaultValue,
   type = 'text',
   className,
 }: InputProps) => {
@@ -32,16 +36,24 @@ const Input = ({
       <Controller
         name={id}
         rules={rules}
+        defaultValue={defaultValue}
         render={({ field }) => (
           <input
             type={type}
             placeholder={placeholder}
-            className={`py-2 px-4 ${className ?? 'rounded-xl bg-gray-100 shadow'}`}
+            className={`py-2 px-4 ${className ?? 'rounded-xl bg-gray-100 shadow'} ${
+              error && 'border-danger border'
+            }`}
             {...field}
           />
         )}
         control={control}
       />
+      {error?.message && (
+        <p className="text-danger animate-shake mt-2 text-sm transition duration-150 ease-in-out">
+          {error.message}
+        </p>
+      )}
     </div>
   );
 };
