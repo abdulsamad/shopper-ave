@@ -10,14 +10,20 @@ import { useAuthActions, useIsAuthenticated } from '@store/index';
 import Button from '@utils/Button';
 import Input from '@utils/Input';
 
-const RegisterSchema = z.object({
-  name: z
-    .string()
-    .min(1, 'Name is required for creating an account')
-    .max(80, 'Name should be under 80 characters'),
-  email: z.string().min(1, 'Email is required for creating an account').email(),
-  password: z.string().min(8, 'Password should be atleast 8 characters long'),
-});
+const RegisterSchema = z
+  .object({
+    name: z
+      .string()
+      .min(1, 'Name is required for creating an account')
+      .max(80, 'Name should be under 80 characters'),
+    email: z.string().min(1, 'Email is required for creating an account').email(),
+    password: z.string().min(8, 'Password should be atleast 8 characters long'),
+    confirmPassword: z.string().min(8, 'Confirm Password should also be atleast 8 characters long'),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    path: ['confirmPassword'],
+    message: "Password and Confirm Passwords don't match!",
+  });
 
 type registerSchemaType = z.infer<typeof RegisterSchema>;
 
@@ -35,6 +41,7 @@ const Register: NextPage = () => {
       name: '',
       email: '',
       password: '',
+      confirmPassword: '',
     },
     resolver: zodResolver(RegisterSchema),
   });
@@ -47,7 +54,7 @@ const Register: NextPage = () => {
 
   const onSubmit: SubmitHandler<registerSchemaType> = useCallback(
     async (data) => {
-      const res = await register(data);
+      await register(data);
     },
     [register]
   );
@@ -79,6 +86,14 @@ const Register: NextPage = () => {
             id="password"
             control={control}
             error={errors.password}
+          />
+          <Input
+            type="text"
+            label="Confirm Password"
+            placeholder="Enter password again"
+            id="confirmPassword"
+            control={control}
+            error={errors.confirmPassword}
           />
           <Button
             type="submit"
