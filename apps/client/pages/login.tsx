@@ -1,6 +1,6 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import type { NextPage } from 'next';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -28,17 +28,10 @@ const Login: NextPage = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit: SubmitHandler<loginSchemaType> = useCallback(
-    async ({ email, password }) => {
-      login({ email, password });
-    },
-    [login]
-  );
-
   return (
     <section className="my-5">
       <div className="mx-auto max-w-full px-5 md:w-[500px]">
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(login)}>
           <Input
             type="email"
             label="Email"
