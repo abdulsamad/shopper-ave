@@ -1,5 +1,5 @@
 import React from 'react';
-import { Controller, Control } from 'react-hook-form';
+import { Controller, Control, RegisterOptions, FieldValues } from 'react-hook-form';
 
 interface InputProps {
   label: string;
@@ -7,11 +7,23 @@ interface InputProps {
   id: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   control: Control<any, any>;
+  rules?: Omit<
+    RegisterOptions<FieldValues, string>,
+    'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'
+  >;
   type?: string;
   className?: string;
 }
 
-const Input = ({ label, placeholder, type = 'text', id, className, control }: InputProps) => {
+const Input = ({
+  label,
+  placeholder,
+  id,
+  control,
+  rules,
+  type = 'text',
+  className,
+}: InputProps) => {
   return (
     <div className="my-2 flex flex-col">
       <label htmlFor={id} className="mb-2 font-medium">
@@ -19,6 +31,7 @@ const Input = ({ label, placeholder, type = 'text', id, className, control }: In
       </label>
       <Controller
         name={id}
+        rules={rules}
         render={({ field }) => (
           <input
             type={type}
