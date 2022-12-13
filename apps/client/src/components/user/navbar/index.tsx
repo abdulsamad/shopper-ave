@@ -66,10 +66,10 @@ const Index = () => {
             </Link>
           ))}
         </div>
-        {/* // TODO: Fix user greeting */}
         {isAuthenticated ? (
           <div className="flex items-center space-x-1">
-            <p className="mr-5">Hi, {user && 'name' in user && user.name}</p>
+            {/* TODO: Fix user greeting */}
+            <p className="mr-5">Hi, {(user as any).name}</p>
             <button className="p-1">
               <ShoppingCartIcon className="h-6 w-6" />
               <div className="sr-only">Cart</div>
