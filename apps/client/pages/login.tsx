@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import type { NextPage } from 'next';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import Button from '@utils/Button';
 import Input from '@utils/Input';
@@ -12,12 +12,14 @@ const loginSchema = z.object({
   password: z.string().min(8, 'Password should be atleast 8 characters long'),
 });
 
+type loginSchemaType = z.infer<typeof loginSchema>;
+
 const Login: NextPage = () => {
   const {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm({
+  } = useForm<loginSchemaType>({
     defaultValues: {
       email: '',
       password: '',
@@ -25,14 +27,14 @@ const Login: NextPage = () => {
     resolver: zodResolver(loginSchema),
   });
 
+  const onSubmit: SubmitHandler<loginSchemaType> = useCallback(async (data) => {
+    console.log(data);
+  }, []);
+
   return (
     <section className="my-5">
       <div className="mx-auto max-w-full px-5 md:w-[500px]">
-        <form
-          className=""
-          onSubmit={handleSubmit((data) => {
-            console.log(data);
-          })}>
+        <form className="" onSubmit={handleSubmit(onSubmit)}>
           <Input
             type="email"
             label="Email"
