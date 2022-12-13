@@ -12,6 +12,7 @@ import { useRootStore } from '@store/index';
 import HamburgerIcon from './HamburgerIcon';
 import { navLinks } from './navLinks';
 import { DropdownItemVariant, dropdownVariants } from './framer-variants';
+import { LinkButton } from '@utils/Button';
 
 const Index = () => {
   const [opened, setOpened] = useState(false);
@@ -76,16 +77,12 @@ const Index = () => {
           </div>
         ) : (
           <div className="flex items-center space-x-2">
-            <Link
-              href="/login"
-              className="inline-flex items-center rounded-lg bg-gray-200 py-1.5 px-3.5 text-sm font-semibold text-gray-900 hover:bg-gray-300">
+            <LinkButton className="bg-gray-200 text-gray-900" href="/login">
               <ArrowRightOnRectangleIcon className="mr-1.5 h-5 w-5" /> Log In
-            </Link>
-            <Link
-              href="/register"
-              className="bg-primary hover:bg-primary-500 hidden items-center rounded-lg py-1.5 px-3.5 text-sm font-semibold text-white lg:inline-flex">
+            </LinkButton>
+            <LinkButton className="bg-primary text-white" href="/register">
               Register
-            </Link>
+            </LinkButton>
           </div>
         )}
       </motion.nav>
