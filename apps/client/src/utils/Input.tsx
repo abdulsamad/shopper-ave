@@ -1,5 +1,6 @@
 import React from 'react';
 import { Controller, Control, RegisterOptions, FieldValues, FieldError } from 'react-hook-form';
+import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 
 interface InputProps {
   label: string;
@@ -42,7 +43,7 @@ const Input = ({
             type={type}
             placeholder={placeholder}
             className={`py-2 px-4 ${className ?? 'rounded-xl bg-gray-100 shadow'} ${
-              error && 'border-danger border'
+              error && 'border-danger animate-shake border transition duration-150 ease-in-out'
             }`}
             {...field}
           />
@@ -50,8 +51,8 @@ const Input = ({
         control={control}
       />
       {error?.message && (
-        <p className="text-danger animate-shake mt-2 text-sm transition duration-150 ease-in-out">
-          {error.message}
+        <p className="text-danger mt-2 flex gap-1 text-sm">
+          <ExclamationTriangleIcon className="h-5 w-5" /> {error.message}
         </p>
       )}
     </div>
