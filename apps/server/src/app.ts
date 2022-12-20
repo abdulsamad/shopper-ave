@@ -18,6 +18,16 @@ dotenv.config();
 
 const app = express();
 
+// Allow Resource Origin
+if (process.env.NODE_ENV !== 'production') {
+  app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+
+    next();
+  });
+}
+
 // Swagger documentation
 const swaggerDocument = YAML.load(path.resolve(__dirname, '../swagger.yml'));
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
