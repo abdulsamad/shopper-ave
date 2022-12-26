@@ -1,13 +1,21 @@
 import React from 'react';
-import type { NextPage } from 'next';
+import type { NextPage, GetStaticProps, InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
+
+import { Product } from 'shared-types';
+
+import { getProducts } from '@api/index';
 
 import Banner from '@components/user/banner';
 import Sidebar from '@components/user/sidebar';
 import Products from '@components/user/products';
 import Ad from '@components/user/ad';
 
-const Home: NextPage = () => {
+interface Products {
+  products: Product[];
+}
+
+const Home: NextPage<InferGetStaticPropsType<typeof Products>> = ({ products }: Products) => {
   return (
     <div>
       <Head>
@@ -31,6 +39,16 @@ const Home: NextPage = () => {
       </main>
     </div>
   );
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+  const products: Product = (await getProducts()).products;
+
+  return {
+    props: {
+      products,
+    },
+  };
 };
 
 export default Home;
