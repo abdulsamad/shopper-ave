@@ -5,7 +5,6 @@ import Head from 'next/head';
 import { Product } from 'shared-types';
 
 import { getProducts } from '@api/index';
-
 import Banner from '@components/user/banner';
 import Sidebar from '@components/user/sidebar';
 import Products from '@components/user/products';
