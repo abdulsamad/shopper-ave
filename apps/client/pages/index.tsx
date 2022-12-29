@@ -14,7 +14,7 @@ interface Products {
   products: Product[];
 }
 
-const Home: NextPage<InferGetStaticPropsType<typeof Products>> = ({ products }: Products) => {
+const Home: NextPage<InferGetStaticPropsType<typeof Products>> = (products) => {
   return (
     <div>
       <Head>
@@ -41,7 +41,7 @@ const Home: NextPage<InferGetStaticPropsType<typeof Products>> = ({ products }: 
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const products: Product = (await getProducts()).products;
+  const products = (await getProducts()).products;
 
   return {
     props: {
