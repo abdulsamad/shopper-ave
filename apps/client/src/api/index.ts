@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import { Product } from 'shared-types';
+
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
 });
@@ -67,11 +69,22 @@ export const logout = async (): Promise<logoutResData> => {
 
 export interface getProductsRes {
   success: boolean;
-  product: object[];
+  products: Product[];
 }
 
-export const getProducts = async () => {
+export const getProducts = async (): Promise<getProductsRes> => {
   const res = await axiosInstance.get('/products');
+  const data = await res.data;
+  return data;
+};
+
+export interface getProductRes {
+  success: boolean;
+  product: Product;
+}
+
+export const getProduct = async (id: string): Promise<getProductRes> => {
+  const res = await axiosInstance.get(`/product/${id}`);
   const data = await res.data;
   return data;
 };
