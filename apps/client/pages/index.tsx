@@ -1,5 +1,5 @@
 import React from 'react';
-import type { NextPage, GetStaticProps, InferGetStaticPropsType } from 'next';
+import type { NextPage, GetStaticProps } from 'next';
 import Head from 'next/head';
 
 import { Product } from 'shared-types';
@@ -14,7 +14,7 @@ interface Products {
   products: Product[];
 }
 
-const Home: NextPage<InferGetStaticPropsType<typeof Products>> = (products) => {
+const Home = ({ products }: Products) => {
   return (
     <div>
       <Head>
@@ -33,7 +33,7 @@ const Home: NextPage<InferGetStaticPropsType<typeof Products>> = (products) => {
           <Sidebar />
         </aside>
         <section className="col-span-4 lg:col-span-3">
-          <Products />
+          <Products products={products} />
         </section>
       </main>
     </div>
