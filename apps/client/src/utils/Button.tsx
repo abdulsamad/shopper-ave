@@ -12,7 +12,7 @@ export const Button = ({ children, onClick, type, className }: ButtonProps) => (
   <button
     type={type}
     onClick={onClick}
-    className={`items-center rounded-lg py-1.5 px-3.5 text-sm font-semibold lg:inline-flex ${className}`}>
+    className={`items-center rounded-lg py-2 px-3.5 text-sm font-semibold active:scale-105 lg:inline-flex ${className}`}>
     {children}
   </button>
 );
