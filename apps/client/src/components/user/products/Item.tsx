@@ -16,9 +16,9 @@ const Item = ({ _id, name, category, photos, price }: Product) => {
   return (
     <Link
       href={`/product/${encodeURIComponent(_id)}`}
-      className="flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-solid border-red-500 shadow">
+      className="flex h-full flex-col justify-between overflow-hidden rounded-2xl shadow">
       <Image
-        width={200}
+        width={300}
         height={200}
         src={photos[0].secure_url}
         className="mx-auto h-full object-cover"
