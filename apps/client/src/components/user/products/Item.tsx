@@ -2,15 +2,9 @@ import React, { useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-interface ItemProps {
-  id: string;
-  title: string;
-  image: string;
-  price: number;
-  category: string;
-}
+import { Product } from 'shared-types';
 
-const Item = ({ id, title, image, category, price }: ItemProps) => {
+const Item = ({ _id, name, category, photos, price }: Product) => {
   const formatCurrency = useCallback((price: number) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -20,16 +14,20 @@ const Item = ({ id, title, image, category, price }: ItemProps) => {
   }, []);
 
   return (
-    <Link className="text-center" href={`/products/${encodeURIComponent(id)}`}>
-      <div className="h-[150px] w-full overflow-hidden object-contain">
-        <Image className="mx-auto" src={image} alt={title} height={200} width={200} />
-      </div>
-      <div className="my-4">
-        <h3 className="font-bold">{title}</h3>
-        <div className="d-flex">
-          <span className="italic">{formatCurrency(price)}</span>
-          <span className="ml-4 capitalize">{category}</span>
-        </div>
+    <Link
+      href={`/product/${encodeURIComponent(_id)}`}
+      className="flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-solid border-red-500 shadow">
+      <Image
+        width={200}
+        height={200}
+        src={photos[0].secure_url}
+        className="mx-auto h-full object-cover"
+        alt={name}
+      />
+      <div className="bg-gray-100 p-4">
+        <h3 className="text-lg font-light">{name}</h3>
+        <h4 className="text-sm capitalize text-gray-400">{category}</h4>
+        <h5 className="text-bold my-3 font-semibold">{formatCurrency(price)}</h5>
       </div>
     </Link>
   );
