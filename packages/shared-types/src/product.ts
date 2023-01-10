@@ -2,9 +2,9 @@ export interface Product {
   _id: string;
   __v: string;
   name: string;
-  price: string;
+  price: number;
   description: string;
-  photos?: [
+  photos: [
     {
       _id: string;
       id: string;
