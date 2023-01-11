@@ -1,18 +1,12 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
 import { Product } from 'shared-types';
 
-const Item = ({ _id, name, category, photos, price }: Product) => {
-  const formatCurrency = useCallback((price: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-    }).format(price);
-  }, []);
+import { formatCurrency } from '@utils/index';
 
+const Item = ({ _id, name, category, photos, price }: Product) => {
   return (
     <Link
       href={`/product/${encodeURIComponent(_id)}`}
