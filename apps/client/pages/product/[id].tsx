@@ -1,6 +1,5 @@
 import React from 'react';
 import { NextPage, GetServerSideProps } from 'next';
-import Image from 'next/image';
 import { ShoppingCartIcon, ShoppingBagIcon, StarIcon } from '@heroicons/react/24/solid';
 import { StarIcon as StarIconOutline } from '@heroicons/react/24/outline';
 
@@ -9,6 +8,7 @@ import { Product as IProduct } from 'shared-types';
 import { getProduct } from '@api/index';
 import Button from '@utils/Button';
 import { formatCurrency } from '@utils/index';
+import Photos from '@components/user/product/Photos';
 
 const Index: NextPage<IProduct> = ({
   name,
@@ -21,17 +21,7 @@ const Index: NextPage<IProduct> = ({
 }: IProduct) => {
   return (
     <div className="grid grid-cols-2 place-items-center p-5">
-      {photos && (
-        <div className="">
-          <Image
-            src={photos[0].secure_url}
-            alt={name}
-            className="mx-auto"
-            height={180}
-            width={340}
-          />
-        </div>
-      )}
+      <Photos photos={photos} name={name} />
       <section className="flex flex-col gap-6">
         <div>
           <h2 className="text-xl font-bold">{brand}</h2>
