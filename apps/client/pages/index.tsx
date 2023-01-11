@@ -14,7 +14,7 @@ interface Products {
   products: Product[];
 }
 
-const Home = ({ products }: Products) => {
+const Home: NextPage<Products> = ({ products }: Products) => {
   return (
     <div>
       <Head>
