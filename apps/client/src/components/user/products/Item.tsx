@@ -21,7 +21,19 @@ const Item = ({ _id, name, category, photos, price }: Product) => {
       <div className="bg-gray-100 p-4">
         <h3 className="text-lg font-light">{name}</h3>
         <h4 className="text-sm capitalize text-gray-400">{category}</h4>
-        <h5 className="text-bold my-3 font-semibold">{formatCurrency(price)}</h5>
+        <h5 className="text-bold my-2 font-semibold">{formatCurrency(price)}</h5>
+      </div>
+      <div className="flex">
+        <button
+          type="button"
+          className="w-1/2 bg-gradient-to-r from-cyan-300 to-blue-400 p-2 text-white">
+          Buy Now
+        </button>
+        <button
+          type="button"
+          className="from-primary-400 to-primary-600 w-1/2 bg-gradient-to-r p-2 text-white">
+          Add to Cart
+        </button>
       </div>
     </Link>
   );
