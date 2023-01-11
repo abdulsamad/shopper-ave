@@ -26,7 +26,7 @@ const Index: NextPage<IProduct> = ({
         <div>
           <h2 className="text-xl font-bold">{brand}</h2>
           <h1 className="mt-3 text-3xl font-light">{name}</h1>
-          <div className="mb-4 flex">
+          <div className="mb-2 flex">
             {[1, 2, 3, 4, 5].map((star) =>
               star <= ratings ? (
                 <StarIcon key={star} className="h-4 w-4 text-yellow-500" />
@@ -35,6 +35,7 @@ const Index: NextPage<IProduct> = ({
               )
             )}
           </div>
+          <p className="m-0">{category}</p>
           <p className="text my-2 text-xl font-bold capitalize">{formatCurrency(price)}</p>
           <p className="">{description}</p>
         </div>
