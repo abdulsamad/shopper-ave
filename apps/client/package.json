@@ -12,19 +12,19 @@
   "dependencies": {
     "@heroicons/react": "^2.0.13",
     "@hookform/resolvers": "^2.9.10",
-    "@tanstack/react-query": "^4.20.4",
-    "axios": "^1.2.1",
-    "beautiful-react-hooks": "^3.11.2",
+    "@tanstack/react-query": "^4.22.0",
+    "axios": "^1.2.2",
+    "beautiful-react-hooks": "^3.12.2",
     "dayjs": "^1.11.7",
     "embla-carousel-autoplay": "^7.0.5",
     "embla-carousel-react": "^7.0.5",
-    "framer-motion": "^7.10.2",
-    "next": "^13.0.7",
+    "framer-motion": "^8.4.3",
+    "next": "^13.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-hook-form": "^7.41.0",
+    "react-hook-form": "^7.42.1",
     "zod": "^3.20.2",
-    "zustand": "^4.1.5"
+    "zustand": "^4.3.2"
   },
   "devDependencies": {
     "@types/node": "18.11.17",

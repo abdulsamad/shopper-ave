@@ -1,4 +1,4 @@
-import create from 'zustand';
+import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 
 import { login, loginReqData, register, registerReqData, logout } from '@api/index';
