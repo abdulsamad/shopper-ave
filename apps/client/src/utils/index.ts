@@ -5,3 +5,7 @@ export const formatCurrency = (price: number) => {
     minimumFractionDigits: 0,
   }).format(price);
 };
+
+export const formatNumber = (price: number) => {
+  return new Intl.NumberFormat('en-US').format(price);
+};
