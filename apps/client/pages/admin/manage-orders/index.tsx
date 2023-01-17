@@ -3,14 +3,14 @@ import type { NextPage } from 'next';
 
 import Sidebar from '@components/admin/sidebar';
 
-const Admin: NextPage = () => {
+const Index: NextPage = () => {
   return (
     <div className="grid grid-cols-12">
       <Sidebar />
       <div className="col-span-10">
         <div className="container">
           <h1 className="my-3 text-center text-4xl text-gray-700">
-            Welcome to <span className="text-primary">Admin Area</span>
+            Welcome to <span className="text-primary">Route</span>
           </h1>
         </div>
       </div>
@@ -18,4 +18,4 @@ const Admin: NextPage = () => {
   );
 };
 
-export default Admin;
+export default Index;
