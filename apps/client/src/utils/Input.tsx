@@ -4,7 +4,7 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 
 interface InputProps {
   label: string;
-  placeholder: string;
+  placeholder?: string;
   id: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   control: Control<any, any>;
