@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 
-import { login, loginReqData, register, registerReqData, logout } from '@api/index';
+import { login, loginReqData, register, registerReqData, logout } from '@api/auth';
 
 export interface IAuthStore {
   isAuthenticated: boolean;
@@ -16,6 +16,7 @@ export interface IAuthStore {
 
 export const useAuthStore = create<IAuthStore>()(
   devtools(
+    // persist(
     (set) => ({
       isAuthenticated: false,
       user: null,
@@ -45,9 +46,9 @@ export const useAuthStore = create<IAuthStore>()(
           set(() => ({ isAuthenticated: false, token: null, user: null }));
         },
       },
-    }),
-
-    { name: 'Auth Store' }
+    })
+    // { name: 'auth' }
+    // )
   )
 );
 
