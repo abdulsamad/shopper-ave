@@ -2,8 +2,8 @@ import { useState } from 'react';
 import type { AppProps } from 'next/app';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import Navbar from '@components/user/navbar';
-import Footer from '@components/user/footer';
+import Navbar from '@components/layout/navbar';
+import Footer from '@components/layout/footer';
 
 // Global Styles
 import '@styles/index.css';
