@@ -14,4 +14,7 @@ const connectDB = async () => {
   }
 };
 
+// Adding strict query
+mongoose.set('strictQuery', false);
+
 export default connectDB;
