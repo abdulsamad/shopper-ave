@@ -4,18 +4,20 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
+import { createProduct } from '@api/admin';
 import Sidebar from '@components/admin/sidebar';
 import Input from '@utils/Input';
 import FileInput from '@utils/FileInput';
 import TextArea from '@utils/TextArea';
 import Button from '@utils/Button';
 import Select from '@utils/Select';
+import { createFormData } from '@utils/index';
 
 const productSchema = z.object({
   name: z.string(),
   price: z.string(),
   description: z.string(),
-  photos: z.custom<File | null>((val) => val),
+  photos: z.custom<FileList | null>((val) => val),
   category: z.string().min(1, 'Category should not be empty'),
   brand: z.string(),
   stock: z.string(),
@@ -25,6 +27,7 @@ type productSchemaType = z.infer<typeof productSchema>;
 
 const Index: NextPage = () => {
   const {
+    register,
     handleSubmit,
     control,
     formState: { errors },
@@ -42,8 +45,8 @@ const Index: NextPage = () => {
   });
 
   const onSubmit: SubmitHandler<productSchemaType> = useCallback(async (data) => {
-    //
-    console.log(data);
+    const formData = createFormData(data);
+    await createProduct(formData);
   }, []);
 
   return (
@@ -72,13 +75,27 @@ const Index: NextPage = () => {
             control={control}
             error={errors.description}
           />
-          <FileInput id="photos" label="Photos" control={control} error={errors.photos} multiple />
+          <FileInput
+            id="photos"
+            label="Photos"
+            register={register('photos')}
+            error={errors.photos}
+            multiple
+          />
           <Select
             label="Category"
-            options={['John', 'Wick']}
+            options={['hoodie', 'electronics']}
             id="category"
             control={control}
             error={errors.category}
+          />
+          <Input
+            type="text"
+            id="brand"
+            label="Brand"
+            placeholder="e.g Nike"
+            control={control}
+            error={errors.brand}
           />
           <Input
             type="number"
