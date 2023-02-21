@@ -44,6 +44,8 @@ module.exports = {
       },
       animation: {
         shake: 'shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both',
+        'button-loader-middle': 'button-loader 0.3s 0.3s linear infinite alternate',
+        'button-loader-side': 'button-loader 0.3s 0.45s linear infinite alternate',
       },
       keyframes: {
         shake: {
@@ -58,6 +60,14 @@ module.exports = {
           },
           '40%, 60%': {
             transform: 'translate3d(3px, 0, 0)',
+          },
+        },
+        'button-loader': {
+          '0%': {
+            height: '1.2em',
+          },
+          '100%': {
+            height: '4px',
           },
         },
       },
