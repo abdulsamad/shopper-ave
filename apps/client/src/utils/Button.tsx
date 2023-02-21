@@ -15,7 +15,10 @@ export const Button = ({ children, isLoading = false, onClick, type, className }
   <button
     type={type}
     onClick={onClick}
-    className={`items-center justify-center rounded-lg py-2.5 px-3.5 text-sm font-semibold active:scale-105 lg:inline-flex ${className}`}>
+    disabled={isLoading}
+    className={`h-10 items-center justify-center rounded-lg py-2.5 px-3.5 text-sm font-semibold active:scale-105 lg:inline-flex ${
+      isLoading && 'hover:cursor-wait'
+    } ${className}`}>
     {isLoading ? <ButtonLoader /> : children}
   </button>
 );
