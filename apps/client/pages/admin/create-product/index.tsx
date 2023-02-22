@@ -72,7 +72,9 @@ const Index: NextPage = () => {
       <Sidebar />
       <div className="col-span-10">
         <div className="container">
-          <h1 className="my-3 text-center text-4xl text-gray-700">Add New Product</h1>
+          <h1 className="my-3 text-center text-4xl text-gray-700">
+            Create <span className="text-primary">Product</span>
+          </h1>
         </div>
         <form
           className="mx-auto flex w-full flex-col gap-2 p-5 lg:w-1/2"
