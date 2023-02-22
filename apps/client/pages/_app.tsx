@@ -13,7 +13,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="min-h-screen">
+      <div className="flex min-h-screen flex-col">
         <Navbar />
         <Component {...pageProps} />
         <Footer />
