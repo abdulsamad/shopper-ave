@@ -3,6 +3,7 @@ import type { NextPage } from 'next';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { isAxiosError } from 'axios';
 
 import { createProduct } from '@api/admin';
 import Sidebar from '@components/admin/sidebar';
@@ -11,6 +12,7 @@ import FileInput from '@utils/FileInput';
 import TextArea from '@utils/TextArea';
 import Button from '@utils/Button';
 import Select from '@utils/Select';
+import Alert from '@utils/Alert';
 import { createFormData } from '@utils/index';
 
 const productSchema = z.object({
@@ -30,7 +32,10 @@ const Index: NextPage = () => {
     register,
     handleSubmit,
     control,
-    formState: { errors },
+    reset,
+    clearErrors,
+    setError,
+    formState: { errors, isSubmitting },
   } = useForm<productSchemaType>({
     defaultValues: {
       name: '',
@@ -44,10 +49,23 @@ const Index: NextPage = () => {
     resolver: zodResolver(productSchema),
   });
 
-  const onSubmit: SubmitHandler<productSchemaType> = useCallback(async (data) => {
-    const formData = createFormData(data);
-    await createProduct(formData);
-  }, []);
+  const onSubmit: SubmitHandler<productSchemaType> = useCallback(
+    async (data) => {
+      try {
+        // Clear errors
+        clearErrors();
+
+        const formData = createFormData(data);
+        await createProduct(formData);
+
+        reset();
+      } catch (err) {
+        if (isAxiosError(err) && err.response)
+          setError('root', { type: 'custom', message: err.response.data.err });
+      }
+    },
+    [reset, clearErrors, setError]
+  );
 
   return (
     <div className="grid grid-cols-12">
@@ -59,6 +77,7 @@ const Index: NextPage = () => {
         <form
           className="mx-auto flex w-full flex-col gap-2 p-5 lg:w-1/2"
           onSubmit={handleSubmit(onSubmit)}>
+          {errors.root?.message && <Alert type="error" message={errors.root.message} />}
           <Input
             type="text"
             id="name"
@@ -113,7 +132,7 @@ const Index: NextPage = () => {
             control={control}
             error={errors.stock}
           />
-          <Button type="submit" className="bg-primary text-white">
+          <Button type="submit" isLoading={isSubmitting} className="bg-primary text-white">
             Submit
           </Button>
         </form>
