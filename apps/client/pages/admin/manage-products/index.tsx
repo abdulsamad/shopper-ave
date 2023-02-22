@@ -10,7 +10,7 @@ const Index: NextPage = () => {
       <div className="col-span-10">
         <div className="container">
           <h1 className="my-3 text-center text-4xl text-gray-700">
-            Welcome to <span className="text-primary">Route</span>
+            Manage <span className="text-primary">Products</span>
           </h1>
         </div>
       </div>
