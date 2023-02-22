@@ -48,7 +48,8 @@ const Sidebar = () => {
     <aside className="bg-primary-600 col-span-2 text-white">
       <ul>
         {sidebarItems.map(({ title, Icon, route }) => {
-          const isActive = router.pathname === `/admin/${route}`;
+          const isHomeActive = route === '' && router.pathname === '/admin';
+          const isActive = router.pathname === `/admin/${route}` || isHomeActive;
 
           return (
             <li key={title} className={isActive ? 'bg-red-500' : ''}>
