@@ -1,0 +1,23 @@
+[build]
+  functions = "functions"
+  command = "echo 'No build functions found!'"
+  publish = ".next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/api/docs"
+  to = "http://178.62.32.180:4000/api-docs/"
+  status = 301
+
+[[headers]]
+	for = "/*"
+
+	[headers.values]
+		X-Frame-Options = "DENY"
