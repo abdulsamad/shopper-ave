@@ -4,8 +4,8 @@
   command = "yarn workspace client build"
   publish = ".next"
 
-[[plugins]]
-  # package = "@netlify/plugin-nextjs"
+# [[plugins]]
+#   package = "@netlify/plugin-nextjs"
 
 [[redirects]]
   from = "/api/*"
