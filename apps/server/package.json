@@ -9,7 +9,7 @@
     "build": "npx tsc",
     "test": "DOTENV_CONFIG_PATH=.env.test jest",
     "test:watch": "DOTENV_CONFIG_PATH=.env.test jest --watch",
-    "api-docs": "open 'http://localhost:4000/api-docs' "
+    "api-docs": "open 'http://localhost:4000/api-docs'"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
