@@ -2,7 +2,7 @@
   base = "/apps/client"
   functions = "functions"
   command = "yarn workspace client build"
-  publish = "/apps/client/.next"
+  publish = ".next"
 
 [[redirects]]
   from = "/api/*"
