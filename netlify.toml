@@ -10,7 +10,7 @@
   status = 200
 
 [[redirects]]
-  from = "/api/docs"
+  from = "/api-docs"
   to = "http://178.62.32.180:4000/api-docs/"
   status = 301
 
