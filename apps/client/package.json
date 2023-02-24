@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "debug": "NODE_OPTIONS='--inspect' npm run dev",
     "cypress:open": "cypress open"
   },
   "dependencies": {
