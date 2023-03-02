@@ -5,7 +5,7 @@ import { StarIcon as StarIconOutline } from '@heroicons/react/24/outline';
 
 import { Product as IProduct } from 'shared-types';
 
-import { getProduct } from '@api/index';
+import { getProduct } from '@api/user';
 import Button from '@utils/Button';
 import { formatCurrency } from '@utils/index';
 import Photos from '@components/user/product/Photos';
