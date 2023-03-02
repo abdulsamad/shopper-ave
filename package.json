@@ -26,7 +26,7 @@
     "npm": ">=8.0.0",
     "node": ">=16.0.0"
   },
-  "packageManager": "yarn@1.22.19",
+  "packageManager": "yarn@3.4.1",
   "lint-staged": {
     "apps/**/*.{js,ts,jsx,tsx}": [
       "eslint --fix"
