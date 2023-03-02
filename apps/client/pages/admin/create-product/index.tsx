@@ -75,7 +75,7 @@ const Index: NextPage = () => {
         </>
       }>
       <form
-        className="mx-auto flex w-full flex-col gap-2 p-5 lg:w-1/2"
+        className="mx-auto flex h-full w-full flex-col gap-2 overflow-auto p-5 lg:w-1/2"
         onSubmit={handleSubmit(onSubmit)}>
         {errors.root?.message && <Alert type="error" message={errors.root.message} />}
         <Input
