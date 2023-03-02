@@ -52,7 +52,9 @@ const Sidebar = () => {
           const isActive = router.pathname === `/admin/${route}` || isHomeActive;
 
           return (
-            <li key={title} className={isActive ? 'bg-red-500' : ''}>
+            <li
+              key={title}
+              className={isActive ? 'bg-gradient-to-r from-cyan-500 to-blue-500' : ''}>
               <Link href={`/admin/${route}`} className="flex items-center justify-center px-4 py-5">
                 {<Icon className="mr-2 h-5 w-5" />}
                 <span>{title}</span>
