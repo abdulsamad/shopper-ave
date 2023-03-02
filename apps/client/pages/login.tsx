@@ -27,7 +27,8 @@ const Login: NextPage = () => {
     control,
     formState: { errors },
   } = useForm<loginSchemaType>({
-    defaultValues: { email: '', password: '' },
+    // ! Remove default admin values
+    defaultValues: { email: 'john@example.com', password: 'john@123' },
     resolver: zodResolver(loginSchema),
   });
 

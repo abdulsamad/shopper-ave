@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { isAxiosError } from 'axios';
 
 import { createProduct } from '@api/admin';
-import Sidebar from '@components/admin/sidebar';
+import AdminLayout from '@components/admin/layout';
 import Input from '@utils/Input';
 import FileInput from '@utils/FileInput';
 import TextArea from '@utils/TextArea';
@@ -68,78 +68,75 @@ const Index: NextPage = () => {
   );
 
   return (
-    <div className="grid grid-cols-12">
-      <Sidebar />
-      <div className="col-span-10">
-        <div className="container">
-          <h1 className="my-3 text-center text-4xl text-gray-700">
-            Create <span className="text-primary">Product</span>
-          </h1>
-        </div>
-        <form
-          className="mx-auto flex w-full flex-col gap-2 p-5 lg:w-1/2"
-          onSubmit={handleSubmit(onSubmit)}>
-          {errors.root?.message && <Alert type="error" message={errors.root.message} />}
-          <Input
-            type="text"
-            id="name"
-            label="Name"
-            placeholder="Product Name"
-            control={control}
-            error={errors.name}
-          />
-          <TextArea
-            rows={4}
-            id="description"
-            label="Product Description"
-            placeholder="Enter product description here"
-            control={control}
-            error={errors.description}
-          />
-          <FileInput
-            id="photos"
-            label="Photos"
-            register={register('photos')}
-            error={errors.photos}
-            multiple
-          />
-          <Select
-            label="Category"
-            options={['hoodie', 'electronics']}
-            id="category"
-            control={control}
-            error={errors.category}
-          />
-          <Input
-            type="text"
-            id="brand"
-            label="Brand"
-            placeholder="e.g Nike"
-            control={control}
-            error={errors.brand}
-          />
-          <Input
-            type="number"
-            id="price"
-            label="Price"
-            placeholder="20"
-            control={control}
-            error={errors.price}
-          />
-          <Input
-            type="number"
-            id="stock"
-            label="Stock"
-            placeholder="Enter stock quantity"
-            control={control}
-            error={errors.stock}
-          />
-          <Button type="submit" isLoading={isSubmitting} className="bg-primary text-white">
-            Submit
-          </Button>
-        </form>
-      </div>
-    </div>
+    <AdminLayout
+      title={
+        <>
+          Create <span className="text-primary">Product</span>
+        </>
+      }>
+      <form
+        className="mx-auto flex w-full flex-col gap-2 p-5 lg:w-1/2"
+        onSubmit={handleSubmit(onSubmit)}>
+        {errors.root?.message && <Alert type="error" message={errors.root.message} />}
+        <Input
+          type="text"
+          id="name"
+          label="Name"
+          placeholder="Product Name"
+          control={control}
+          error={errors.name}
+        />
+        <TextArea
+          rows={4}
+          id="description"
+          label="Product Description"
+          placeholder="Enter product description here"
+          control={control}
+          error={errors.description}
+        />
+        <FileInput
+          id="photos"
+          label="Photos"
+          register={register('photos')}
+          error={errors.photos}
+          multiple
+        />
+        <Select
+          label="Category"
+          options={['hoodie', 'electronics']}
+          id="category"
+          control={control}
+          error={errors.category}
+        />
+        <Input
+          type="text"
+          id="brand"
+          label="Brand"
+          placeholder="e.g Nike"
+          control={control}
+          error={errors.brand}
+        />
+        <Input
+          type="number"
+          id="price"
+          label="Price"
+          placeholder="20"
+          control={control}
+          error={errors.price}
+        />
+        <Input
+          type="number"
+          id="stock"
+          label="Stock"
+          placeholder="Enter stock quantity"
+          control={control}
+          error={errors.stock}
+        />
+        <Button type="submit" isLoading={isSubmitting} className="bg-primary text-white">
+          Submit
+        </Button>
+      </form>
+    </AdminLayout>
   );
 };
 
