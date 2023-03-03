@@ -4,7 +4,7 @@ import Stripe from 'stripe';
 // Load stripe
 const stripe = new Stripe(process.env.STRIPE_SECRET, {
   appInfo: { name: 'Shopper Ave' },
-  apiVersion: '2022-08-01',
+  apiVersion: '2022-11-15',
 });
 
 export const sendStripeKey = (req: Request, res: Response) => {

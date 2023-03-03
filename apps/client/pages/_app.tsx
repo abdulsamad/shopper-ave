@@ -1,14 +1,25 @@
+import { useState } from 'react';
 import type { AppProps } from 'next/app';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-// Global CSS
-import '../styles/index.css';
+import Navbar from '@components/navbar';
+import Footer from '@components/footer';
 
-function MyApp({ Component, pageProps }: AppProps) {
+// Global Styles
+import '@styles/index.css';
+
+const MyApp = ({ Component, pageProps }: AppProps) => {
+  const [queryClient] = useState(() => new QueryClient());
+
   return (
-    <>
-      <Component {...pageProps} />
-    </>
+    <QueryClientProvider client={queryClient}>
+      <div className="flex min-h-screen flex-col">
+        <Navbar />
+        <Component {...pageProps} />
+        <Footer />
+      </div>
+    </QueryClientProvider>
   );
-}
+};
 
 export default MyApp;

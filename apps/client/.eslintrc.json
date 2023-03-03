@@ -14,6 +14,6 @@
     "react/jsx-filename-extension": [1, { "extensions": [".ts", ".tsx"] }],
     "react/jsx-key": "warn",
     "no-console": "warn",
-    "react/button-has-type": "off"
+    "jsx-a11y/anchor-is-valid": "off"
   }
 }

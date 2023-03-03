@@ -10,7 +10,7 @@ export const getAllProduct = async (req: Request, res: Response) => {
   const query = req.query;
 
   try {
-    const resultPerPage = 6;
+    const resultPerPage = 12;
     const totalProducts = await Product.countDocuments();
 
     // ! Add explicit types for Whereclause class
@@ -61,7 +61,9 @@ export const addReview = async (req: Request, res: Response) => {
   const { rating, comment, productId } = req.body;
 
   if (!rating || !comment || !productId) {
-    return res.status(400).json({ err: 'Rating, comment and product ID are required to add a review' });
+    return res
+      .status(400)
+      .json({ err: 'Rating, comment and product ID are required to add a review' });
   }
 
   if (!req.user) {
@@ -101,7 +103,8 @@ export const addReview = async (req: Request, res: Response) => {
 
     // TODO: Add a model prehook for doing this
     // Rating
-    product.ratings = product.reviews.reduce((acc, value) => value.rating + acc, 0) / product.reviews.length;
+    product.ratings =
+      product.reviews.reduce((acc, value) => value.rating + acc, 0) / product.reviews.length;
 
     // Save
     await product.save({ validateBeforeSave: false });
@@ -130,7 +133,8 @@ export const deleteReview = async (req: Request, res: Response) => {
     // TODO: Add a model pre hook
     // Update ratings and reviews
     const numberOfReviews = reviews.length;
-    const ratings = product.reviews.reduce((acc, value) => value.rating + acc, 0) / product.reviews.length;
+    const ratings =
+      product.reviews.reduce((acc, value) => value.rating + acc, 0) / product.reviews.length;
 
     // Update the product
     await Product.findByIdAndUpdate(
@@ -190,7 +194,9 @@ export const addProduct = async (req: Request, res: Response) => {
   if (!name || !price || !description || !category || !brand || !stock) {
     return res
       .status(400)
-      .json({ err: 'name, price, description, category, brand, and stock are required to create a new product' });
+      .json({
+        err: 'name, price, description, category, brand, and stock are required to create a new product',
+      });
   }
 
   // Images
