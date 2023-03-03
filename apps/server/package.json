@@ -4,9 +4,10 @@
   "main": "src/index.ts",
   "private": true,
   "scripts": {
-    "start": "ts-node -r tsconfig-paths/register --files src/index.ts",
+    "start": "node -r tsconfig-paths/register dist/src/index.js",
     "dev": "nodemon",
     "build": "npx tsc",
+    "postbuild": "cp swagger.yml dist/",
     "test": "DOTENV_CONFIG_PATH=.env.test jest",
     "test:watch": "DOTENV_CONFIG_PATH=.env.test jest --watch",
     "api-docs": "open 'http://localhost:4000/api-docs'"
