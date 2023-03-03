@@ -1,6 +1,6 @@
 {
   "ignore": [".git", "node_modules", "dist"],
   "watch": ["src", "swagger.yml"],
-  "exec": "yarn start",
+  "exec": "ts-node -r tsconfig-paths/register --files src/index.ts",
   "ext": "ts, js, json, yml, yaml"
 }
