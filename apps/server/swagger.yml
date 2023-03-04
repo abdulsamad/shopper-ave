@@ -1209,7 +1209,7 @@ paths:
               properties:
                 amount:
                   type: number
-                  default: 999999
+                  default: 99
               required:
                 - amount
       responses:
