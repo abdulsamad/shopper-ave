@@ -4,7 +4,8 @@
   "main": "src/index.ts",
   "private": true,
   "scripts": {
-    "start": "ts-node -r tsconfig-paths/register  --files src/index.ts",
+    "prestart": "npm run build",
+    "start": "node -r ts-node/register/transpile-only -r tsconfig-paths/register dist/src/index.js",
     "dev": "nodemon",
     "build": "npx tsc",
     "postbuild": "cp swagger.yml dist/",
