@@ -4,7 +4,7 @@
   "main": "src/index.ts",
   "private": true,
   "scripts": {
-    "start": "ts-node -r tsconfig-paths/register --files src/index.ts",
+    "start": "ts-node -r tsconfig-paths/register  --files src/index.ts",
     "dev": "nodemon",
     "build": "npx tsc",
     "postbuild": "cp swagger.yml dist/",
