@@ -3,7 +3,7 @@ declare namespace NodeJS {
     PORT: string;
     MONGODB_URI: string;
     PRODUCT_IMAGES_FOLDER_NAME: string;
-    ALLOWED_ORIGIN: string;
+    ORIGIN: string;
     // Authentication
     JWT_SECRET: string;
     JWT_EXPIRY: string;
