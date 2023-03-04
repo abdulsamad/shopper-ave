@@ -8,7 +8,6 @@
     "packages/*"
   ],
   "scripts": {
-    "start": "cd apps/server/ && npm start",
     "build": "turbo run build",
     "lint": "turbo run lint",
     "dev": "turbo run dev --parallel",
