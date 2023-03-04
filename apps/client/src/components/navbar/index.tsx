@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
@@ -19,6 +20,8 @@ const Index = () => {
   const isAuthenticated = useIsAuthenticated();
   const user = useUser();
   const [opened, setOpened] = useState(false);
+
+  const router = useRouter();
 
   const toggleMenu = useCallback(() => {
     setOpened((open) => !open);
@@ -68,6 +71,11 @@ const Index = () => {
         </div>
         {isAuthenticated && user ? (
           <div className="flex items-center space-x-1">
+            {!router.pathname.includes('/admin') && (
+              <LinkButton href="/admin" className="bg-primary mr-2 text-white">
+                Admin
+              </LinkButton>
+            )}
             <p className="mr-5">Hi, {user.name}</p>
             <button className="p-1">
               <ShoppingCartIcon className="h-6 w-6" />
