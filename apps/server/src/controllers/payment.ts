@@ -9,10 +9,10 @@ const stripe = new Stripe(process.env.STRIPE_SECRET, {
 
 export const sendStripeKey = (req: Request, res: Response) => {
   try {
-    const stripeKey = process.env.STRIPE_API_KEY;
+    const key = process.env.STRIPE_API_KEY;
 
     return res.status(200).json({
-      stripeKey,
+      key,
     });
   } catch (err) {
     console.error(err);
