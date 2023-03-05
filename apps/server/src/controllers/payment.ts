@@ -29,7 +29,7 @@ export const capturePayment = async (req: Request, res: Response) => {
 
   try {
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: req.body.amount,
+      amount: amount / 100,
       currency: 'INR',
 
       // Optional metadata for payment on stripe
