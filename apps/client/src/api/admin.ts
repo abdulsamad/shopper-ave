@@ -9,7 +9,10 @@ export interface createProductRes {
 
 export const createProduct = async (details: FormData): Promise<createProductRes> => {
   const res = await axiosInstance.post('/admin/product/add', details, {
-    headers: { 'Content-Type': 'multipart/form-data' },
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
   });
 
   const data = await res.data;

@@ -40,7 +40,12 @@ export const capturePayment = async (amount: number): Promise<ICapturePaymenRes>
   const res = await axiosInstance.post(
     '/payment/capturestripe',
     { amount },
-    { headers: { 'Content-Type': 'application/json' } }
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    }
   );
   const data = await res.data;
   return data;
