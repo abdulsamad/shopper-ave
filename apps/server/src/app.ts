@@ -12,6 +12,7 @@ import user from '@routes/user';
 import product from '@routes/product';
 import payment from '@routes/payment';
 import order from '@routes/order';
+import category from '@routes/category';
 
 // Initialize dotenv
 dotenv.config();
@@ -56,5 +57,6 @@ app.use('/api/v1', user);
 app.use('/api/v1', product);
 app.use('/api/v1', payment);
 app.use('/api/v1', order);
+app.use('/api/v1', category);
 
 export default app;
