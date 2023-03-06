@@ -18,3 +18,22 @@ export const createProduct = async (details: FormData): Promise<createProductRes
   const data = await res.data;
   return data;
 };
+
+export interface ICreateCategoryRes {
+  success: boolean;
+}
+
+export const createCategory = async ({ name }: { name: string }): Promise<ICreateCategoryRes> => {
+  const res = await axiosInstance.post(
+    '/admin/category/add',
+    { name },
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    }
+  );
+  const data = await res.data;
+  return data;
+};
