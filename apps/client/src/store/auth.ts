@@ -5,7 +5,7 @@ import { login, loginReqData, register, registerReqData, logout } from '@api/aut
 
 export interface IAuthStore {
   isAuthenticated: boolean;
-  user: null | object;
+  user: null | any;
   token: null | string;
   actions: {
     login: ({ email, password }: loginReqData) => Promise<void>;
@@ -25,6 +25,9 @@ export const useAuthStore = create<IAuthStore>()(
         login: async (data) => {
           try {
             const { user, token } = await login(data);
+
+            // Set token in local storage
+            localStorage.setItem('token', token);
 
             set(() => ({ user, token, isAuthenticated: true }));
           } catch (err) {
