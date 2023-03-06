@@ -35,7 +35,7 @@ export const LinkButton = ({ href, children, onClick, className }: LinkButtonPro
   <Link
     href={href}
     onClick={onClick}
-    className={`items-center justify-center rounded-lg py-1.5 px-3.5 text-sm font-semibold lg:inline-flex ${className}`}>
+    className={`h-10 items-center justify-center rounded-lg py-1.5 px-3.5 text-sm font-semibold lg:inline-flex ${className}`}>
     {children}
   </Link>
 );
