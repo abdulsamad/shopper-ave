@@ -74,12 +74,12 @@ const Index = () => {
         {isAuthenticated && user ? (
           <div className="flex items-center space-x-1">
             {!router.pathname.includes('/admin') && (
-              <LinkButton href="/admin" className="bg-primary mr-2 text-white">
+              <LinkButton href="/admin" className="bg-primary mr-2 h-8 text-white">
                 Admin
               </LinkButton>
             )}
             <p className="mr-5">Hi, {user.name}</p>
-            <LinkButton href="/cart" className="relative p-1">
+            <LinkButton href="/cart" className="relative p-1 px-2">
               <ShoppingCartIcon className="h-6 w-6" />
               <div className="sr-only">Cart</div>
               {isCartFilled && (
@@ -88,10 +88,10 @@ const Index = () => {
                 </span>
               )}
             </LinkButton>
-            <button className="p-1">
+            <LinkButton href="/profile" className="p-1 px-1">
               <UserCircleIcon className="h-6 w-6" />
               <div className="sr-only">User Profile</div>
-            </button>
+            </LinkButton>
           </div>
         ) : (
           <div className="flex items-center space-x-2">
