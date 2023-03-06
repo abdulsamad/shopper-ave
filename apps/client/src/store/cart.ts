@@ -11,6 +11,7 @@ export type IProduct = Product & Other;
 
 export interface ICartStore {
   items: IProduct[];
+  amount: number;
   actions: {
     add: (product: IProduct, others?: Other) => Promise<void>;
     remove: (id: string) => Promise<void>;
@@ -21,25 +22,32 @@ export interface ICartStore {
 export const useCartStore = create<ICartStore>()(
   devtools((set) => ({
     items: [],
+    amount: 0,
     actions: {
       add: async (product, others = { quantity: 1 }) => {
-        const newProduct = { ...product, ...others };
+        let newItems: IProduct[];
 
-        set(({ items }) => {
+        set(({ items, amount }) => {
           const itemExist = items.filter(({ _id }) => product._id === _id).length > 0;
 
-          if (itemExist) {
-            return {
-              items: items.map((item) => {
-                if (!item.quantity || !others.quantity) return item;
+          // Update amount
+          const updatedAmount = amount + product.price * (others.quantity || 1);
 
-                const quantity = item.quantity + others.quantity;
-                return item._id === product._id ? { ...item, quantity } : item;
-              }),
-            };
+          if (itemExist) {
+            // Update already exist item quantity
+            newItems = items.map((item) => {
+              if (!item.quantity || !others.quantity) return item;
+
+              const quantity = item.quantity + others.quantity;
+              return item._id === product._id ? { ...item, quantity } : item;
+            });
+          } else {
+            // Add new product
+            const newProduct = { ...product, ...others };
+            newItems = [...items, newProduct];
           }
 
-          return { items: [...items, newProduct] };
+          return { items: newItems, amount: updatedAmount };
         });
       },
       remove: async (id) => {
