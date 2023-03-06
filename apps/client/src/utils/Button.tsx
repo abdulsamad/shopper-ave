@@ -1,5 +1,6 @@
 import React, { MouseEventHandler } from 'react';
 import Link from 'next/link';
+import type { LinkProps } from 'next/link';
 
 import { ButtonLoader } from './Loader';
 
@@ -23,19 +24,18 @@ export const Button = ({ children, isLoading = false, onClick, type, className }
   </button>
 );
 
-interface LinkButtonProps {
-  href: string;
+interface LinkButtonProps extends LinkProps {
   children: React.ReactNode;
-  onClick?: MouseEventHandler;
+  className: string;
   type?: 'button' | 'submit' | 'reset';
-  className?: string;
 }
 
-export const LinkButton = ({ href, children, onClick, className }: LinkButtonProps) => (
+export const LinkButton = ({ href, children, onClick, className, ...props }: LinkButtonProps) => (
   <Link
     href={href}
     onClick={onClick}
-    className={`h-10 items-center justify-center rounded-lg py-1.5 px-3.5 text-sm font-semibold lg:inline-flex ${className}`}>
+    className={`h-10 items-center justify-center rounded-lg py-1.5 px-3.5 text-sm font-semibold lg:inline-flex ${className}`}
+    {...props}>
     {children}
   </Link>
 );
