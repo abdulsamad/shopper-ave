@@ -9,7 +9,7 @@ import {
   UserPlusIcon,
 } from '@heroicons/react/24/outline';
 
-import { useIsAuthenticated, useUser } from '@store/index';
+import { useCart, useIsAuthenticated, useUser } from '@store/index';
 
 import HamburgerIcon from './HamburgerIcon';
 import { navLinks } from './navLinks';
@@ -19,9 +19,11 @@ import { LinkButton } from '@utils/Button';
 const Index = () => {
   const isAuthenticated = useIsAuthenticated();
   const user = useUser();
+  const { items } = useCart();
   const [opened, setOpened] = useState(false);
 
   const router = useRouter();
+  const isCartFilled = items.length > 0;
 
   const toggleMenu = useCallback(() => {
     setOpened((open) => !open);
@@ -77,9 +79,14 @@ const Index = () => {
               </LinkButton>
             )}
             <p className="mr-5">Hi, {user.name}</p>
-            <LinkButton href="/cart" className="p-1">
+            <LinkButton href="/cart" className="relative p-1">
               <ShoppingCartIcon className="h-6 w-6" />
               <div className="sr-only">Cart</div>
+              {isCartFilled && (
+                <span className="bg-primary absolute bottom-[2px] right-2 flex h-4 w-4 items-center justify-center rounded-lg text-xs text-white">
+                  {items.length}
+                </span>
+              )}
             </LinkButton>
             <button className="p-1">
               <UserCircleIcon className="h-6 w-6" />

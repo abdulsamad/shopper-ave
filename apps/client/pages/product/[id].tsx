@@ -5,20 +5,16 @@ import { StarIcon as StarIconOutline } from '@heroicons/react/24/outline';
 
 import { Product as IProduct } from 'shared-types';
 
+import { useCart } from '@store/index';
 import { getProduct } from '@api/user';
 import Button from '@utils/Button';
 import { formatCurrency } from '@utils/index';
 import Photos from '@components/user/product/Photos';
 
-const Index: NextPage<IProduct> = ({
-  name,
-  brand,
-  photos,
-  price,
-  category,
-  description,
-  ratings,
-}: IProduct) => {
+const Index: NextPage<IProduct> = (product: IProduct) => {
+  const { name, brand, photos, price, category, description, ratings } = product;
+  const { actions } = useCart();
+
   return (
     <div className="grid grid-cols-2 place-items-center p-5">
       <Photos photos={photos} name={name} />
@@ -45,7 +41,10 @@ const Index: NextPage<IProduct> = ({
           </Button>
           <Button
             type="button"
-            className="border-primary text-primary hover:bg-primary border border-solid py-2 transition duration-300 ease-out hover:text-white">
+            className="border-primary text-primary hover:bg-primary border border-solid py-2 transition duration-300 ease-out hover:text-white"
+            onClick={() => {
+              actions.add(product);
+            }}>
             <ShoppingCartIcon className="mr-3 h-5 w-5" /> Add to Cart
           </Button>
         </div>
