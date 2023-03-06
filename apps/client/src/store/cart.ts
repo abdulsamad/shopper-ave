@@ -7,7 +7,7 @@ interface Other {
   quantity?: number;
 }
 
-type IProduct = Product & Other;
+export type IProduct = Product & Other;
 
 export interface ICartStore {
   items: IProduct[];
