@@ -77,7 +77,7 @@ const Index = () => {
               </LinkButton>
             )}
             <p className="mr-5">Hi, {user.name}</p>
-            <LinkButton href="/checkout" className="p-1">
+            <LinkButton href="/cart" className="p-1">
               <ShoppingCartIcon className="h-6 w-6" />
               <div className="sr-only">Cart</div>
             </LinkButton>
