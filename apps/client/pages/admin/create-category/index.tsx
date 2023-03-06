@@ -21,7 +21,7 @@ const Index: NextPage = () => {
   const {
     handleSubmit,
     control,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     reset,
     clearErrors,
     setError,
@@ -65,7 +65,7 @@ const Index: NextPage = () => {
           control={control}
           error={errors.name}
         />
-        <Button type="submit" className="bg-primary text-white">
+        <Button type="submit" isLoading={isSubmitting} className="bg-primary text-white">
           Submit
         </Button>
       </form>
