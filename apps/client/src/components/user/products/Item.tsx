@@ -34,7 +34,7 @@ const Item = (product: IProduct) => {
           onClick={(ev) => {
             ev.stopPropagation();
           }}
-          className="w-1/2 bg-gradient-to-r from-cyan-300 to-blue-400 p-2 text-white">
+          className="w-1/2 rounded-none bg-gradient-to-r from-cyan-300 to-blue-400 p-2 text-white">
           Buy Now
         </Button>
         <Button
@@ -43,7 +43,7 @@ const Item = (product: IProduct) => {
             ev.stopPropagation();
             actions.add(product);
           }}
-          className="from-primary-400 to-primary-600 w-1/2 bg-gradient-to-r p-2 text-white">
+          className="from-primary-400 to-primary-600 w-1/2 rounded-none bg-gradient-to-r p-2 text-white">
           Add to Cart
         </Button>
       </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { MinusCircleIcon } from '@heroicons/react/24/outline';
+import { MinusCircleIcon, ShoppingBagIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 
 import { IProduct, ICartStore } from '@store/cart';
@@ -48,9 +48,11 @@ const Cart = ({ items, actions, isCartEmpty }: ICart) => {
           </div>
         </div>
       ))}
-      <LinkButton href="/checkout" className="bg-primary w-full text-white">
-        Proceed to Checkout
-      </LinkButton>
+      <div className="py-2">
+        <LinkButton href="/checkout" className="bg-primary w-full text-white">
+          <ShoppingBagIcon className="mr-2 h-6 w-6" /> Proceed to Checkout
+        </LinkButton>
+      </div>
     </div>
   );
 };
