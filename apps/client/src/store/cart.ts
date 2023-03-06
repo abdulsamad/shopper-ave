@@ -12,7 +12,7 @@ type IProduct = Product & Other;
 export interface ICartStore {
   items: IProduct[];
   actions: {
-    add: (product: IProduct, { quantity }?: Other) => Promise<void>;
+    add: (product: IProduct, others?: Other) => Promise<void>;
     remove: (id: string) => Promise<void>;
     update: (product: IProduct) => Promise<void>;
   };
