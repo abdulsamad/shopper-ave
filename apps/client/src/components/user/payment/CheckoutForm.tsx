@@ -1,38 +1,90 @@
-import React, { FormEvent } from 'react';
-import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
+import React, { useEffect, FormEvent } from 'react';
+import { CardElement, PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
 
 import Button from '@utils/Button';
-import { capturePayment } from '@api/user';
 
-const CheckoutForm = () => {
+interface ICheckoutForm {
+  amount: number;
+}
+
+const CheckoutForm = ({ amount }: ICheckoutForm) => {
   const stripe = useStripe();
   const elements = useElements();
+
+  const [message, setMessage] = React.useState('');
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  useEffect(() => {
+    if (!stripe) {
+      return;
+    }
+
+    const clientSecret = new URLSearchParams(window.location.search).get(
+      'payment_intent_client_secret'
+    );
+
+    if (!clientSecret) {
+      return;
+    }
+
+    stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
+      if (!paymentIntent) return;
+
+      switch (paymentIntent.status) {
+        case 'succeeded':
+          setMessage('Payment succeeded!');
+          break;
+        case 'processing':
+          setMessage('Your payment is processing.');
+          break;
+        case 'requires_payment_method':
+          setMessage('Your payment was not successful, please try again.');
+          break;
+        default:
+          setMessage('Something went wrong.');
+          break;
+      }
+    });
+  }, [stripe]);
 
   const handleSubmit = async (ev: FormEvent) => {
     ev.preventDefault();
     const card = elements?.getElement(CardElement);
 
-    const capture = await capturePayment(78);
-
-    if (elements == null || stripe == null || card == null) {
+    if (!stripe || !elements) {
       return;
     }
 
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
-      type: 'card',
-      card,
+    setIsLoading(true);
+
+    const { error } = await stripe.confirmPayment({
+      elements,
+      confirmParams: {
+        return_url: process.env.NEXT_PUBLIC_DOMAIN,
+      },
     });
 
-    console.log({ paymentMethod, error });
+    if (error.type === 'card_error' || error.type === 'validation_error') {
+      // setError(error.message)
+    } else {
+      // Unexpedted errror occurred.
+    }
+
+    setIsLoading(false);
   };
 
   return (
     <div className="text-center">
-      <h1 className="my-5 text-center text-xl">Checkout</h1>
+      <h1 className="my-5 text-center text-xl">
+        Pay with <span className="text-primary">Credit Card</span>
+      </h1>
       <form onSubmit={handleSubmit}>
-        <CardElement options={{ iconStyle: 'solid' }} />
-        <Button type="submit" className="bg-primary my-3 text-white">
-          Pay
+        <PaymentElement options={{ layout: 'tabs' }} />
+        <Button
+          type="submit"
+          isLoading={isLoading}
+          className="bg-primary my-3 uppercase text-white">
+          Pay Securely
         </Button>
       </form>
     </div>
