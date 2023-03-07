@@ -15,7 +15,7 @@ export interface ICartStore {
   actions: {
     add: (product: IProduct, others?: Other) => Promise<void>;
     remove: (id: string) => Promise<void>;
-    update: (product: IProduct) => Promise<void>;
+    updateQuantity: (id: string, quantity: number) => Promise<void>;
   };
 }
 
@@ -55,10 +55,25 @@ export const useCartStore = create<ICartStore>()(
           items: items.filter((item) => item._id !== id),
         }));
       },
-      update: async (product) => {
-        set(({ items }) => ({
-          items: items.map((item) => (item._id === product._id ? product : item)),
-        }));
+      updateQuantity: async (id, quantity) => {
+        set(({ items, amount }) => {
+          let newAmount;
+
+          const updatedItems = items.map((item) => {
+            // Remove already added amount
+            if (item._id === id && item.quantity) {
+              const previousAmount = item.quantity * item.price;
+              newAmount = item.price * quantity + (amount - previousAmount);
+            }
+
+            return item._id === id ? { ...item, quantity } : item;
+          });
+
+          return {
+            items: updatedItems,
+            amount: newAmount,
+          };
+        });
       },
     },
   }))
