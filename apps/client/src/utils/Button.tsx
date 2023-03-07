@@ -17,7 +17,7 @@ export const Button = ({ children, isLoading = false, onClick, type, className }
     type={type}
     onClick={onClick}
     disabled={isLoading}
-    className={`h-10 items-center justify-center rounded-lg py-1.5 px-3.5 text-sm active:scale-105 lg:inline-flex ${
+    className={`items-center justify-center rounded-lg py-1.5 px-3.5 text-sm active:scale-105 lg:inline-flex ${
       isLoading && 'hover:cursor-wait'
     } ${className}`}>
     {isLoading ? <ButtonLoader /> : children}
@@ -34,7 +34,7 @@ export const LinkButton = ({ href, children, onClick, className, ...props }: Lin
   <Link
     href={href}
     onClick={onClick}
-    className={`h-10 items-center justify-center rounded-lg py-1.5 px-3.5 text-sm lg:inline-flex ${className}`}
+    className={`items-center justify-center rounded-lg py-1.5 px-3.5 text-sm lg:inline-flex ${className}`}
     {...props}>
     {children}
   </Link>
