@@ -30,7 +30,7 @@ const Input = ({
   className,
 }: InputProps) => {
   return (
-    <div className="my-2 flex flex-col">
+    <div className="my-3 flex flex-col">
       <label htmlFor={id} className="mb-2 font-medium">
         {label}
       </label>
