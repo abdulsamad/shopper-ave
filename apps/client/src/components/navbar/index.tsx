@@ -32,7 +32,7 @@ const Index = () => {
   return (
     <header className="container mx-auto">
       <motion.nav
-        className="flex items-center justify-between px-4 py-4"
+        className="flex items-center justify-between px-1 py-2 lg:px-3"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}>
         <div className="flex">
@@ -54,7 +54,7 @@ const Index = () => {
               animate="show"
               exit="hidden"
               variants={dropdownVariants}
-              className="absolute top-[60px] left-1/2 z-50 flex w-full -translate-x-1/2 flex-col items-center space-y-2 bg-white py-2 shadow-md">
+              className="absolute top-[50px] left-1/2 z-50 flex w-full -translate-x-1/2 flex-col items-center space-y-2 bg-white py-2 shadow-md">
               {navLinks.map(({ path, text }) => (
                 <motion.li key={path} className="w-full text-center" variants={DropdownItemVariant}>
                   <Link href={path}>{text}</Link>
@@ -78,7 +78,7 @@ const Index = () => {
                 Admin
               </LinkButton>
             )}
-            <p className="mr-5">Hi, {user.name}</p>
+            <p className="mr-5 hidden lg:block">Hi, {user.name}</p>
             <LinkButton href="/cart" className="relative p-1 px-2">
               <ShoppingCartIcon className="h-6 w-6" />
               <div className="sr-only">Cart</div>
