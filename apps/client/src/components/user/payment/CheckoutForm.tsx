@@ -1,15 +1,17 @@
-import React, { useEffect, FormEvent } from 'react';
-import { CardElement, PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import { LockClosedIcon } from '@heroicons/react/24/outline';
+import React, { useEffect, useState, FormEvent } from 'react';
+import { PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
+import { LockClosedIcon } from '@heroicons/react/24/solid';
 
 import Button from '@utils/Button';
+import Alert from '@utils/Alert';
 
 const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
 
-  const [message, setMessage] = React.useState('');
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [message, setMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     if (!stripe) {
@@ -46,7 +48,6 @@ const CheckoutForm = () => {
 
   const handleSubmit = async (ev: FormEvent) => {
     ev.preventDefault();
-    const card = elements?.getElement(CardElement);
 
     if (!stripe || !elements) {
       return;
@@ -62,9 +63,10 @@ const CheckoutForm = () => {
     });
 
     if (error.type === 'card_error' || error.type === 'validation_error') {
-      // setError(error.message)
+      if (error instanceof Error) setError(error.message);
     } else {
       // Unexpedted errror occurred.
+      setError('An unexpected error occurred!');
     }
 
     setIsLoading(false);
@@ -76,11 +78,13 @@ const CheckoutForm = () => {
         Pay with <span className="text-primary">Credit Card</span>
       </h1>
       <form onSubmit={handleSubmit}>
+        {message && <Alert message={message} />}
+        {error && <Alert message={error} type="error" />}
         <PaymentElement options={{ layout: 'tabs' }} />
         <Button
           type="submit"
           isLoading={isLoading}
-          className="bg-primary my-3 flex items-center py-2 text-lg uppercase text-white">
+          className="from-primary-600 to-primary-400 hover:bg-primary-500 my-6 flex w-full items-center bg-gradient-to-r py-2 uppercase text-white">
           <LockClosedIcon className="mr-2 h-6 w-6" />
           Pay Securely
         </Button>
