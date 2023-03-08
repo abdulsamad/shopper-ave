@@ -10,16 +10,26 @@ interface ButtonProps {
   onClick?: MouseEventHandler;
   type?: 'button' | 'submit' | 'reset';
   className?: string;
+  disabled?: boolean;
 }
 
-export const Button = ({ children, isLoading = false, onClick, type, className }: ButtonProps) => (
+export const Button = ({
+  children,
+  isLoading = false,
+  disabled,
+  onClick,
+  type,
+  className,
+  ...props
+}: ButtonProps) => (
   <button
     type={type}
     onClick={onClick}
-    disabled={isLoading}
+    disabled={isLoading || disabled}
     className={`items-center justify-center rounded-lg py-1.5 px-3.5 text-sm active:scale-105 lg:inline-flex ${
       isLoading && 'hover:cursor-wait'
-    } ${className}`}>
+    } ${className}`}
+    {...props}>
     {isLoading ? <ButtonLoader /> : children}
   </button>
 );
