@@ -25,7 +25,7 @@ const Login: NextPage = () => {
   const {
     handleSubmit,
     control,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<loginSchemaType>({
     // ! Remove default admin values
     defaultValues: { email: 'john@example.com', password: 'john@123' },
@@ -67,7 +67,8 @@ const Login: NextPage = () => {
           />
           <Button
             type="submit"
-            className="bg-primary hover:bg-primary-500 mt-2 px-4 py-2 text-white">
+            isLoading={isSubmitting}
+            className="from-primary-600  to-primary-400 hover:bg-primary-500 mt-2 w-full bg-gradient-to-r px-4 py-2 text-white">
             Log In
           </Button>
         </form>
