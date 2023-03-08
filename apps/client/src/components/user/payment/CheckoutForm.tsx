@@ -1,5 +1,6 @@
 import React, { useEffect, FormEvent } from 'react';
 import { CardElement, PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
+import { LockClosedIcon } from '@heroicons/react/24/outline';
 
 import Button from '@utils/Button';
 
@@ -83,7 +84,8 @@ const CheckoutForm = ({ amount }: ICheckoutForm) => {
         <Button
           type="submit"
           isLoading={isLoading}
-          className="bg-primary my-3 uppercase text-white">
+          className="bg-primary my-3 flex items-center py-2 text-lg uppercase text-white">
+          <LockClosedIcon className="mr-2 h-6 w-6" />
           Pay Securely
         </Button>
       </form>

@@ -103,7 +103,7 @@ const Cart = ({ items, actions, isCartEmpty, amount }: ICart) => {
       </div>
       <LinkButton
         href="/checkout"
-        className="from-primary-600 to-primary-400 flex w-full whitespace-nowrap bg-gradient-to-r px-0 text-white">
+        className="from-primary-600 to-primary-400 flex w-full whitespace-nowrap bg-gradient-to-r py-2 px-0 text-white">
         <ShoppingBagIcon className="mr-2 h-6 w-6" /> Proceed to Checkout
       </LinkButton>
     </div>

@@ -64,7 +64,7 @@ module.exports = {
         },
         'button-loader': {
           '0%': {
-            height: '1.2em',
+            height: '1.1em',
           },
           '100%': {
             height: '4px',

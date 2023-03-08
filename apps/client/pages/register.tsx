@@ -127,7 +127,7 @@ const Register: NextPage = () => {
           <Button
             type="submit"
             isLoading={isSubmitting}
-            className="hover:bg-primary-500 from-primary-600 to-primary-400 mt-2 w-full bg-gradient-to-r text-white">
+            className="hover:bg-primary-500 from-primary-600 to-primary-400 mt-2 w-full bg-gradient-to-r py-2 text-lg text-white">
             Create Account
           </Button>
         </form>
