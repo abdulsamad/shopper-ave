@@ -6,6 +6,7 @@ import {
   ShoppingCartIcon,
   ArrowRightOnRectangleIcon,
   UserPlusIcon,
+  UserCircleIcon,
 } from '@heroicons/react/24/outline';
 
 import { useCart, useIsAuthenticated, useUser } from '@store/index';
@@ -89,7 +90,7 @@ const Index = () => {
               )}
             </LinkButton>
             <LinkButton href="/profile" className="p-1 px-1 text-sm">
-              {user.photo && (
+              {user.photo ? (
                 <Image
                   src={user.photo.secure_url}
                   alt={user.name}
@@ -97,6 +98,8 @@ const Index = () => {
                   height={40}
                   className="rounded-full"
                 />
+              ) : (
+                <UserCircleIcon className="h-6 w-6" />
               )}
               <div className="sr-only">User Profile</div>
             </LinkButton>

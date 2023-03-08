@@ -36,7 +36,7 @@ const ProfilePage: NextPage = () => {
           />
         )}
       </div>
-      <div className="flex flex-col space-y-3 text-center">
+      <div className="flex flex-col space-y-4 text-center">
         <div>
           <span className="mr-2 font-semibold">Name:</span>
           <span>{name}</span>
