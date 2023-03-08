@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   ShoppingCartIcon,
-  UserCircleIcon,
   ArrowRightOnRectangleIcon,
   UserPlusIcon,
 } from '@heroicons/react/24/outline';
@@ -75,7 +74,7 @@ const Index = () => {
         {isAuthenticated && user ? (
           <div className="flex items-center space-x-1">
             {!router.pathname.includes('/admin') && (
-              <LinkButton href="/admin" className="bg-primary mr-2 h-8 text-white">
+              <LinkButton href="/admin" className="bg-primary mr-2 h-8 text-sm text-white">
                 Admin
               </LinkButton>
             )}
@@ -89,7 +88,7 @@ const Index = () => {
                 </span>
               )}
             </LinkButton>
-            <LinkButton href="/profile" className="p-1 px-1">
+            <LinkButton href="/profile" className="p-1 px-1 text-sm">
               {user.photo && (
                 <Image
                   src={user.photo.secure_url}
@@ -104,10 +103,10 @@ const Index = () => {
           </div>
         ) : (
           <div className="flex items-center space-x-2">
-            <LinkButton className="bg-gray-200 text-gray-900" href="/login">
+            <LinkButton className="bg-gray-200 text-sm text-gray-900" href="/login">
               <ArrowRightOnRectangleIcon className="mr-1.5 h-5 w-5" /> Log In
             </LinkButton>
-            <LinkButton className="bg-primary text-white" href="/register">
+            <LinkButton className="bg-primary text-sm text-white" href="/register">
               <UserPlusIcon className="mr-1.5 h-5 w-5" />
               Register
             </LinkButton>
