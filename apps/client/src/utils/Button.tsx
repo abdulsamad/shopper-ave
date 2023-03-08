@@ -26,7 +26,7 @@ export const Button = ({
     type={type}
     onClick={onClick}
     disabled={isLoading || disabled}
-    className={`items-center justify-center rounded-lg py-1.5 px-3.5 text-sm active:scale-105 lg:inline-flex ${
+    className={`items-center justify-center rounded-lg py-1.5 px-3.5 active:scale-105 lg:inline-flex ${
       isLoading && 'hover:cursor-wait'
     } ${className}`}
     {...props}>
@@ -36,15 +36,14 @@ export const Button = ({
 
 interface LinkButtonProps extends LinkProps {
   children: React.ReactNode;
-  className: string;
   type?: 'button' | 'submit' | 'reset';
+  className?: string;
 }
 
-export const LinkButton = ({ href, children, onClick, className, ...props }: LinkButtonProps) => (
+export const LinkButton = ({ children, type, className, ...props }: LinkButtonProps) => (
   <Link
-    href={href}
-    onClick={onClick}
-    className={`items-center justify-center rounded-lg py-1.5 px-3.5 text-sm lg:inline-flex ${className}`}
+    type={type}
+    className={`items-center justify-center rounded-lg py-1.5 px-3.5 lg:inline-flex ${className}`}
     {...props}>
     {children}
   </Link>
