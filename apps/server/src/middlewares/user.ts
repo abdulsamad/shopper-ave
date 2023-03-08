@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 
+import { User as IUser } from 'shared-types';
+
 import User from '@models/user';
-import { User as IUser } from '@types';
 
 export const isLoggedIn = async (req: Request, res: Response, next: NextFunction) => {
   const token = req.cookies.token || req.header('Authorization')?.replace('Bearer ', '');
