@@ -33,7 +33,7 @@ export const signup = async (req: Request, res: Response) => {
       password,
       photo: {
         id: result?.public_id,
-        secure_url: result?.url,
+        secure_url: result?.secure_url,
       },
     });
 
@@ -138,7 +138,10 @@ export const passwordReset = async (req: Request, res: Response) => {
 
   try {
     const encryToken = crypto.createHash('sha256').update(token).digest('hex');
-    const user = await User.findOne({ forgotPasswordToken: encryToken, forgotPasswordExpiry: { $gt: Date.now() } });
+    const user = await User.findOne({
+      forgotPasswordToken: encryToken,
+      forgotPasswordExpiry: { $gt: Date.now() },
+    });
 
     if (!user) {
       return res.status(400).json({ err: 'Token is either invalid or expired' });
@@ -180,7 +183,9 @@ export const changePassword = async (req: Request, res: Response) => {
   const userId = req.user?._id;
 
   if (!oldPassword || !newPassword) {
-    return res.status(400).json({ err: 'Both old and new password is required to update password' });
+    return res
+      .status(400)
+      .json({ err: 'Both old and new password is required to update password' });
   }
 
   try {
@@ -320,9 +325,9 @@ export const adminUpdateUser = async (req: Request, res: Response) => {
   }
 
   if (!name && !email && !role) {
-    return res
-      .status(400)
-      .json({ err: 'Atleast one property (name, email, photo or role) is required to update data' });
+    return res.status(400).json({
+      err: 'Atleast one property (name, email, photo or role) is required to update data',
+    });
   }
 
   try {
