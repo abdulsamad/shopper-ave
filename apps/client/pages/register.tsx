@@ -9,6 +9,7 @@ import { useAuthActions, useIsAuthenticated } from '@store/index';
 
 import Button from '@utils/Button';
 import Input from '@utils/Input';
+import FileInput from '@utils/FileInput';
 
 const RegisterSchema = z
   .object({
@@ -17,6 +18,7 @@ const RegisterSchema = z
       .min(1, 'Name is required for creating an account')
       .max(80, 'Name should be under 80 characters'),
     email: z.string().min(1, 'Email is required for creating an account').email(),
+    photo: z.custom<File | null>((val) => val),
     password: z.string().min(8, 'Password should be atleast 8 characters long'),
     confirmPassword: z.string().min(8, 'Confirm Password should also be atleast 8 characters long'),
   })
@@ -28,18 +30,20 @@ const RegisterSchema = z
 type registerSchemaType = z.infer<typeof RegisterSchema>;
 
 const Register: NextPage = () => {
-  const { register } = useAuthActions();
+  const { register: authRegister } = useAuthActions();
   const isAuthenticated = useIsAuthenticated();
 
   const router = useRouter();
   const {
     handleSubmit,
+    register,
     control,
     formState: { errors },
   } = useForm<registerSchemaType>({
     defaultValues: {
       name: '',
       email: '',
+      photo: null,
       password: '',
       confirmPassword: '',
     },
@@ -54,19 +58,19 @@ const Register: NextPage = () => {
 
   const onSubmit: SubmitHandler<registerSchemaType> = useCallback(
     async (data) => {
-      await register(data);
+      await authRegister(data);
     },
-    [register]
+    [authRegister]
   );
 
   return (
     <section className="my-5">
       <div className="mx-auto max-w-full px-5 md:w-[500px]">
-        <form className="" onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <Input
             type="text"
             label="Name"
-            placeholder="Gavin Belson"
+            placeholder="John Doe"
             id="name"
             control={control}
             error={errors.name}
@@ -79,6 +83,7 @@ const Register: NextPage = () => {
             control={control}
             error={errors.email}
           />
+          <FileInput id="photo" label="Photo" register={register('photo')} required={false} />
           <Input
             type="password"
             label="Password"
