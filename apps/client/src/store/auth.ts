@@ -1,11 +1,13 @@
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 
+import { User } from 'shared-types';
+
 import { login, loginReqData, register, registerReqData, logout } from '@api/auth';
 
 export interface IAuthStore {
   isAuthenticated: boolean;
-  user: null | any;
+  user: null | User;
   token: null | string;
   actions: {
     login: ({ email, password }: loginReqData) => Promise<void>;

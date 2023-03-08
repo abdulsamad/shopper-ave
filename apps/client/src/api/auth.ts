@@ -1,3 +1,5 @@
+import { User } from 'shared-types';
+
 import { axiosInstance } from './axiosInstance';
 
 export interface loginReqData {
@@ -8,7 +10,7 @@ export interface loginReqData {
 export interface loginResData {
   success: boolean;
   token: string;
-  user: object;
+  user: User;
 }
 
 /**
@@ -31,7 +33,7 @@ export interface registerReqData {
 export interface registerResData {
   success: boolean;
   token: string;
-  user: object;
+  user: User;
 }
 
 export const register = async ({
