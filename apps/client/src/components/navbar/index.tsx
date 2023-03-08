@@ -15,6 +15,7 @@ import HamburgerIcon from './HamburgerIcon';
 import { navLinks } from './navLinks';
 import { DropdownItemVariant, dropdownVariants } from './framer-variants';
 import { LinkButton } from '@utils/Button';
+import Image from 'next/image';
 
 const Index = () => {
   const isAuthenticated = useIsAuthenticated();
@@ -89,7 +90,15 @@ const Index = () => {
               )}
             </LinkButton>
             <LinkButton href="/profile" className="p-1 px-1">
-              <UserCircleIcon className="h-6 w-6" />
+              {user.photo && (
+                <Image
+                  src={user.photo.secure_url}
+                  alt={user.name}
+                  width={40}
+                  height={40}
+                  className="rounded-full"
+                />
+              )}
               <div className="sr-only">User Profile</div>
             </LinkButton>
           </div>

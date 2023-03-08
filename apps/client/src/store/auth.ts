@@ -48,6 +48,9 @@ export const useAuthStore = create<IAuthStore>()(
         logout: async () => {
           await logout();
 
+          // Remove token from local storage
+          localStorage.removeItem('token');
+
           set(() => ({ isAuthenticated: false, token: null, user: null }));
         },
       },
