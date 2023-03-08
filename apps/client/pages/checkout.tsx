@@ -7,12 +7,14 @@ import { Elements } from '@stripe/react-stripe-js';
 import { useCart } from '@store/index';
 import CheckoutForm from '@components/user/payment/CheckoutForm';
 import { capturePayment } from '@api/user';
+import Alert from '@utils/Alert';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
 const Checkout: NextPage = () => {
   const { amount } = useCart();
   const [clientSecret, setClientSecret] = useState('');
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const createPaymentIntent = async () => {
@@ -23,7 +25,7 @@ const Checkout: NextPage = () => {
     // Set client secret
     createPaymentIntent()
       .then(({ client_secret }) => setClientSecret(client_secret))
-      .catch((err) => console.error(err));
+      .catch((err) => setError(err.message));
   }, [amount]);
 
   const options: StripeElementsOptions = {
@@ -42,7 +44,8 @@ const Checkout: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="flex flex-col p-2 md:flex-row lg:p-5">
-        <section className="mx-auto px-8 lg:w-1/2">
+        <section className="mx-auto max-w-[400px] px-8 lg:max-w-[600px]">
+          {error && <Alert message={error} type="error" />}
           {clientSecret && (
             <Elements options={options} stripe={stripePromise}>
               <CheckoutForm />
