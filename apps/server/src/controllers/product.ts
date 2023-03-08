@@ -192,11 +192,9 @@ export const addProduct = async (req: Request, res: Response) => {
   const { name, price, description, category, brand, stock } = req.body;
 
   if (!name || !price || !description || !category || !brand || !stock) {
-    return res
-      .status(400)
-      .json({
-        err: 'name, price, description, category, brand, and stock are required to create a new product',
-      });
+    return res.status(400).json({
+      err: 'name, price, description, category, brand, and stock are required to create a new product',
+    });
   }
 
   // Images
