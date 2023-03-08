@@ -4,12 +4,15 @@ import { useRouter } from 'next/router';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { isAxiosError } from 'axios';
 
 import { useAuthActions, useIsAuthenticated } from '@store/index';
 
 import Button from '@utils/Button';
 import Input from '@utils/Input';
 import FileInput from '@utils/FileInput';
+import { createFormData } from '@utils/index';
+import Alert from '@utils/Alert';
 
 const RegisterSchema = z
   .object({
@@ -18,7 +21,7 @@ const RegisterSchema = z
       .min(1, 'Name is required for creating an account')
       .max(80, 'Name should be under 80 characters'),
     email: z.string().min(1, 'Email is required for creating an account').email(),
-    photo: z.custom<File | null>((val) => val),
+    photo: z.custom<FileList | null>((val) => val),
     password: z.string().min(8, 'Password should be atleast 8 characters long'),
     confirmPassword: z.string().min(8, 'Confirm Password should also be atleast 8 characters long'),
   })
@@ -38,7 +41,10 @@ const Register: NextPage = () => {
     handleSubmit,
     register,
     control,
-    formState: { errors },
+    formState: { errors, isSubmitting },
+    clearErrors,
+    setError,
+    reset,
   } = useForm<registerSchemaType>({
     defaultValues: {
       name: '',
@@ -58,15 +64,27 @@ const Register: NextPage = () => {
 
   const onSubmit: SubmitHandler<registerSchemaType> = useCallback(
     async (data) => {
-      await authRegister(data);
+      try {
+        // Clear errors
+        clearErrors();
+
+        const formData = createFormData(data);
+        await authRegister(formData);
+
+        reset();
+      } catch (err) {
+        if (isAxiosError(err) && err.response)
+          setError('root', { type: 'custom', message: err.response.data.err });
+      }
     },
-    [authRegister]
+    [reset, clearErrors, setError, authRegister]
   );
 
   return (
     <section className="my-5">
       <div className="mx-auto max-w-full px-5 md:w-[500px]">
         <form onSubmit={handleSubmit(onSubmit)}>
+          {errors.root?.message && <Alert type="error" message={errors.root.message} />}
           <Input
             type="text"
             label="Name"
@@ -83,7 +101,13 @@ const Register: NextPage = () => {
             control={control}
             error={errors.email}
           />
-          <FileInput id="photo" label="Photo" register={register('photo')} required={false} />
+          <FileInput
+            id="photo"
+            label="Photo"
+            register={register('photo')}
+            error={errors.photo}
+            required={false}
+          />
           <Input
             type="password"
             label="Password"
@@ -102,7 +126,8 @@ const Register: NextPage = () => {
           />
           <Button
             type="submit"
-            className="bg-primary hover:bg-primary-500 mt-2 px-4 py-2 text-white">
+            isLoading={isSubmitting}
+            className="hover:bg-primary-500 from-primary-600 to-primary-400 mt-2 w-full bg-gradient-to-r text-white">
             Create Account
           </Button>
         </form>
