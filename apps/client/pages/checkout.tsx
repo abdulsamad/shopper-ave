@@ -45,7 +45,7 @@ const Checkout: NextPage = () => {
         <section className="mx-auto px-8 lg:w-1/2">
           {clientSecret && (
             <Elements options={options} stripe={stripePromise}>
-              <CheckoutForm amount={amount} />
+              <CheckoutForm />
             </Elements>
           )}
         </section>

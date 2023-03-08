@@ -4,11 +4,7 @@ import { LockClosedIcon } from '@heroicons/react/24/outline';
 
 import Button from '@utils/Button';
 
-interface ICheckoutForm {
-  amount: number;
-}
-
-const CheckoutForm = ({ amount }: ICheckoutForm) => {
+const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
 
