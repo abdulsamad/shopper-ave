@@ -3,7 +3,7 @@ import { devtools, persist } from 'zustand/middleware';
 
 import { User } from 'shared-types';
 
-import { login, loginReqData, register, registerReqData, logout } from '@api/auth';
+import { login, loginReqData, register, logout } from '@api/auth';
 
 export interface IAuthStore {
   isAuthenticated: boolean;
@@ -11,7 +11,7 @@ export interface IAuthStore {
   token: null | string;
   actions: {
     login: ({ email, password }: loginReqData) => Promise<void>;
-    register: ({ email, password, name }: registerReqData) => Promise<void>;
+    register: (userInfo: FormData) => Promise<void>;
     logout: () => void;
   };
 }
