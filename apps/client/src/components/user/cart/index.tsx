@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { MinusCircleIcon, PlusCircleIcon } from '@heroicons/react/24/outline';
 import { ShoppingBagIcon } from '@heroicons/react/24/solid';
 import Image from 'next/image';
@@ -16,6 +16,8 @@ interface ICart {
 }
 
 const Cart = ({ items, actions, isCartEmpty, amount }: ICart) => {
+  const [outOfStockItem, setOutOfStockItem] = useState('');
+
   if (isCartEmpty) {
     return (
       <div className="p-5 text-center">
@@ -29,6 +31,16 @@ const Cart = ({ items, actions, isCartEmpty, amount }: ICart) => {
 
   return (
     <div className="max-w[400px] mx-auto space-y-2 px-5 md:max-w-[600px]">
+      {outOfStockItem && (
+        <Alert
+          message={
+            <div>
+              <strong>&quot;{outOfStockItem}&quot;</strong> is out of stock now.
+            </div>
+          }
+          type="error"
+        />
+      )}
       <div className="relative">
         <h1 className="text-center text-2xl">My Cart</h1>
         <span className="absolute left-[calc(50%+10ch)] top-1/2 -translate-y-1/2 -translate-x-1/2 rounded-lg bg-slate-200 p-1 text-sm shadow-sm">
@@ -71,6 +83,7 @@ const Cart = ({ items, actions, isCartEmpty, amount }: ICart) => {
               className="disabled:text-slate-400"
               onClick={() => {
                 if (!quantity) return;
+                if (quantity + 1 === stock) setOutOfStockItem(name);
 
                 actions.updateQuantity(_id, quantity + 1);
               }}>
