@@ -4,11 +4,12 @@ import { useRouter } from 'next/router';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { isAxiosError } from 'axios';
 
 import { useAuthActions, useIsAuthenticated } from '@store/index';
-
 import Button from '@utils/Button';
 import Input from '@utils/Input';
+import Alert from '@utils/Alert';
 
 const loginSchema = z.object({
   email: z.string().min(1, 'Email is required for login').email(),
@@ -26,6 +27,9 @@ const Login: NextPage = () => {
     handleSubmit,
     control,
     formState: { errors, isSubmitting },
+    clearErrors,
+    setError,
+    reset,
   } = useForm<loginSchemaType>({
     // ! Remove default admin values
     defaultValues: { email: 'john@example.com', password: 'john@123' },
@@ -40,15 +44,26 @@ const Login: NextPage = () => {
 
   const onSubmit: SubmitHandler<loginSchemaType> = useCallback(
     async (data) => {
-      await login(data);
+      try {
+        // Clear errors
+        clearErrors();
+
+        await login(data);
+
+        reset();
+      } catch (err) {
+        if (isAxiosError(err) && err.response)
+          setError('root', { type: 'custom', message: err.response.data.err });
+      }
     },
-    [login]
+    [login, reset, clearErrors, setError]
   );
 
   return (
     <section className="my-5">
       <div className="mx-auto max-w-full px-5 md:w-[500px]">
         <form onSubmit={handleSubmit(onSubmit)}>
+          {errors.root?.message && <Alert type="error" message={errors.root.message} />}
           <Input
             type="email"
             label="Email"
