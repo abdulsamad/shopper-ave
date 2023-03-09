@@ -10,7 +10,7 @@ const bannerImages = [
   {
     src: 'https://res.cloudinary.com/abdulsamad/image/upload/v1670939764/shopping_xgna10.webp',
     slideClasses: 'bg-[linear-gradient(45deg,#8e54e9,#4776e6)] text-white',
-    textClasses: 'top-1/2 -translate-y-1/2 left-0',
+    textClasses: 'top-1/2 -translate-y-1/2 left-5',
     imgClasses: '-right-16',
     imgFilter: 'drop-shadow(0.5rem 1rem 2rem #fdfdfd)',
     children: (
@@ -33,7 +33,7 @@ const bannerImages = [
   {
     src: 'https://res.cloudinary.com/abdulsamad/image/upload/v1670939761/jacket_inlgnr.webp',
     slideClasses: 'bg-[radial-gradient(circle,#d64a40,#f44336)]',
-    textClasses: 'top-1/2 -translate-y-1/2 right-0',
+    textClasses: 'top-1/2 -translate-y-1/2 right-5',
     imgClasses: '-left-24',
     imgFilter: 'drop-shadow(0.5rem 1rem 2rem #2f2f2f)',
     children: (
