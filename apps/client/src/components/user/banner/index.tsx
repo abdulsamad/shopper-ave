@@ -68,6 +68,7 @@ const Index = () => {
               <Image
                 src={src}
                 className={`object-contain ${imgClassName}`}
+                style={{ filter: 'drop-shadow(0.5rem 1rem 2rem #fdfdfd)' }}
                 alt="Banner"
                 height={800}
                 width={800}
