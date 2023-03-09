@@ -106,10 +106,10 @@ const Index = () => {
           </div>
         ) : (
           <div className="flex items-center space-x-2">
-            <LinkButton className="bg-gray-200 text-sm text-gray-900" href="/login">
+            <LinkButton className="inline-flex bg-gray-200 text-sm text-gray-900" href="/login">
               <ArrowRightOnRectangleIcon className="mr-1.5 h-5 w-5" /> Log In
             </LinkButton>
-            <LinkButton className="bg-primary text-sm text-white" href="/register">
+            <LinkButton className="bg-primary inline-flex text-sm text-white" href="/register">
               <UserPlusIcon className="mr-1.5 h-5 w-5" />
               Register
             </LinkButton>

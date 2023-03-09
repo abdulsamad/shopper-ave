@@ -26,7 +26,7 @@ export const Button = ({
     type={type}
     onClick={onClick}
     disabled={isLoading || disabled}
-    className={`items-center justify-center rounded-lg py-1.5 px-3.5 active:scale-105 lg:inline-flex ${
+    className={`items-center justify-center whitespace-nowrap rounded-lg py-1.5 px-3.5 active:scale-105 lg:inline-flex ${
       isLoading && 'hover:cursor-wait'
     } ${className}`}
     {...props}>
@@ -43,7 +43,7 @@ interface LinkButtonProps extends LinkProps {
 export const LinkButton = ({ children, type, className, ...props }: LinkButtonProps) => (
   <Link
     type={type}
-    className={`items-center justify-center rounded-lg py-1.5 px-3.5 lg:inline-flex ${className}`}
+    className={`items-center justify-center whitespace-nowrap rounded-lg py-1.5 px-3.5 lg:inline-flex ${className}`}
     {...props}>
     {children}
   </Link>
