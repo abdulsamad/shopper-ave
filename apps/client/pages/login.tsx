@@ -30,11 +30,8 @@ const Login: NextPage = () => {
     clearErrors,
     setError,
     reset,
-  } = useForm<loginSchemaType>({
-    // ! Remove default admin values
-    defaultValues: { email: 'john@example.com', password: 'john@123' },
-    resolver: zodResolver(loginSchema),
-  });
+    setValue,
+  } = useForm<loginSchemaType>({ resolver: zodResolver(loginSchema) });
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -59,8 +56,18 @@ const Login: NextPage = () => {
     [login, reset, clearErrors, setError]
   );
 
+  const loginWithTestAccount = useCallback(async () => {
+    const email = process.env.NEXT_PUBLIC_TEST_EMAIL;
+    const password = process.env.NEXT_PUBLIC_TEST_PASSWORD;
+
+    setValue('email', email);
+    setValue('password', password);
+
+    await login({ email, password });
+  }, [login, setValue]);
+
   return (
-    <section className="my-5">
+    <section className="my-5 flex-1">
       <div className="mx-auto max-w-full px-5 md:w-[500px]">
         <form onSubmit={handleSubmit(onSubmit)}>
           {errors.root?.message && <Alert type="error" message={errors.root.message} />}
@@ -85,6 +92,13 @@ const Login: NextPage = () => {
             isLoading={isSubmitting}
             className="from-primary-600  to-primary-400 hover:bg-primary-500 mt-2 w-full bg-gradient-to-r px-4 py-2 text-white">
             Log In
+          </Button>
+          <Button
+            type="button"
+            isLoading={isSubmitting}
+            onClick={loginWithTestAccount}
+            className="border-3 my-3 w-full border bg-gradient-to-b from-white to-slate-100 px-4 py-2 text-gray-600 shadow hover:bg-slate-200">
+            Log In with Test Account
           </Button>
         </form>
       </div>

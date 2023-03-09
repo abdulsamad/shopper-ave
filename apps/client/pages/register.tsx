@@ -81,7 +81,7 @@ const Register: NextPage = () => {
   );
 
   return (
-    <section className="my-5">
+    <section className="my-5 flex-1">
       <div className="mx-auto max-w-full px-5 md:w-[500px]">
         <form onSubmit={handleSubmit(onSubmit)}>
           {errors.root?.message && <Alert type="error" message={errors.root.message} />}
