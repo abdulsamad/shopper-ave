@@ -7,7 +7,7 @@
 
 ## :construction: Underconstruction!
 
-An E-Commerce Store
+ShopperAve is a full-stack ecommerce web application built using MongoDB, React, Node, Turborepo, and Express. It features Swagger UI for API documentation and Cypress testing for the frontend, and Jest for the backend. With Shopper Ave, users can enjoy a seamless online shopping experience, from browsing products to placing orders, all within a secure and reliable platform. Its modern and user-friendly interface, combined with its powerful backend capabilities, make Shopper Ave a top choice for any ecommerce business looking to provide their customers with the best possible shopping experience.
 
 <details>
 	<summary>Technologies</summary>
