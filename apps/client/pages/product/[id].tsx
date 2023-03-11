@@ -1,7 +1,6 @@
 import React from 'react';
 import { NextPage, GetServerSideProps } from 'next';
-import { ShoppingCartIcon, ShoppingBagIcon, StarIcon } from '@heroicons/react/24/solid';
-import { StarIcon as StarIconOutline } from '@heroicons/react/24/outline';
+import { ShoppingCartIcon, ShoppingBagIcon } from '@heroicons/react/24/solid';
 
 import { Product as IProduct } from 'shared-types';
 
@@ -10,6 +9,8 @@ import { getProduct } from '@api/user';
 import Button from '@utils/Button';
 import { formatCurrency } from '@utils/index';
 import Photos from '@components/user/product/Photos';
+import Review from '@components/user/review';
+import Stars from '@utils/Stars';
 
 const Index: NextPage<IProduct> = (product: IProduct) => {
   const { name, brand, photos, price, category, description, ratings } = product;
@@ -24,13 +25,7 @@ const Index: NextPage<IProduct> = (product: IProduct) => {
             <h2 className="text-xl font-bold">{brand}</h2>
             <h1 className="mt-3 text-3xl font-light">{name}</h1>
             <div className="mb-2 flex">
-              {[1, 2, 3, 4, 5].map((star) =>
-                star <= ratings ? (
-                  <StarIcon key={star} className="h-4 w-4 text-yellow-500" />
-                ) : (
-                  <StarIconOutline key={star} className="h-4 w-4" />
-                )
-              )}
+              <Stars ratings={ratings} />
             </div>
             <p className="m-0">{category}</p>
             <p className="text my-2 text-xl font-bold capitalize">{formatCurrency(price)}</p>
@@ -49,6 +44,9 @@ const Index: NextPage<IProduct> = (product: IProduct) => {
               <ShoppingCartIcon className="mr-3 h-5 w-5" /> Add to Cart
             </Button>
           </div>
+        </section>
+        <section className="col-span-2 my-8">
+          <Review id={product._id} />
         </section>
       </div>
     </div>
