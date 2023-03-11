@@ -29,10 +29,13 @@ const Home: NextPage<Products> = ({ products }: Products) => {
         <section className="col-span-4 flex h-[60px]">
           <Ad />
         </section>
-        <aside className="fixed top-0 left-0 hidden h-full w-[250px] lg:relative lg:flex">
+        {/* <aside className="fixed top-0 left-0 hidden h-full w-[250px] lg:relative lg:flex">
           <Sidebar />
         </aside>
         <section className="col-span-4 lg:col-span-3">
+          <Products products={products} />
+        </section> */}
+        <section className="col-span-4 lg:col-span-4">
           <Products products={products} />
         </section>
       </main>
