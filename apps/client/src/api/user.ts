@@ -18,8 +18,61 @@ export interface IGetProductRes {
   product: Product;
 }
 
-export const getProduct = async (id: string): Promise<IGetProductRes> => {
-  const res = await axiosInstance.get(`/product/${id}`);
+export const getProduct = async (productId: string): Promise<IGetProductRes> => {
+  const res = await axiosInstance.get(`/product/${productId}`);
+  const data = await res.data;
+  return data;
+};
+
+export interface IAddReview {
+  productId: string;
+  rating: number;
+  comment: string;
+}
+
+export interface IAddReviewRes {
+  success: boolean;
+}
+
+export const addReview = async ({
+  productId,
+  rating,
+  comment,
+}: IAddReview): Promise<IAddReviewRes> => {
+  const res = await axiosInstance.put(
+    `/product/review`,
+    { productId, rating, comment },
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    }
+  );
+  const data = await res.data;
+  return data;
+};
+
+export interface IDeleteReview {
+  productId: string;
+  rating: number;
+  comment: string;
+}
+
+export interface IDeleteReviewRes {
+  success: boolean;
+}
+
+export const deleteReview = async ({ productId }: IDeleteReview): Promise<IDeleteReviewRes> => {
+  const res = await axiosInstance.delete(`/product/review`, {
+    params: {
+      productId,
+    },
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+  });
   const data = await res.data;
   return data;
 };
