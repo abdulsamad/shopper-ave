@@ -14,7 +14,8 @@ import Stars from '@utils/Stars';
 
 const Index: NextPage<IProduct> = (product: IProduct) => {
   const { name, brand, photos, price, category, description, ratings } = product;
-  const { actions } = useCart();
+  const { actions, items: cartItems } = useCart();
+  const isAddedToCart = cartItems.some((item) => item._id === product._id);
 
   return (
     <div className="flex-1">
@@ -41,7 +42,8 @@ const Index: NextPage<IProduct> = (product: IProduct) => {
               onClick={() => {
                 actions.add(product);
               }}>
-              <ShoppingCartIcon className="mr-3 h-5 w-5" /> Add to Cart
+              <ShoppingCartIcon className="mr-3 h-5 w-5" />{' '}
+              {isAddedToCart ? 'Add More to Cart' : 'Add to Cart'}
             </Button>
           </div>
         </section>

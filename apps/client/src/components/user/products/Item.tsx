@@ -10,7 +10,8 @@ import Button from '@utils/Button';
 
 const Item = (product: IProduct) => {
   const { _id, name, category, photos, price } = product;
-  const { actions } = useCart();
+  const { actions, items: cartItems } = useCart();
+  const isAddedToCart = cartItems.some((item) => item._id === _id);
 
   return (
     <div className="flex h-full flex-col justify-between overflow-hidden rounded-2xl shadow">
@@ -28,25 +29,35 @@ const Item = (product: IProduct) => {
           <h5 className="text-bold my-2 font-semibold">{formatCurrency(price)}</h5>
         </div>
       </Link>
-      <div className="flex">
-        <Button
-          type="button"
-          onClick={(ev) => {
-            ev.stopPropagation();
-          }}
-          className="w-1/2 rounded-none bg-gradient-to-r from-cyan-300 to-blue-400 p-2 text-white">
-          Buy Now
-        </Button>
-        <Button
-          type="button"
-          onClick={(ev) => {
-            ev.stopPropagation();
-            actions.add(product);
-          }}
-          className="from-primary-400 to-primary-600 w-1/2 rounded-none bg-gradient-to-r p-2 text-white">
-          Add to Cart
-        </Button>
-      </div>
+      {isAddedToCart ? (
+        <div className="flex">
+          <Button
+            type="button"
+            className="w-full bg-gradient-to-r from-slate-200 to-slate-300 p-2 text-slate-500">
+            Added to Cart
+          </Button>
+        </div>
+      ) : (
+        <div className="flex">
+          <Button
+            type="button"
+            onClick={(ev) => {
+              ev.stopPropagation();
+            }}
+            className="w-1/2 rounded-none bg-gradient-to-r from-cyan-300 to-blue-400 p-2 text-white">
+            Buy Now
+          </Button>
+          <Button
+            type="button"
+            onClick={(ev) => {
+              ev.stopPropagation();
+              actions.add(product);
+            }}
+            className="from-primary-400 to-primary-600 w-1/2 rounded-none bg-gradient-to-r p-2 text-white">
+            Add to Cart
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
