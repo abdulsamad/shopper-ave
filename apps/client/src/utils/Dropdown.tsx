@@ -45,6 +45,7 @@ const Dropdown = ({ children, title, iconSrc, className, btnClasses }: IDropdown
             initial={{ opacity: 0.5, scaleY: 0.5 }}
             animate={{ opacity: 1, scaleY: 1 }}
             exit={{ opacity: 0.5, scaleY: 0 }}
+            onClick={() => setOpen(false)}
             className="absolute right-0 z-40 w-[140px] origin-top items-center rounded-b-lg bg-white p-1 shadow-lg group-hover:visible lg:right-auto lg:w-full">
             {children}
           </motion.div>
