@@ -6,20 +6,21 @@ import {
   ShoppingCartIcon,
   ArrowRightOnRectangleIcon,
   UserPlusIcon,
-  UserCircleIcon,
 } from '@heroicons/react/24/outline';
+import { ArrowLeftOnRectangleIcon } from '@heroicons/react/24/outline';
 
-import { useCart, useIsAuthenticated, useUser } from '@store/index';
+import { useCart, useIsAuthenticated, useUser, useAuthActions } from '@store/index';
 
 import HamburgerIcon from './HamburgerIcon';
 import { navLinks } from './navLinks';
 import { DropdownItemVariant, dropdownVariants } from './framer-variants';
 import { LinkButton } from '@utils/Button';
-import Image from 'next/image';
+import Dropdown, { DropdownLink, DropdownButton } from '@utils/Dropdown';
 
 const Index = () => {
   const isAuthenticated = useIsAuthenticated();
   const user = useUser();
+  const { logout } = useAuthActions();
   const { items } = useCart();
   const [opened, setOpened] = useState(false);
 
@@ -73,35 +74,33 @@ const Index = () => {
           ))}
         </div>
         {isAuthenticated && user ? (
-          <div className="flex items-center space-x-1">
+          <div className="flex items-center space-x-2">
             {!router.pathname.includes('/admin') && (
               <LinkButton href="/admin" className="bg-primary mr-2 h-8 text-sm text-white">
                 Admin
               </LinkButton>
             )}
-            <p className="mr-5 hidden lg:block">Hi, {user.name}</p>
-            <LinkButton href="/cart" className="relative p-1 px-2">
+            <Dropdown
+              title={user.name}
+              className="text-center text-sm"
+              iconSrc={user.photo?.secure_url || '/default-profile-pic.jpg'}>
+              <DropdownLink href="/profile">Profile</DropdownLink>
+              <DropdownLink href="/orders">Orders</DropdownLink>
+              <DropdownButton onClick={logout} divider>
+                <div className="flex items-center">
+                  <ArrowLeftOnRectangleIcon className="mr-2 h-5 w-5" />
+                  Logout
+                </div>
+              </DropdownButton>
+            </Dropdown>
+            <LinkButton href="/cart" className="relative px-[5px]">
               <ShoppingCartIcon className="h-6 w-6" />
               <div className="sr-only">Cart</div>
               {isCartFilled && (
-                <span className="bg-primary absolute bottom-[2px] right-2 flex h-4 w-4 items-center justify-center rounded-lg text-xs text-white">
+                <span className="bg-primary absolute bottom-[2px] right-0 flex h-4 w-4 items-center justify-center rounded-lg text-xs text-white">
                   {items.length}
                 </span>
               )}
-            </LinkButton>
-            <LinkButton href="/profile" className="p-1 px-1 text-sm">
-              {user.photo ? (
-                <Image
-                  src={user.photo.secure_url}
-                  alt={user.name}
-                  width={40}
-                  height={40}
-                  className="rounded-full"
-                />
-              ) : (
-                <UserCircleIcon className="h-6 w-6" />
-              )}
-              <div className="sr-only">User Profile</div>
             </LinkButton>
           </div>
         ) : (
