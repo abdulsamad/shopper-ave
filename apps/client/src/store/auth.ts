@@ -18,45 +18,49 @@ export interface IAuthStore {
 
 export const useAuthStore = create<IAuthStore>()(
   devtools(
-    // persist(
-    (set) => ({
-      isAuthenticated: false,
-      user: null,
-      token: null,
-      actions: {
-        login: async (data) => {
-          try {
-            const { user, token } = await login(data);
+    persist(
+      (set) => ({
+        isAuthenticated: false,
+        user: null,
+        token: null,
+        actions: {
+          login: async (data) => {
+            try {
+              const { user, token } = await login(data);
 
-            // Set token in local storage
-            localStorage.setItem('token', token);
+              // Set token in local storage
+              localStorage.setItem('token', token);
 
-            set(() => ({ user, token, isAuthenticated: true }));
-          } catch (err) {
-            set(() => ({ user: null, token: null, isAuthenticated: false }));
-          }
+              set(() => ({ user, token, isAuthenticated: true }));
+            } catch (err) {
+              set(() => ({ user: null, token: null, isAuthenticated: false }));
+            }
+          },
+          register: async (data) => {
+            try {
+              const { user, token } = await register(data);
+
+              set(() => ({ user, token, isAuthenticated: true }));
+            } catch (err) {
+              set(() => ({ user: null, token: null, isAuthenticated: false }));
+            }
+          },
+          logout: async () => {
+            await logout();
+
+            // Remove token from local storage
+            localStorage.removeItem('token');
+
+            set(() => ({ isAuthenticated: false, token: null, user: null }));
+          },
         },
-        register: async (data) => {
-          try {
-            const { user, token } = await register(data);
-
-            set(() => ({ user, token, isAuthenticated: true }));
-          } catch (err) {
-            set(() => ({ user: null, token: null, isAuthenticated: false }));
-          }
-        },
-        logout: async () => {
-          await logout();
-
-          // Remove token from local storage
-          localStorage.removeItem('token');
-
-          set(() => ({ isAuthenticated: false, token: null, user: null }));
-        },
-      },
-    })
-    // { name: 'auth' }
-    // )
+      }),
+      {
+        name: 'auth',
+        partialize: (state) =>
+          Object.fromEntries(Object.entries(state).filter(([key]) => !['actions'].includes(key))),
+      }
+    )
   )
 );
 
