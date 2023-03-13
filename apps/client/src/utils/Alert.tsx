@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { AnimatePresence, motion } from 'framer-motion';
 
 interface IAlert {
-  message: string;
+  message: string | React.ReactNode;
   type?: 'default' | 'error' | 'success' | 'info';
   className?: string;
+  timeout?: number;
 }
 
 const variants = {
@@ -15,8 +16,15 @@ const variants = {
   info: 'text-white bg-info',
 };
 
-const Alert = ({ message, type = 'default', className }: IAlert) => {
+const Alert = ({ message, type = 'default', className, timeout = 5000 }: IAlert) => {
   const [show, setShow] = useState(true);
+
+  useEffect(() => {
+    const timeId = setTimeout(() => setShow(false), timeout);
+    return () => {
+      clearTimeout(timeId);
+    };
+  }, [show, timeout]);
 
   return (
     <AnimatePresence>
