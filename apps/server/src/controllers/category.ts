@@ -5,6 +5,8 @@ export const addCategory = (req: Request, res: Response) => {
 
   const category = name;
 
+  // TODO: Add category to databse
+
   try {
     return res.status(201).json({
       success: true,
@@ -12,6 +14,6 @@ export const addCategory = (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ err: 'Something went wrong' });
+    return res.status(500).json({ success: false, err: 'Something went wrong' });
   }
 };
