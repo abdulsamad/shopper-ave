@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
+import { isAxiosError } from 'axios';
 
 import { User } from 'shared-types';
 
@@ -10,8 +11,8 @@ export interface IAuthStore {
   user: null | User;
   token: null | string;
   actions: {
-    login: ({ email, password }: loginReqData) => Promise<void>;
-    register: (userInfo: FormData) => Promise<void>;
+    login: ({ email, password }: loginReqData) => Promise<void | Error>;
+    register: (userInfo: FormData) => Promise<void | Error>;
     logout: () => void;
   };
 }
@@ -34,6 +35,12 @@ export const useAuthStore = create<IAuthStore>()(
               set(() => ({ user, token, isAuthenticated: true }));
             } catch (err) {
               set(() => ({ user: null, token: null, isAuthenticated: false }));
+
+              if (isAxiosError(err)) {
+                throw new Error(err.response?.data.err, {
+                  cause: 'invalid-credentials',
+                });
+              }
             }
           },
           register: async (data) => {
@@ -43,6 +50,12 @@ export const useAuthStore = create<IAuthStore>()(
               set(() => ({ user, token, isAuthenticated: true }));
             } catch (err) {
               set(() => ({ user: null, token: null, isAuthenticated: false }));
+
+              if (isAxiosError(err)) {
+                throw new Error(err.response?.data.err, {
+                  cause: 'invalid-credentials',
+                });
+              }
             }
           },
           logout: async () => {
