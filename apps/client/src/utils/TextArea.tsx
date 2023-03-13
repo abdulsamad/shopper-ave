@@ -16,6 +16,7 @@ interface TextAreaProps {
   error?: FieldError | undefined;
   defaultValue?: unknown;
   className?: string;
+  required?: boolean;
 }
 
 const TextArea = ({
@@ -28,11 +29,13 @@ const TextArea = ({
   error,
   defaultValue,
   className,
+  required = true,
 }: TextAreaProps) => {
   return (
     <div className="my-2 flex flex-col">
       <label htmlFor={id} className="mb-2 font-medium">
         {label}
+        {required && <span className="text-danger ml-1 text-xs">*</span>}
       </label>
       <Controller
         name={id}

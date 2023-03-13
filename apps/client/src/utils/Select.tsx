@@ -27,7 +27,7 @@ const Select = ({
   error,
   defaultValue,
   className,
-  required,
+  required = true,
 }: SelectProps) => (
   <div className="my-2 flex flex-col">
     <label htmlFor={id} className="mb-2 font-medium">
