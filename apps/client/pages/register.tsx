@@ -73,8 +73,7 @@ const Register: NextPage = () => {
 
         reset();
       } catch (err) {
-        if (isAxiosError(err) && err.response)
-          setError('root', { type: 'custom', message: err.response.data.err });
+        if (err instanceof Error) setError('root', { type: 'custom', message: err.message });
       }
     },
     [reset, clearErrors, setError, authRegister]

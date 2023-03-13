@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { isAxiosError } from 'axios';
 
 import { useAuthActions, useIsAuthenticated } from '@store/index';
 import Button from '@utils/Button';
@@ -49,8 +48,7 @@ const Login: NextPage = () => {
 
         reset();
       } catch (err) {
-        if (isAxiosError(err) && err.response)
-          setError('root', { type: 'custom', message: err.response.data.err });
+        if (err instanceof Error) setError('root', { type: 'custom', message: err.message });
       }
     },
     [login, reset, clearErrors, setError]
