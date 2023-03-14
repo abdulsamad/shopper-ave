@@ -11,6 +11,7 @@ interface ButtonProps {
   type?: 'button' | 'submit' | 'reset';
   className?: string;
   disabled?: boolean;
+  paddingClasses?: string;
 }
 
 export const Button = ({
@@ -19,6 +20,7 @@ export const Button = ({
   disabled,
   onClick,
   type,
+  paddingClasses = 'py-1.5 px-3.5',
   className,
   ...props
 }: ButtonProps) => (
@@ -26,7 +28,7 @@ export const Button = ({
     type={type}
     onClick={onClick}
     disabled={isLoading || disabled}
-    className={`items-center justify-center whitespace-nowrap rounded-lg py-1.5 px-3.5 active:scale-105 lg:inline-flex ${
+    className={`items-center justify-center whitespace-nowrap rounded-lg active:scale-105 lg:inline-flex ${paddingClasses} ${
       isLoading && 'hover:cursor-wait'
     } ${className}`}
     {...props}>
@@ -38,12 +40,19 @@ interface LinkButtonProps extends LinkProps {
   children: React.ReactNode;
   type?: 'button' | 'submit' | 'reset';
   className?: string;
+  paddingClasses?: string;
 }
 
-export const LinkButton = ({ children, type, className, ...props }: LinkButtonProps) => (
+export const LinkButton = ({
+  children,
+  type,
+  className,
+  paddingClasses = 'py-1.5 px-3.5',
+  ...props
+}: LinkButtonProps) => (
   <Link
     type={type}
-    className={`items-center justify-center whitespace-nowrap rounded-lg py-1.5 px-3.5 lg:inline-flex ${className}`}
+    className={`items-center justify-center whitespace-nowrap rounded-lg lg:inline-flex ${paddingClasses} ${className}`}
     {...props}>
     {children}
   </Link>
