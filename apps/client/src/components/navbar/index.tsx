@@ -76,13 +76,13 @@ const Index = () => {
         {isAuthenticated && user ? (
           <div className="flex items-center space-x-2">
             {!router.pathname.includes('/admin') && (
-              <LinkButton href="/admin" className="bg-primary mr-2 h-8 text-sm text-white">
+              <LinkButton href="/admin" className="bg-primary mr-2 h-8 text-white">
                 Admin
               </LinkButton>
             )}
             <Dropdown
               title={user.name}
-              className="text-center text-sm"
+              className="text-center"
               iconSrc={user.photo?.secure_url || '/default-profile-pic.jpg'}>
               <DropdownLink href="/profile">Profile</DropdownLink>
               <DropdownLink href="/orders">Orders</DropdownLink>
@@ -105,10 +105,10 @@ const Index = () => {
           </div>
         ) : (
           <div className="flex items-center space-x-2">
-            <LinkButton className="inline-flex bg-gray-200 text-sm text-gray-900" href="/login">
+            <LinkButton className="inline-flex bg-gray-200 text-gray-900" href="/login">
               <ArrowRightOnRectangleIcon className="mr-1.5 h-5 w-5" /> Log In
             </LinkButton>
-            <LinkButton className="bg-primary inline-flex text-sm text-white" href="/register">
+            <LinkButton className="bg-primary inline-flex text-white" href="/register">
               <UserPlusIcon className="mr-1.5 h-5 w-5" />
               Register
             </LinkButton>
