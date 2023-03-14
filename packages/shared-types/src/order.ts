@@ -20,6 +20,8 @@ export interface PaymentInfo {
 }
 
 export interface Order<T = string> {
+  _id: string;
+  __v: string;
   shippingInfo: ShippingInfo;
   user: T;
   orderItems: OrderItem<T>[];
@@ -28,5 +30,5 @@ export interface Order<T = string> {
   shippingAmount: number;
   totalAmount: number;
   orderStatus: 'processing' | 'dispatched' | 'out_for_delivery' | 'delivered' | 'canceled';
-  deliveredAt: DateConstructor;
+  deliveredAt: string;
 }
