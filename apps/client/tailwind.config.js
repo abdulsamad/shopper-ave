@@ -23,6 +23,7 @@ module.exports = {
         },
         secondary: '#012C01',
         danger: '#F44336',
+        success: '#4CAF50',
         info: '#2196F3',
         transparent: 'transparent',
         current: 'currentColor',
