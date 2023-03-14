@@ -14,15 +14,11 @@ const Item = (product: IProduct) => {
   const isAddedToCart = cartItems.some((item) => item._id === _id);
 
   return (
-    <div className="flex h-full flex-col justify-between overflow-hidden rounded-2xl shadow">
+    <div className="flex h-full w-full flex-col justify-between overflow-hidden rounded-2xl shadow">
       <Link className="flex h-full flex-col" href={`/product/${encodeURIComponent(_id)}`}>
-        <Image
-          width={300}
-          height={200}
-          src={photos[0].secure_url}
-          className="mx-auto h-full object-cover"
-          alt={name}
-        />
+        <div className="relative h-[400px] w-full">
+          <Image src={photos[0].secure_url} alt={name} className="mx-auto object-cover" fill />
+        </div>
         <div className="bg-gray-100 p-4">
           <h3 className="text-lg font-light">{name}</h3>
           <h4 className="text-sm capitalize text-gray-400">{category}</h4>
