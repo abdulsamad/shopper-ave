@@ -146,14 +146,14 @@ const OrderProductItem = ({ image, name, price, product, quantity }: OrderItem) 
         height={100}
       />
       <div className="flex flex-1 flex-col px-2 lg:px-0">
-        <LinkButton href={`/product/${product}`} className="flex flex-col">
+        <div className="flex flex-col">
           <div className="text-slate-800">{name}</div>
           <div className="mt-1 text-sm text-slate-500">Quantity: {quantity}</div>
-        </LinkButton>
+        </div>
         <LinkButton
-          href="/"
+          href={`/product/${product}`}
           className="mt-3 border-2 border-solid border-slate-200 px-2 text-sm text-sky-400">
-          View Details
+          View Product
         </LinkButton>
       </div>
       <div className="flex flex-col space-y-2">
