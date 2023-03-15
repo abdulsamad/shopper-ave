@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import type { NextPage } from 'next';
 import Image from 'next/image';
 import dayjs from 'dayjs';
 
 import { useUser } from '@store/index';
+import { generateAvatar } from '@utils/index';
 
 const ProfilePage: NextPage = () => {
   const user = useUser();
+
+  const avatar = useMemo(() => {
+    if (!user) return '';
+
+    return generateAvatar(user.name, 300);
+  }, [user]);
 
   if (!user) return null;
 
@@ -15,19 +22,13 @@ const ProfilePage: NextPage = () => {
   return (
     <section className="my-5 flex flex-1 flex-col items-center justify-center">
       <div className="mb-16">
-        {user.photo ? (
-          <Image
-            width={300}
-            height={300}
-            src={user.photo?.secure_url}
-            alt={name}
-            className="rounded-full object-cover"
-          />
-        ) : (
-          <div className="bg-primary-200 flex h-[150px] w-[150px] items-center justify-center overflow-hidden rounded-full">
-            <div className="text-6xl">{name.substring(0, 1)}</div>
-          </div>
-        )}
+        <Image
+          width={300}
+          height={300}
+          src={user.photo ? user.photo.secure_url : avatar}
+          alt={name}
+          className="rounded-full object-cover"
+        />
       </div>
       <div className="flex flex-col space-y-4 text-center">
         <div>

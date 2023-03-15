@@ -11,6 +11,8 @@
     "cypress:open": "cypress open"
   },
   "dependencies": {
+    "@dicebear/collection": "^5.3.4",
+    "@dicebear/core": "^5.3.4",
     "@heroicons/react": "^2.0.16",
     "@hookform/resolvers": "^2.9.11",
     "@stripe/react-stripe-js": "^1.16.5",

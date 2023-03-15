@@ -1,3 +1,6 @@
+import { createAvatar } from '@dicebear/core';
+import { lorelei } from '@dicebear/collection';
+
 export const formatCurrency = (price: number, options?: Intl.NumberFormatOptions) => {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -34,6 +37,10 @@ export const createFormData = (data: object) => {
   }
 
   return formData;
+};
+
+export const generateAvatar = (seed: string, size: number) => {
+  return createAvatar(lorelei, { seed, size }).toDataUriSync();
 };
 
 // Sleep for dev experiments

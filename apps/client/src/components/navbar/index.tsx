@@ -1,6 +1,7 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Image from 'next/image';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   ShoppingCartIcon,
@@ -16,6 +17,7 @@ import { navLinks } from './navLinks';
 import { DropdownItemVariant, dropdownVariants } from './framer-variants';
 import { LinkButton } from '@utils/Button';
 import Dropdown, { DropdownLink, DropdownButton } from '@utils/Dropdown';
+import { generateAvatar } from '@utils/index';
 
 const Index = () => {
   const isAuthenticated = useIsAuthenticated();
@@ -30,6 +32,12 @@ const Index = () => {
   const toggleMenu = useCallback(() => {
     setOpened((open) => !open);
   }, []);
+
+  const avatar = useMemo(() => {
+    if (!user) return '';
+
+    return generateAvatar(user.name, 35);
+  }, [user]);
 
   return (
     <header className="container mx-auto">
@@ -83,7 +91,16 @@ const Index = () => {
             <Dropdown
               title={user.name}
               className="text-center"
-              iconSrc={user.photo?.secure_url || '/default-profile-pic.jpg'}>
+              icon={
+                <Image
+                  src={user.photo ? user.photo.secure_url : avatar}
+                  alt={user.name}
+                  className="rounded-full"
+                  aria-hidden={true}
+                  width={25}
+                  height={25}
+                />
+              }>
               <DropdownLink href="/profile">Profile</DropdownLink>
               <DropdownLink href="/orders">Orders</DropdownLink>
               <DropdownButton onClick={logout} divider>

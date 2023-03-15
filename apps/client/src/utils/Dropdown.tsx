@@ -1,18 +1,17 @@
 import React, { useCallback, useState } from 'react';
 import Link, { LinkProps } from 'next/link';
-import Image from 'next/image';
 import { ChevronDownIcon } from '@heroicons/react/24/solid';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface IDropdown {
   children: React.ReactNode;
   title: string;
-  iconSrc?: string;
+  icon?: React.ReactNode;
   className?: string;
   btnClasses?: string;
 }
 
-const Dropdown = ({ children, title, iconSrc, className, btnClasses }: IDropdown) => {
+const Dropdown = ({ children, title, icon, className, btnClasses }: IDropdown) => {
   const [open, setOpen] = useState(false);
 
   const handleClick = useCallback(() => {
@@ -24,16 +23,7 @@ const Dropdown = ({ children, title, iconSrc, className, btnClasses }: IDropdown
       <button
         className={`text-blue group-hover:border-grey-light flex cursor-pointer items-center rounded-t-lg p-2 ${btnClasses}`}
         onClick={handleClick}>
-        {iconSrc && (
-          <Image
-            src={iconSrc}
-            alt={title}
-            className="mr-2 rounded-full"
-            aria-hidden={true}
-            width={25}
-            height={25}
-          />
-        )}
+        {icon && <div className="mr-2">{icon}</div>}
         <span className="hidden md:inline-block">{title}</span>
         <motion.div className="ml-1 origin-center" animate={{ rotateZ: open ? '180deg' : '0deg' }}>
           <ChevronDownIcon className="h-4 w-4 fill-current" />
