@@ -50,6 +50,35 @@ const UserSchema = new mongoose.Schema<IUser>(
         type: String,
       },
     },
+    addresses: [
+      {
+        address: {
+          type: String,
+          maxlength: [250, 'Please provide a shorter address'],
+          required: true,
+        },
+        city: {
+          type: String,
+          maxlength: [85, 'Please provide a valid city name'],
+          required: true,
+        },
+        postalCode: {
+          type: String,
+          validator: [validator.isPostalCode, 'Please provide a valid postal code'],
+          required: true,
+        },
+        state: {
+          type: String,
+          maxlength: [85, 'Please provide a valid state name'],
+          required: true,
+        },
+        country: {
+          type: String,
+          maxlength: [56, 'Please provide a valid country name'],
+          required: true,
+        },
+      },
+    ],
     forgotPasswordToken: String,
     forgotPasswordExpiry: Date,
   },
