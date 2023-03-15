@@ -75,7 +75,7 @@ export const getOrder = async (req: Request, res: Response) => {
 
 export const getUserOrders = async (req: Request, res: Response) => {
   try {
-    const orders = await Order.find({ user: req.user?._id });
+    const orders = await Order.find({ user: req.user?._id }).sort({ updatedAt: -1 });
 
     if (!orders) {
       return res.status(400).json({ success: false, err: `No orders found for ${req.user?.name}` });
