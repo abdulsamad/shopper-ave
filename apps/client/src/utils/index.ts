@@ -35,3 +35,6 @@ export const createFormData = (data: object) => {
 
   return formData;
 };
+
+// Sleep for dev experiments
+export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
