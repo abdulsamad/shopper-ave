@@ -14,7 +14,7 @@ interface ICheckoutForm {
 const CheckoutForm = ({ clientSecret }: ICheckoutForm) => {
   const stripe = useStripe();
   const elements = useElements();
-  const { items, amount } = useCart();
+  const { items, amount, actions } = useCart();
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -49,6 +49,7 @@ const CheckoutForm = ({ clientSecret }: ICheckoutForm) => {
     });
 
     // Empty cart
+    actions.reset();
 
     // Confirm payment
     const { error } = await stripe.confirmPayment({

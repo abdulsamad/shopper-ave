@@ -16,13 +16,18 @@ export interface ICartStore {
     add: (product: IProduct, others?: Other) => Promise<void>;
     remove: (id: string) => Promise<void>;
     updateQuantity: (id: string, quantity: number) => Promise<void>;
+    reset: () => void;
   };
 }
 
+const initialState = {
+  items: [],
+  amount: 0,
+};
+
 export const useCartStore = create<ICartStore>()(
   devtools((set) => ({
-    items: [],
-    amount: 0,
+    ...initialState,
     actions: {
       add: async (product, others = { quantity: 1 }) => {
         let newItems: IProduct[];
@@ -74,6 +79,9 @@ export const useCartStore = create<ICartStore>()(
             amount: newAmount,
           };
         });
+      },
+      reset: () => {
+        set(initialState);
       },
     },
   }))
