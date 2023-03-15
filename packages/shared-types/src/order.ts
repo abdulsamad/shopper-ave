@@ -31,4 +31,6 @@ export interface Order<T = string> {
   totalAmount: number;
   orderStatus: 'processing' | 'dispatched' | 'out_for_delivery' | 'delivered' | 'canceled';
   deliveredAt: DateConstructor;
+  createdAt: string;
+  updatedAt: string;
 }
