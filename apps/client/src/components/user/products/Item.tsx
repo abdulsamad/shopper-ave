@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import { Product as IProduct } from 'shared-types';
 
@@ -9,6 +10,8 @@ import { useCart } from '@store/index';
 import Button from '@utils/Button';
 
 const Item = (product: IProduct) => {
+  const router = useRouter();
+
   const { _id, name, category, photos, price } = product;
   const { actions, items: cartItems } = useCart();
   const isAddedToCart = cartItems.some((item) => item._id === _id);
@@ -37,8 +40,11 @@ const Item = (product: IProduct) => {
         <div className="flex">
           <Button
             type="button"
-            onClick={(ev) => {
+            onClick={async (ev) => {
               ev.stopPropagation();
+              actions.reset();
+              await actions.add(product);
+              router.push('/checkout');
             }}
             className="w-1/2 rounded-none bg-gradient-to-r from-cyan-300 to-blue-400 p-2 text-white">
             Buy Now
