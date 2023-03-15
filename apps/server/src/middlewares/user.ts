@@ -9,7 +9,7 @@ export const isLoggedIn = async (req: Request, res: Response, next: NextFunction
   const token = req.cookies.token || req.header('Authorization')?.replace('Bearer ', '');
 
   if (!token) {
-    return res.status(401).json({ err: 'Please login to access this page' });
+    return res.status(401).json({ success: false, err: 'Please login to access this page' });
   }
 
   try {
@@ -22,7 +22,7 @@ export const isLoggedIn = async (req: Request, res: Response, next: NextFunction
     next();
   } catch (err) {
     console.error(err);
-    res.status(401).json({ err: "You're unauthorized to access this page" });
+    res.status(401).json({ success: false, err: "You're unauthorized to access this page" });
   }
 };
 
@@ -32,13 +32,15 @@ export const checkRole = (...roles: IUser['role'][]) => {
       const role = req.user?.role;
 
       if (role && !roles.includes(role)) {
-        return res.status(403).json({ err: "You're not allowed to access this resource" });
+        return res
+          .status(403)
+          .json({ success: false, err: "You're not allowed to access this resource" });
       }
 
       next();
     } catch (err) {
       console.error(err);
-      res.status(403).json({ err: "You're unauthorized to access this page" });
+      res.status(403).json({ success: false, err: "You're unauthorized to access this page" });
     }
   };
 };
