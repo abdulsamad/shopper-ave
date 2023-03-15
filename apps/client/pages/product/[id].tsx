@@ -1,5 +1,6 @@
 import React from 'react';
 import { NextPage, GetServerSideProps } from 'next';
+import { useRouter } from 'next/router';
 import { ShoppingCartIcon, ShoppingBagIcon } from '@heroicons/react/24/solid';
 
 import { Product as IProduct } from 'shared-types';
@@ -13,6 +14,8 @@ import Review from '@components/user/review';
 import Stars from '@utils/Stars';
 
 const Index: NextPage<IProduct> = (product: IProduct) => {
+  const router = useRouter();
+
   const { name, brand, photos, price, category, description, ratings } = product;
   const { actions, items: cartItems } = useCart();
   const isAddedToCart = cartItems.some((item) => item._id === product._id);
@@ -33,7 +36,14 @@ const Index: NextPage<IProduct> = (product: IProduct) => {
             <p className="">{description}</p>
           </div>
           <div className="flex gap-6">
-            <Button type="button" className="bg-primary text-white">
+            <Button
+              type="button"
+              className="bg-primary text-white"
+              onClick={async () => {
+                actions.reset();
+                await actions.add(product);
+                router.push('/checkout');
+              }}>
               <ShoppingBagIcon className="mr-3 h-5 w-5" /> Buy Now
             </Button>
             <Button
