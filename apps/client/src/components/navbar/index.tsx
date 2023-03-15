@@ -83,7 +83,7 @@ const Index = () => {
         </div>
         {isAuthenticated && user ? (
           <div className="flex items-center space-x-2">
-            {!router.pathname.includes('/admin') && (
+            {user.role === 'admin' && !router.pathname.includes('/admin') && (
               <LinkButton href="/admin" className="bg-primary mr-2 h-8 text-white">
                 Admin
               </LinkButton>
