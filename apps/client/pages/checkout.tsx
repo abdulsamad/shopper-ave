@@ -44,11 +44,11 @@ const Checkout: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="flex flex-col p-2 md:flex-row lg:p-5">
-        <section className="mx-auto max-w-[400px] px-8 lg:max-w-[600px]">
+        <section className="mx-auto max-w-[400px] px-8 lg:max-w-[700px]">
           {error && <Alert message={error} type="error" />}
           {clientSecret && (
             <Elements options={options} stripe={stripePromise}>
-              <CheckoutForm />
+              <CheckoutForm clientSecret={clientSecret} />
             </Elements>
           )}
         </section>

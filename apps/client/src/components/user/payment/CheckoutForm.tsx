@@ -1,64 +1,62 @@
-import React, { useEffect, useState, FormEvent } from 'react';
+import React, { useState, FormEvent } from 'react';
 import { PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { LockClosedIcon } from '@heroicons/react/24/solid';
 
 import Button from '@utils/Button';
 import Alert from '@utils/Alert';
+import { useCart } from '@store/index';
+import { createOrder } from '@api/user';
 
-const CheckoutForm = () => {
+interface ICheckoutForm {
+  clientSecret: string;
+}
+
+const CheckoutForm = ({ clientSecret }: ICheckoutForm) => {
   const stripe = useStripe();
   const elements = useElements();
+  const { items, amount } = useCart();
 
-  const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-
-  useEffect(() => {
-    if (!stripe) {
-      return;
-    }
-
-    const clientSecret = new URLSearchParams(window.location.search).get(
-      'payment_intent_client_secret'
-    );
-
-    if (!clientSecret) {
-      return;
-    }
-
-    stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
-      if (!paymentIntent) return;
-
-      switch (paymentIntent.status) {
-        case 'succeeded':
-          setMessage('Payment succeeded!');
-          break;
-        case 'processing':
-          setMessage('Your payment is processing.');
-          break;
-        case 'requires_payment_method':
-          setMessage('Your payment was not successful, please try again.');
-          break;
-        default:
-          setMessage('Something went wrong.');
-          break;
-      }
-    });
-  }, [stripe]);
 
   const handleSubmit = async (ev: FormEvent) => {
     ev.preventDefault();
 
-    if (!stripe || !elements) {
+    if (!stripe || !elements || !items || !amount) {
       return;
     }
 
     setIsLoading(true);
 
+    // Create Order
+    const {
+      order: { _id, shippingInfo },
+    } = await createOrder(items, {
+      shippingInfo: {
+        address: '124 Bombay',
+        city: 'Peddar Road',
+        country: 'India',
+        phoneNo: '222333444',
+        postalCode: '400001',
+        state: 'Maharashtra',
+      },
+      paymentInfo: {
+        id: clientSecret,
+      },
+      shippingAmount: 0,
+      totalAmount: amount,
+      taxAmount: 0,
+    });
+
+    // Empty cart
+
+    // Confirm payment
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: process.env.NEXT_PUBLIC_DOMAIN,
+        return_url:
+          process.env.NEXT_PUBLIC_DOMAIN +
+          `/success?orderId=${_id}&address=${shippingInfo.address}&city=${shippingInfo.city}&postalCode=${shippingInfo.postalCode}&state=${shippingInfo.state}&country=${shippingInfo.country}&amount=${amount}`,
       },
     });
 
@@ -78,7 +76,6 @@ const CheckoutForm = () => {
         Pay with <span className="text-primary">Credit Card</span>
       </h1>
       <form onSubmit={handleSubmit}>
-        {message && <Alert message={message} />}
         {error && <Alert message={error} type="error" />}
         <PaymentElement options={{ layout: 'tabs' }} />
         <Button

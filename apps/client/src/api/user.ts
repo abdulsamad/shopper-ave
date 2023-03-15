@@ -1,6 +1,7 @@
-import { Product, Review, Order } from 'shared-types';
+import { Product, Review, Order, OrderItem } from 'shared-types';
 
 import { axiosInstance } from './axiosInstance';
+import { IProduct } from '@store/cart';
 
 export interface IGetProductsRes {
   success: boolean;
@@ -92,16 +93,34 @@ export const deleteReview = async ({ productId }: IDeleteReview): Promise<IDelet
 
 export interface ICreateOrderRes {
   success: boolean;
-  order: boolean;
+  order: Order;
 }
 
-export const createOrder = async (orderData: Order): Promise<ICreateOrderRes> => {
-  const res = await axiosInstance.post('/order/create', orderData, {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
-    },
-  });
+export const createOrder = async (
+  items: IProduct[],
+  orderData: Pick<
+    Order,
+    'shippingInfo' | 'shippingAmount' | 'totalAmount' | 'taxAmount' | 'paymentInfo'
+  >
+): Promise<ICreateOrderRes> => {
+  const orderItems: OrderItem[] = items.map(({ name, quantity, photos, price, _id }) => ({
+    name,
+    quantity: quantity ? quantity : 1,
+    image: photos[0].secure_url,
+    price,
+    product: _id,
+  }));
+
+  const res = await axiosInstance.post(
+    '/order/create',
+    { orderItems, ...orderData },
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    }
+  );
   const data = await res.data;
   return data;
 };
