@@ -1,4 +1,5 @@
-type baseType = any;
+import { Query } from 'mongoose';
+
 type bigQueryType = {
   search?: string;
   limit?: string;
@@ -12,11 +13,13 @@ type bigQueryType = {
  * base - @mongoose {Product.find()}
  * bigQuery - Request query object
  */
-export class WhereClause {
-  base: baseType;
+export class WhereClause<T> {
+  base: Query<T[], T>;
   bigQuery: bigQueryType;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [x: string]: any;
 
-  constructor(base: baseType, bigQuery: bigQueryType) {
+  constructor(base: Query<T[], T>, bigQuery: bigQueryType) {
     this.base = base;
     this.bigQuery = bigQuery;
   }

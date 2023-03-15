@@ -13,13 +13,13 @@ export const getAllProduct = async (req: Request, res: Response) => {
     const resultPerPage = 12;
     const totalProducts = await Product.countDocuments();
 
-    // ! Add explicit types for Whereclause class
-    let products: any = new WhereClause(Product.find(), query).search().filter();
+    let products = new WhereClause(Product.find(), query).search().filter();
 
     const filteredProductNumber = products.length;
 
     products.pager(resultPerPage);
-    products = await products.base;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    products = (await products.base) as any;
 
     return res.status(200).json({
       success: true,
