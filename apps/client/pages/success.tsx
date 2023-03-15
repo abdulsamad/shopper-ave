@@ -41,7 +41,7 @@ const Success: NextPage = () => {
             </div>
             <div>
               <div className="mb-1 font-semibold">Order Amount</div>
-              <div className="select-all text-slate-500">#{formatCurrency(~~amount)}</div>
+              <div className="select-all text-lg text-slate-500">{formatCurrency(~~amount)}</div>
             </div>
             <div>
               <div className="mb-1 font-semibold">Address</div>
