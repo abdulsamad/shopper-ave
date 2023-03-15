@@ -187,7 +187,7 @@ export const changePassword = async (req: Request, res: Response) => {
   if (!oldPassword || !newPassword) {
     return res
       .status(400)
-      .json({ err: 'Both old and new password is required to update password' });
+      .json({ success: false, err: 'Both old and new password is required to update password' });
   }
 
   try {
@@ -263,6 +263,69 @@ export const updateUser = async (req: Request, res: Response) => {
       success: true,
       user,
     });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ success: false, err: 'Something went wrong' });
+  }
+};
+
+export const addAddress = async (req: Request, res: Response) => {
+  const { address, city, postalCode, state, country } = req.body;
+  const userId = req.user?._id;
+
+  if (!address || !city || !postalCode || !state || !country) {
+    return res.status(400).json({
+      success: false,
+      err: 'Address, city, postal code, state, and country all are required',
+    });
+  }
+
+  try {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      throw new Error('User not available');
+    }
+
+    user.addresses?.push({
+      address,
+      city,
+      postalCode,
+      state,
+      country,
+    });
+
+    await user.save({ validateBeforeSave: true });
+
+    return res.status(201).json({ success: true, user });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ success: false, err: 'Something went wrong' });
+  }
+};
+
+export const removeAddress = async (req: Request, res: Response) => {
+  const { addressId } = req.query;
+  const userId = req.user.id;
+
+  try {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(400).json({ success: false, err: 'User not found' });
+    }
+
+    const addresses = user.addresses;
+
+    if (!addresses) {
+      return res.status(400).json({ success: false, err: 'No address found' });
+    }
+
+    user.addresses = addresses.filter((address: any) => address._id === addressId);
+
+    await user.save({ validateBeforeSave: true });
+
+    return res.status(200).json({ success: true, message: 'Address deleted successfully', user });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ success: false, err: 'Something went wrong' });

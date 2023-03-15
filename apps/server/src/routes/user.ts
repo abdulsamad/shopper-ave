@@ -14,6 +14,8 @@ import {
   adminUser,
   adminUpdateUser,
   adminDeleteUser,
+  addAddress,
+  removeAddress,
 } from '@controllers/user';
 import { checkRole, isLoggedIn } from '@middlewares/user';
 
@@ -31,6 +33,8 @@ router.route('/password/reset/:token').post(passwordReset);
 router.route('/dashboard').get(isLoggedIn, getLoggedInUserDetails);
 router.route('/password/update').post(isLoggedIn, changePassword);
 router.route('/dashboard/update').post(isLoggedIn, updateUser);
+router.route('/address/add').post(isLoggedIn, addAddress);
+router.route('/address/remove/:addressId').delete(isLoggedIn, removeAddress);
 
 /*
  * ### ADMIN ###
