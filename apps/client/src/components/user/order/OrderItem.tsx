@@ -34,21 +34,22 @@ const OrderItem = ({
   taxAmount,
   totalAmount,
   deliveredAt,
+  createdAt,
 }: Order) => {
   const [open, setOpen] = useState(false);
   const { address, city, country, postalCode, state } = shippingInfo;
-  const DeliveryDate = dayjs(deliveredAt?.toString());
+  const orderedOn = dayjs(createdAt);
 
   return (
     <section className="mx-auto max-w-[700px] rounded-xl border border-solid border-slate-200 p-5 shadow">
       <div className="mb-4">
         <h3 className="text-lg">
-          <time dateTime={dayjs(DeliveryDate).format('YYYY-MM-DD hh:mm:ss')}>
-            {dayjs(DeliveryDate).format('DD MMM YYYY')}
+          <time dateTime={dayjs(orderedOn).format('YYYY-MM-DD hh:mm:ss')}>
+            {dayjs(orderedOn).format('DD MMM YYYY')}
           </time>
         </h3>
         <div className="mt-1 text-sm font-light">
-          Order #<span className="select-all">{_id}</span>
+          Order #<span className="select-all italic">{_id}</span>
         </div>
       </div>
       <div className="flex flex-col justify-between space-y-4 lg:mb-0 lg:flex-row lg:space-y-0">
@@ -60,9 +61,19 @@ const OrderItem = ({
             {state} {country}
           </address>
         </div>
-        <div className="h-full">
-          <h4 className="mb-2 font-semibold">Delivery Status</h4>
-          <div>{statusBadges[orderStatus]}</div>
+        <div className="h-full text-sm">
+          <div>
+            <h4 className="mb-2 font-semibold">Delivery Status</h4>
+            <div>{statusBadges[orderStatus]}</div>
+          </div>
+          {orderStatus === 'delivered' && deliveredAt && (
+            <div className="my-4">
+              <h4 className="font-semibold">Delivered On</h4>
+              <div className="text-slate-700">
+                {dayjs(deliveredAt.toString()).format('DD MMM YYYY')}
+              </div>
+            </div>
+          )}
         </div>
         <table className="table-fixed border-collapse">
           <caption className="mb-2 font-semibold">Orders Summary</caption>
@@ -91,7 +102,7 @@ const OrderItem = ({
         </table>
       </div>
       <button
-        className="flex w-full justify-center rounded-lg p-2 shadow"
+        className="mt-2 flex w-full justify-center rounded-lg border border-solid border-slate-200 p-2 shadow"
         onClick={() => setOpen((prevState) => !prevState)}>
         <span className="mr-2">View Products</span>
         <motion.span className="origin-center" animate={{ rotateZ: open ? '180deg' : '0deg' }}>

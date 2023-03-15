@@ -15,7 +15,7 @@ const Index: NextPage = () => {
       <h2 className="text-2xl">
         Orders <span className="text-primary">History</span>
       </h2>
-      <div className="my-5">
+      <div className="my-5 space-y-8">
         {data.orders.map((order) => (
           <OrderItem key={order._id} {...order} />
         ))}
