@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 
 import { useUser } from '@store/index';
 import { generateAvatar } from '@utils/index';
+import { roleBadges } from '@utils/Badges';
 
 const ProfilePage: NextPage = () => {
   const user = useUser();
@@ -41,7 +42,7 @@ const ProfilePage: NextPage = () => {
         </div>
         <div>
           <span className="mr-2 font-semibold">Role:</span>
-          <span className="uppercase">{role}</span>
+          {roleBadges[role]}
         </div>
         <div>
           <span className="mr-2 font-semibold">Created On:</span>

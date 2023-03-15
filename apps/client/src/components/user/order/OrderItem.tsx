@@ -8,7 +8,7 @@ import { Order, OrderItem } from 'shared-types';
 
 import { LinkButton } from '@utils/Button';
 import { formatCurrency } from '@utils/index';
-import { statusTags } from '@utils/StatusTags';
+import { statusBadges } from '@utils/Badges';
 
 const orderVariants: Variants = {
   hidden: {
@@ -62,7 +62,7 @@ const OrderItem = ({
         </div>
         <div className="h-full">
           <h4 className="mb-2 font-semibold">Delivery Status</h4>
-          <div>{statusTags[orderStatus]}</div>
+          <div>{statusBadges[orderStatus]}</div>
         </div>
         <table className="table-fixed border-collapse">
           <caption className="mb-2 font-semibold">Orders Summary</caption>
