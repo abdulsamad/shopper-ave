@@ -10,9 +10,9 @@ export const createOrder = async (req: Request, res: Response) => {
   if (
     !shippingInfo ||
     !orderItems ||
-    !taxAmount ||
+    !totalAmount ||
     shippingAmount === undefined ||
-    totalAmount === undefined
+    taxAmount === undefined
   ) {
     return res
       .status(400)
