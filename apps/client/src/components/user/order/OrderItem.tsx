@@ -109,9 +109,9 @@ const OrderItem = ({
           <ChevronDownIcon className="h-6 w-6 fill-current" />
         </motion.span>
       </button>
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {open && (
-          <motion.div variants={orderVariants}>
+          <motion.div variants={orderVariants} initial="hidden" animate="show" exit="hidden">
             {orderItems.map((order) => (
               <OrderProductItem key={order.product} {...order} />
             ))}
@@ -124,8 +124,8 @@ const OrderItem = ({
 
 const orderItemVariants: Variants = {
   hidden: {
-    opacity: 0,
-    scaleY: 0,
+    opacity: 0.2,
+    scaleY: 0.2,
   },
   show: {
     opacity: 1,
@@ -137,7 +137,7 @@ const OrderProductItem = ({ image, name, price, product, quantity }: OrderItem) 
   return (
     <motion.div
       variants={orderItemVariants}
-      className="mt-5 flex space-x-2 overflow-hidden rounded-lg border border-solid border-slate-200 p-3.5 shadow lg:space-x-4">
+      className="mt-5 flex origin-top space-x-2 overflow-hidden rounded-lg border border-solid border-slate-200 p-3.5 shadow lg:space-x-4">
       <Image
         src={image}
         alt="Shopping"
