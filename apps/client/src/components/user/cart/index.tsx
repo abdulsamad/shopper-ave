@@ -91,7 +91,7 @@ const Cart = ({ items, actions, isCartEmpty, amount }: ICart) => {
             </button>
           </div>
           <div className="ml-2">
-            <Button type="button" className="bg-slate-100 px-1">
+            <Button type="button" className="bg-slate-100 px-1" onClick={() => actions.remove(_id)}>
               Remove
             </Button>
           </div>
