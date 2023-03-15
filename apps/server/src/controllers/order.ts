@@ -7,7 +7,13 @@ export const createOrder = async (req: Request, res: Response) => {
   const { shippingInfo, orderItems, paymentInfo, taxAmount, shippingAmount, totalAmount } =
     req.body;
 
-  if (!shippingInfo || !orderItems || !taxAmount || !shippingAmount || !totalAmount) {
+  if (
+    !shippingInfo ||
+    !orderItems ||
+    !taxAmount ||
+    shippingAmount === undefined ||
+    totalAmount === undefined
+  ) {
     return res
       .status(400)
       .json({ success: false, err: 'Order cannot be processed without all details' });
