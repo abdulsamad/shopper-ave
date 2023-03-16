@@ -1,4 +1,4 @@
-import { Product, Review, Order, OrderItem } from 'shared-types';
+import { Product, Review, Order, OrderItem, AddressItem } from 'shared-types';
 
 import { axiosInstance } from './axiosInstance';
 import { IProduct } from '@store/cart';
@@ -103,13 +103,15 @@ export const createOrder = async (
     'shippingInfo' | 'shippingAmount' | 'totalAmount' | 'taxAmount' | 'paymentInfo'
   >
 ): Promise<ICreateOrderRes> => {
-  const orderItems: OrderItem[] = items.map(({ name, quantity, photos, price, _id }) => ({
-    name,
-    quantity: quantity ? quantity : 1,
-    image: photos[0].secure_url,
-    price,
-    product: _id,
-  }));
+  const orderItems: Omit<OrderItem, '_id'>[] = items.map(
+    ({ name, quantity, photos, price, _id }) => ({
+      name,
+      quantity: quantity ? quantity : 1,
+      image: photos[0].secure_url,
+      price,
+      product: _id,
+    })
+  );
 
   const res = await axiosInstance.post(
     '/order/create',
@@ -157,8 +159,24 @@ export const getOrder = async (orderId: string): Promise<IGetOrder> => {
   return data;
 };
 
+export const addAddress = async (address: Omit<AddressItem, '_id'>) => {
+  const res = await axiosInstance.post('/address/add', address, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+  });
+  const data = await res.data;
+  return data;
+};
+
 export const getStripeAPIKey = async (): Promise<{ key: string }> => {
-  const res = await axiosInstance.get('/payment/stripekey');
+  const res = await axiosInstance.get('/payment/stripekey', {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+  });
   const data = await res.data;
   return data;
 };

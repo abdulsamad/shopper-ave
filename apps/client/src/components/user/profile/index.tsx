@@ -28,7 +28,7 @@ const Profile = ({ name, email, role, createdAt, photo, toggleEditMode }: IProfi
           height={300}
           src={photo ? photo.secure_url : avatar}
           alt={name}
-          className="rounded-full object-cover"
+          className="mx-auto rounded-full object-cover"
         />
       </div>
       <div className="flex flex-col space-y-4 text-center">

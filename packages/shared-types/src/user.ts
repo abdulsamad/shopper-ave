@@ -1,4 +1,4 @@
-export interface addressItem {
+export interface AddressItem {
   address: string;
   city: string;
   postalCode: string;
@@ -15,7 +15,7 @@ export interface User {
   password: string;
   role: 'user' | 'admin' | 'manager';
   photo?: { id: string; secure_url: string };
-  addresses?: addressItem[];
+  addresses?: AddressItem[];
   forgotPasswordToken?: string;
   forgotPasswordExpiry?: string;
   createdAt: string;
