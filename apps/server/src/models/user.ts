@@ -6,9 +6,9 @@ import crypto from 'crypto';
 
 import { User } from 'shared-types';
 
-export interface IUser extends User {
+export interface IUser extends User, Document {
   isValidPassword: (receivedPassword: string) => Promise<boolean>;
-  getJwtToken: () => void;
+  getJwtToken: () => string;
   getForgotPasswordToken: () => string;
 }
 
