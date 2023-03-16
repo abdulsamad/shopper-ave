@@ -57,16 +57,12 @@ export interface updateUserResData {
 }
 
 export const updateUser = async (userInfo: FormData): Promise<updateUserResData> => {
-  const res = await axiosInstance.put(
-    '/dashboard/update',
-    { ...userInfo },
-    {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    }
-  );
+  const res = await axiosInstance.put('/dashboard/update', userInfo, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+  });
   const data = await res.data;
   return data;
 };
