@@ -281,16 +281,17 @@ export const addAddress = async (req: Request, res: Response) => {
   }
 
   try {
-    const user = await User.updateOne(
-      { _id: userId },
-      { $push: { addresses: { address, city, postalCode, state, country } } }
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { $push: { addresses: { address, city, postalCode, state, country } } },
+      { new: true }
     );
 
-    if (user.modifiedCount === 0) {
+    if (!user) {
       throw new Error('User not available');
     }
 
-    return res.status(201).json({ success: true });
+    return res.status(201).json({ success: true, user });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ success: false, err: 'Something went wrong' });
@@ -308,16 +309,17 @@ export const removeAddress = async (req: Request, res: Response) => {
   }
 
   try {
-    const user = await User.updateOne(
-      { _id: userId },
-      { $pull: { addresses: { _id: addressId } } }
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { $pull: { addresses: { _id: addressId } } },
+      { new: true }
     );
 
-    if (user.modifiedCount === 0) {
-      return res.status(400).json({ success: false, err: 'Address not found' });
+    if (!user) {
+      throw new Error('User not available');
     }
 
-    return res.status(200).json({ success: true });
+    return res.status(200).json({ success: true, user });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ success: false, err: 'Something went wrong' });

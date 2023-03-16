@@ -84,30 +84,14 @@ export const useAuthStore = create<IAuthStore>()(
             }
           },
           addAddress: async (address) => {
-            await addAddress(address);
+            const { user } = await addAddress(address);
+
+            set(() => ({ user }));
           },
           removeAddress: async (addressId) => {
-            try {
-              await removeAddress(addressId);
+            const { user } = await removeAddress(addressId);
 
-              set((state) => ({
-                user:
-                  state.user && state.user.addresses
-                    ? {
-                        ...state.user,
-                        addresses: state.user.addresses.filter(
-                          (address) => address._id !== addressId
-                        ),
-                      }
-                    : null,
-              }));
-            } catch (err) {
-              if (isAxiosError(err)) {
-                throw new Error(err.response?.data.err, {
-                  cause: 'invalid-credentials',
-                });
-              }
-            }
+            set(() => ({ user }));
           },
         },
       }),

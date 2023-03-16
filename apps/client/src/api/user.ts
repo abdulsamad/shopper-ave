@@ -1,4 +1,4 @@
-import { Product, Review, Order, OrderItem, AddressItem } from 'shared-types';
+import { Product, Review, Order, OrderItem, AddressItem, User } from 'shared-types';
 
 import { axiosInstance } from './axiosInstance';
 import { IProduct } from '@store/cart';
@@ -161,6 +161,7 @@ export const getOrder = async (orderId: string): Promise<IGetOrder> => {
 
 interface addAddressRes {
   success: boolean;
+  user: User;
 }
 
 export const addAddress = async (address: Omit<AddressItem, '_id'>): Promise<addAddressRes> => {
@@ -176,6 +177,7 @@ export const addAddress = async (address: Omit<AddressItem, '_id'>): Promise<add
 
 interface removeAddressRes {
   success: boolean;
+  user: User;
 }
 
 export const removeAddress = async (addressId: string): Promise<removeAddressRes> => {
