@@ -3,7 +3,10 @@ import { faker } from '@faker-js/faker';
 import { User } from 'shared-types';
 
 /* istanbul ignore file */
-export const user: User = {
+export const user: Pick<
+  User,
+  '__v' | '_id' | 'email' | 'name' | 'email' | 'password' | 'role' | 'createdAt' | 'updatedAt'
+> = {
   __v: 0,
   _id: faker.database.mongodbObjectId(),
   email: faker.internet.email(),
