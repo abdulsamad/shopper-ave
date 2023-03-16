@@ -4,6 +4,7 @@ import { BookmarkSquareIcon } from '@heroicons/react/24/outline';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { isAxiosError } from 'axios';
 
 import { User } from 'shared-types';
 
@@ -18,15 +19,22 @@ import FileInput from '@utils/FileInput';
 const editModeSchema = z.object({
   name: z
     .string()
-    // .min(1, 'Name is required')
-    // .max(80, 'Name should be under 80 characters')
-    .optional(),
-  photo: z.custom<FileList | null>((val) => val).optional(),
-  email: z
-    .string()
-    // .min(1, 'Email is required for creating an account').email()
-    .optional(),
+    .min(1, 'Name is required')
+    .max(80, 'Name should be under 80 characters')
+    .optional()
+    .or(z.literal('')),
+  photo: z.custom<File | null>((val) => val).or(z.literal(null)),
+  email: z.string().min(1, 'Email cannot be empty').email().optional().or(z.literal('')),
 });
+// TODO: Fix refine and make atleast one item required before submit
+// .refine(
+//   ({ name, email, photo }) => {
+//     return name !== undefined || photo !== null || email !== undefined;
+//   },
+//   {
+//     message: 'At least one value should be added to updated',
+//   }
+// );
 
 type editModeSchemaType = z.infer<typeof editModeSchema>;
 
@@ -62,11 +70,13 @@ const EditMode = ({ name, email, role, createdAt, toggleEditMode }: IEditMode) =
         await updateUser(formData);
 
         reset();
+        toggleEditMode();
       } catch (err) {
-        if (err instanceof Error) setError('root', { type: 'custom', message: err.message });
+        if (isAxiosError(err) && err.response)
+          setError('root', { type: 'custom', message: err.response.data.err });
       }
     },
-    [reset, clearErrors, setError]
+    [reset, clearErrors, setError, toggleEditMode]
   );
 
   return (
@@ -110,11 +120,7 @@ const EditMode = ({ name, email, role, createdAt, toggleEditMode }: IEditMode) =
       <p className="my-3 text-sm italic text-slate-500">
         <strong>Note:</strong> Only change those fields that you need to update. All are optional.
       </p>
-      <Button
-        type="submit"
-        isLoading={isSubmitting}
-        className="bg-success my-3 p-2 text-white"
-        onClick={toggleEditMode}>
+      <Button type="submit" isLoading={isSubmitting} className="bg-success my-3 p-2 text-white">
         <BookmarkSquareIcon className="mr-2 h-6 w-6" />
         Save Profile
       </Button>
