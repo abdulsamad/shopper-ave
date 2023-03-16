@@ -50,3 +50,23 @@ export const logout = async (): Promise<logoutResData> => {
   const data = await res.data;
   return data;
 };
+
+export interface updateUserResData {
+  success: boolean;
+  user: User;
+}
+
+export const updateUser = async (userInfo: FormData): Promise<updateUserResData> => {
+  const res = await axiosInstance.put(
+    '/dashboard/update',
+    { ...userInfo },
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    }
+  );
+  const data = await res.data;
+  return data;
+};
