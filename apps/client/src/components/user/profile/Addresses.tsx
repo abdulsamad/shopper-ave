@@ -69,20 +69,25 @@ const Addresses = ({ addresses }: { addresses: User['addresses'] }) => {
     <div className="flex flex-col">
       <h2 className="mb-4 font-semibold">Addresses</h2>
       <div className="space-y-5">
-        {addresses.map(({ address, city, country, postalCode, state, _id }) => (
-          <div
-            key={_id}
-            className="justify-centers relative flex items-center justify-center bg-slate-100 p-4 text-slate-700">
-            <address>
-              <span className="max-w-xs">{address}</span>
-              <br /> {city}, {postalCode} <br />
-              {state} {country}
-            </address>
-            <button type="button" onClick={() => actions.removeAddress(_id)}>
-              <TrashIcon className="text-danger absolute right-4 top-4 h-4 w-4" />
-            </button>
-          </div>
-        ))}
+        <AnimatePresence>
+          {addresses.map(({ address, city, country, postalCode, state, _id }) => (
+            <motion.div
+              key={_id}
+              initial={{ translateY: '-10px', opacity: 0 }}
+              animate={{ translateY: 0, opacity: 1 }}
+              exit={{ translateY: '-10px', opacity: 0 }}
+              className="justify-centers relative flex items-center justify-center bg-slate-100 p-4 text-slate-700">
+              <address>
+                <span className="max-w-xs">{address}</span>
+                <br /> {city}, {postalCode} <br />
+                {state} {country}
+              </address>
+              <button type="button" onClick={() => actions.removeAddress(_id)}>
+                <TrashIcon className="text-danger absolute right-4 top-4 h-4 w-4" />
+              </button>
+            </motion.div>
+          ))}
+        </AnimatePresence>
       </div>
       <Button
         className="bg-primary-500 my-5 text-white"
@@ -91,8 +96,12 @@ const Addresses = ({ addresses }: { addresses: User['addresses'] }) => {
       </Button>
       <AnimatePresence>
         {open && (
-          <motion.div className="fixed top-0 right-0 bottom-0 left-0 flex items-center justify-center bg-slate-800 bg-opacity-50">
-            <div className="relative">
+          <div className="fixed top-0 right-0 bottom-0 left-0 flex items-center justify-center bg-slate-800 bg-opacity-50">
+            <motion.div
+              initial={{ translateY: '100vh' }}
+              animate={{ translateY: 0 }}
+              exit={{ translateY: '100vh' }}
+              className="relative">
               <Button
                 type="button"
                 onClick={() => setOpen((prevState) => !prevState)}
@@ -155,8 +164,8 @@ const Addresses = ({ addresses }: { addresses: User['addresses'] }) => {
                   </Button>
                 </form>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
         )}
       </AnimatePresence>
     </div>
