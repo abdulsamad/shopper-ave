@@ -281,23 +281,16 @@ export const addAddress = async (req: Request, res: Response) => {
   }
 
   try {
-    const user = await User.findById(userId);
+    const user = await User.updateOne(
+      { _id: userId },
+      { $push: { addresses: { address, city, postalCode, state, country } } }
+    );
 
-    if (!user) {
+    if (user.modifiedCount === 0) {
       throw new Error('User not available');
     }
 
-    user.addresses?.push({
-      address,
-      city,
-      postalCode,
-      state,
-      country,
-    });
-
-    await user.save({ validateBeforeSave: true });
-
-    return res.status(201).json({ success: true, user });
+    return res.status(201).json({ success: true });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ success: false, err: 'Something went wrong' });
