@@ -71,8 +71,17 @@ export const useAuthStore = create<IAuthStore>()(
             set(() => ({ isAuthenticated: false, token: null, user: null }));
           },
           updateUser: async (formData) => {
-            //
-            await updateUser(formData);
+            try {
+              const { user } = await updateUser(formData);
+
+              set(() => ({ user }));
+            } catch (err) {
+              if (isAxiosError(err)) {
+                throw new Error(err.response?.data.err, {
+                  cause: 'invalid-credentials',
+                });
+              }
+            }
           },
           addAddress: async (address) => {
             await addAddress(address);
