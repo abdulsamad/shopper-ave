@@ -159,8 +159,27 @@ export const getOrder = async (orderId: string): Promise<IGetOrder> => {
   return data;
 };
 
-export const addAddress = async (address: Omit<AddressItem, '_id'>) => {
+interface addAddressRes {
+  success: boolean;
+}
+
+export const addAddress = async (address: Omit<AddressItem, '_id'>): Promise<addAddressRes> => {
   const res = await axiosInstance.post('/address/add', address, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+  });
+  const data = await res.data;
+  return data;
+};
+
+interface removeAddressRes {
+  success: boolean;
+}
+
+export const removeAddress = async (addressId: string): Promise<removeAddressRes> => {
+  const res = await axiosInstance.delete(`/address/remove/${addressId}`, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${localStorage.getItem('token')}`,
