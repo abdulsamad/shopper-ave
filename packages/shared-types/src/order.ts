@@ -13,6 +13,7 @@ export interface OrderItem<T = string> {
   image: string;
   price: number;
   product: T;
+  _id: T;
 }
 
 export interface PaymentInfo {
