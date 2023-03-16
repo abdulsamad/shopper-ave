@@ -535,7 +535,7 @@ paths:
         '500':
           $ref: '#/components/schemas/InternalServerError'
   /password/update:
-    post:
+    put:
       tags:
         - User
       summary: Change user password
@@ -583,7 +583,7 @@ paths:
         '500':
           $ref: '#/components/schemas/InternalServerError'
   /dashboard/update:
-    post:
+    put:
       tags:
         - User
       summary: Update user profile details
@@ -623,6 +623,89 @@ paths:
         '400':
           $ref: '#/components/schemas/BadRequest'
           default: No data provided to update # Ignored
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+  /address/add:
+    post:
+      tags:
+        - User
+      summary: Add an address for the user
+      parameters:
+        - in: header
+          name: auth
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              minProperties: 1
+              properties:
+                address:
+                  type: string
+                  default: 123 Main Street
+                city:
+                  type: string
+                  default: Toronto
+                postalCode:
+                  type: string
+                  default: M1R 0E9
+                state:
+                  type: string
+                  default: Ontario
+                country:
+                  type: string
+                  default: Canada
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  user:
+                    $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: Address, city, postal code, state, and country all are required # Ignored
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+  /address/remove/:addressId:
+    delete:
+      tags:
+        - User
+      summary: Delete an address from user
+      parameters:
+        - in: header
+          name: auth
+        - in: path
+          name: addressId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: Address Id is required to remove address # Ignored
+          default2: Address not found # Ignored
         '401':
           $ref: '#/components/schemas/Unauthorized'
         '500':
