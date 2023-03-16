@@ -65,6 +65,30 @@ components:
             secure_url:
               type: string
               default: Photo URL
+        addresses:
+          type: array
+          items:
+            type: object
+            properties:
+              address:
+                type: string
+                default: 123 Main Street
+              city:
+                type: string
+                default: Toronto
+              postalCode:
+                type: string
+                default: M1R 0E9
+              state:
+                type: string
+                default: Ontario
+              country:
+                type: string
+                default: Canada
+              _id:
+                type: string # MongoDB internal
+                default: <MongoDB ObjectId>
+
         forgotPasswordToken:
           type: string
         forgotPasswordExpiry:

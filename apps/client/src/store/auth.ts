@@ -2,9 +2,10 @@ import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import { isAxiosError } from 'axios';
 
-import { User } from 'shared-types';
+import { AddressItem, User } from 'shared-types';
 
-import { login, loginReqData, register, logout } from '@api/auth';
+import { login, loginReqData, register, logout, updateUser } from '@api/auth';
+import { addAddress, removeAddress } from '@api/user';
 
 export interface IAuthStore {
   isAuthenticated: boolean;
@@ -14,6 +15,9 @@ export interface IAuthStore {
     login: ({ email, password }: loginReqData) => Promise<void | Error>;
     register: (userInfo: FormData) => Promise<void | Error>;
     logout: () => void;
+    updateUser: (data: FormData) => Promise<void | Error>;
+    addAddress: (address: Omit<AddressItem, '_id'>) => Promise<void | Error>;
+    removeAddress: (addressId: string) => Promise<void | Error>;
   };
 }
 
@@ -65,6 +69,16 @@ export const useAuthStore = create<IAuthStore>()(
             localStorage.removeItem('token');
 
             set(() => ({ isAuthenticated: false, token: null, user: null }));
+          },
+          updateUser: async (formData) => {
+            //
+            await updateUser(formData);
+          },
+          addAddress: async (address) => {
+            await addAddress(address);
+          },
+          removeAddress: async (addressId) => {
+            await removeAddress(addressId);
           },
         },
       }),

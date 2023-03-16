@@ -8,7 +8,7 @@ import { isAxiosError } from 'axios';
 
 import { User } from 'shared-types';
 
-import { updateUser } from '@api/auth';
+import { useAuthActions } from '@store/index';
 import { createFormData } from '@utils/index';
 import { roleBadges } from '@utils/Badges';
 import Alert from '@utils/Alert';
@@ -43,6 +43,7 @@ interface IEditMode extends User {
 }
 
 const EditMode = ({ name, email, role, createdAt, toggleEditMode }: IEditMode) => {
+  const { updateUser } = useAuthActions();
   const {
     handleSubmit,
     register,
@@ -76,7 +77,7 @@ const EditMode = ({ name, email, role, createdAt, toggleEditMode }: IEditMode) =
           setError('root', { type: 'custom', message: err.response.data.err });
       }
     },
-    [reset, clearErrors, setError, toggleEditMode]
+    [reset, clearErrors, setError, toggleEditMode, updateUser]
   );
 
   return (

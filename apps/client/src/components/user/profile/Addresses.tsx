@@ -9,9 +9,9 @@ import { XMarkIcon } from '@heroicons/react/24/solid';
 
 import { User } from 'shared-types';
 
+import useAuthStore from '@store/auth';
 import Input from '@utils/Input';
 import Button from '@utils/Button';
-import { addAddress } from '@api/user';
 
 const addressesSchema = z.object({
   address: z.string().max(250, 'Address should not be longer than 250 characters'),
@@ -24,6 +24,7 @@ const addressesSchema = z.object({
 type addressesSchemaType = z.infer<typeof addressesSchema>;
 
 const Addresses = ({ addresses }: { addresses: User['addresses'] }) => {
+  const { actions } = useAuthStore();
   const [open, setOpen] = useState(false);
 
   const {
@@ -50,7 +51,7 @@ const Addresses = ({ addresses }: { addresses: User['addresses'] }) => {
         // Clear errors
         clearErrors();
 
-        await addAddress(data);
+        await actions.addAddress(data);
 
         reset();
         setOpen(false);
@@ -59,7 +60,7 @@ const Addresses = ({ addresses }: { addresses: User['addresses'] }) => {
           setError('root', { type: 'custom', message: err.response.data.err });
       }
     },
-    [reset, clearErrors, setError]
+    [reset, clearErrors, setError, actions]
   );
 
   if (!addresses) return null;
@@ -77,7 +78,7 @@ const Addresses = ({ addresses }: { addresses: User['addresses'] }) => {
               <br /> {city}, {postalCode} <br />
               {state} {country}
             </address>
-            <button>
+            <button type="button" onClick={() => actions.removeAddress(_id)}>
               <TrashIcon className="text-danger absolute right-4 top-4 h-4 w-4" />
             </button>
           </div>
