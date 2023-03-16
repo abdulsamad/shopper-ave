@@ -83,70 +83,77 @@ const Addresses = ({ addresses }: { addresses: User['addresses'] }) => {
           </div>
         ))}
       </div>
-      <Button className="my-2" onClick={() => setOpen((prevState) => !prevState)}>
+      <Button
+        className="bg-primary-500 my-5 text-white"
+        onClick={() => setOpen((prevState) => !prevState)}>
         Add New
       </Button>
-
       <AnimatePresence>
         {open && (
           <motion.div className="fixed top-0 right-0 bottom-0 left-0 flex items-center justify-center bg-slate-800 bg-opacity-50">
-            <Button type="button" onClick={() => setOpen((prevState) => !prevState)}>
-              <XMarkIcon className="text-dark absolute right-2 top-2 h-6 w-6 p-2 text-red-600" />
-            </Button>
-            <div className="rounded-md bg-white px-16 py-14 text-center">
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <Input
-                  type="text"
-                  label="Address"
-                  placeholder="Your street, house..."
-                  id="address"
-                  control={control}
-                  error={errors.address}
-                  required={false}
-                />
-                <Input
-                  type="text"
-                  label="City"
-                  placeholder="Toronto"
-                  id="city"
-                  control={control}
-                  error={errors.city}
-                  required={false}
-                />
-                <Input
-                  type="text"
-                  label="Postal Code"
-                  placeholder="M1R 0E9"
-                  id="postalCode"
-                  control={control}
-                  error={errors.postalCode}
-                  required={false}
-                />
-                <Input
-                  type="text"
-                  label="State"
-                  placeholder="Ontario"
-                  id="state"
-                  control={control}
-                  error={errors.state}
-                  required={false}
-                />
-                <Input
-                  type="text"
-                  label="Country"
-                  placeholder="Canada"
-                  id="country"
-                  control={control}
-                  error={errors.country}
-                  required={false}
-                />
-                <Button
-                  type="submit"
-                  isLoading={isSubmitting}
-                  className="bg-primary-500 my-3 text-white">
-                  Add New Address
-                </Button>
-              </form>
+            <div className="relative">
+              <Button
+                type="button"
+                onClick={() => setOpen((prevState) => !prevState)}
+                className="absolute right-2 top-2 bg-slate-100 p-2">
+                <XMarkIcon className="text-danger h-6 w-6" />
+                <div className="sr-only">Close</div>
+              </Button>
+              <div className="rounded-md bg-white px-16 py-14 text-center">
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <Input
+                    type="text"
+                    label="Address"
+                    placeholder="Your street, house..."
+                    id="address"
+                    control={control}
+                    error={errors.address}
+                    required={false}
+                  />
+                  <Input
+                    type="text"
+                    label="City"
+                    placeholder="Toronto"
+                    id="city"
+                    control={control}
+                    error={errors.city}
+                    required={false}
+                  />
+                  <Input
+                    type="text"
+                    label="Postal Code"
+                    placeholder="M1R 0E9"
+                    id="postalCode"
+                    control={control}
+                    error={errors.postalCode}
+                    required={false}
+                  />
+                  <Input
+                    type="text"
+                    label="State"
+                    placeholder="Ontario"
+                    id="state"
+                    control={control}
+                    error={errors.state}
+                    required={false}
+                  />
+                  <Input
+                    type="text"
+                    label="Country"
+                    placeholder="Canada"
+                    id="country"
+                    control={control}
+                    error={errors.country}
+                    required={false}
+                  />
+                  <Button
+                    type="submit"
+                    isLoading={isSubmitting}
+                    className="bg-primary-500 my-3 text-white">
+                    Add New Address
+                  </Button>
+                </form>
+              </div>
             </div>
           </motion.div>
         )}

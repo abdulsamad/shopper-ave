@@ -18,18 +18,18 @@ const ProfilePage: NextPage = () => {
   if (!user) return null;
 
   return (
-    <section className="my-5 mx-5 flex flex-1 flex-col items-center justify-center space-y-8">
-      <div className="w-full max-w-[600px] rounded-2xl border border-solid border-slate-100 p-6 text-center shadow">
+    <div className="my-5 mx-5 flex flex-1 flex-col items-center justify-center space-y-8">
+      <section className="w-full max-w-[600px] rounded-2xl border border-solid border-slate-100 p-6 text-center shadow">
         {editMode ? (
           <EditMode toggleEditMode={toggleEditMode} {...user} />
         ) : (
           <Profile toggleEditMode={toggleEditMode} {...user} />
         )}
-      </div>
-      <div className="w-full max-w-[600px] rounded-2xl border border-solid border-slate-100 p-6 text-center shadow">
+      </section>
+      <section className="w-full max-w-[600px] rounded-2xl border border-solid border-slate-100 p-6 text-center shadow">
         <Addresses addresses={user.addresses} />
-      </div>
-    </section>
+      </section>
+    </div>
   );
 };
 
