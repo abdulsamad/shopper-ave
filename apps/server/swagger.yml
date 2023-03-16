@@ -693,6 +693,8 @@ paths:
                   success:
                     type: boolean
                     default: true
+                  user:
+                    $ref: '#/components/schemas/User'
         '400':
           $ref: '#/components/schemas/BadRequest'
           default: Address, city, postal code, state, and country all are required # Ignored
@@ -724,6 +726,8 @@ paths:
                   success:
                     type: boolean
                     default: true
+                  user:
+                    $ref: '#/components/schemas/User'
         '400':
           $ref: '#/components/schemas/BadRequest'
           default: Address Id is required to remove address # Ignored
