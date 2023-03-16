@@ -1,5 +1,7 @@
 {
   "files.associations": {
     "**/client/src/styles/index.css": "tailwindcss"
-  }
+  },
+  "npm.scriptExplorerExclude": ["prepare", "format"],
+  "npm.exclude": "**/apps/**"
 }
