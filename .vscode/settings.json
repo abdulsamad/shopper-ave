@@ -3,5 +3,7 @@
     "**/client/src/styles/index.css": "tailwindcss"
   },
   "npm.scriptExplorerExclude": ["prepare", "format"],
-  "npm.exclude": "**/apps/**"
+  "npm.exclude": "**/apps/**",
+  "typescript.tsdk": "../../node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true
 }
