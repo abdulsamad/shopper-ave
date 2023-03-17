@@ -7,9 +7,9 @@ interface IStar {
   className?: string;
 }
 
-const Stars = ({ ratings, className }: IStar) => {
+const Stars = ({ ratings, className = 'h-6 w-6' }: IStar) => {
   return (
-    <div>
+    <div className="flex">
       {[1, 2, 3, 4, 5].map((star) =>
         star <= ratings ? (
           <StarIcon key={star} className={`text-yellow-500 ${className}`} />

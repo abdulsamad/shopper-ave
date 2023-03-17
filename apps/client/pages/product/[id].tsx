@@ -3,26 +3,31 @@ import { NextPage, GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { ShoppingCartIcon, ShoppingBagIcon } from '@heroicons/react/24/solid';
 
-import { Product as IProduct } from 'shared-types';
+import { Product as IProduct, Review as IReview } from 'shared-types';
 
 import { useCart } from '@store/index';
-import { getProduct } from '@api/user';
+import { getProduct, getReviews } from '@api/user';
 import Button from '@utils/Button';
 import { formatCurrency } from '@utils/index';
 import Photos from '@components/user/product/Photos';
 import Review from '@components/user/review';
 import Stars from '@utils/Stars';
 
-const Index: NextPage<IProduct> = (product: IProduct) => {
+interface IProps {
+  product: IProduct;
+  reviews: IReview[];
+}
+
+const Index: NextPage<IProps> = ({ product, reviews }: IProps) => {
   const router = useRouter();
+  const { actions, items: cartItems } = useCart();
 
   const { name, brand, photos, price, category, description, ratings } = product;
-  const { actions, items: cartItems } = useCart();
   const isAddedToCart = cartItems.some((item) => item._id === product._id);
 
   return (
     <div className="flex-1">
-      <div className="grid grid-cols-2 place-items-center p-5">
+      <div className="container grid grid-cols-2 p-5">
         <Photos photos={photos} name={name} />
         <section className="flex flex-col gap-6">
           <div>
@@ -57,8 +62,8 @@ const Index: NextPage<IProduct> = (product: IProduct) => {
             </Button>
           </div>
         </section>
-        <section className="col-span-2 my-8">
-          <Review id={product._id} />
+        <section className="col-span-2 mt-20 w-full">
+          <Review productId={product._id} reviews={reviews} />
         </section>
       </div>
     </div>
@@ -67,11 +72,14 @@ const Index: NextPage<IProduct> = (product: IProduct) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context.params?.id as string;
+
   const product = (await getProduct(id)).product;
+  const reviews = (await getReviews(id)).reviews;
 
   return {
     props: {
-      ...product,
+      product,
+      reviews,
     },
   };
 };
