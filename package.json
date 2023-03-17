@@ -14,7 +14,9 @@
     "test": "turbo run test",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky install",
-    "kill-ports": "kill-port 4000 3000"
+    "kill-ports": "kill-port 4000 3000",
+    "run:client": "yarn workspace client dev",
+    "run:server": "yarn workspace server dev"
   },
   "devDependencies": {
     "eslint-config-custom": "*",
