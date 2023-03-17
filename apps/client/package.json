@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "debug": "NODE_OPTIONS='--inspect' npm run dev",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "cypress:run": "yarn run dev && cypress run"
   },
   "dependencies": {
     "@dicebear/collection": "^5.3.4",
