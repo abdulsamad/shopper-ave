@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "debug": "NODE_OPTIONS='--inspect' npm run dev",
+    "debug": "NODE_OPTIONS='--inspect' yarn run dev",
     "cypress:open": "start-server-and-test dev http://localhost:3000 \"cypress open --e2e\"",
     "cypress:run": "start-server-and-test start http://localhost:3000 \"cypress run --e2e\""
   },
