@@ -1,4 +1,12 @@
 describe('Auth tests', () => {
+  before(async () => {
+    // Index page
+    cy.intercept('http://localhost:4000/api/v1/products', { fixture: 'products.json' });
+
+    // Login
+    // cy.intercept('http://localhost:4000/api/v1/products', {fixture: ''})
+  });
+
   it('User logs In', async () => {
     // Visit login page
     cy.visit('/login');

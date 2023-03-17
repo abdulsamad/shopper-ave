@@ -1,0 +1,113 @@
+{
+  "success": true,
+  "products": [
+    {
+      "_id": "6400abbb71c4a267fcc9a6c8",
+      "name": "Abstract Painting",
+      "price": 999,
+      "description": "Awesome hoodie with an awesome fabric quality",
+      "photos": [
+        {
+          "id": "products/fox2codwjnx5rkxngmee",
+          "secure_url": "https://res.cloudinary.com/abdulsamad/image/upload/v1677765562/products/fox2codwjnx5rkxngmee.jpg",
+          "_id": "6400abbb71c4a267fcc9a6c9"
+        }
+      ],
+      "category": "hoodie",
+      "stock": 38,
+      "brand": "Nike",
+      "ratings": 0,
+      "numberOfReviews": 0,
+      "user": "6331b54195fdd97ca09621a4",
+      "reviews": [],
+      "createdAt": "2023-03-02T13:59:23.496Z",
+      "updatedAt": "2023-03-15T16:48:45.109Z",
+      "__v": 0
+    },
+    {
+      "_id": "64059e3278f35a3b44a48c27",
+      "name": "DSLR Camera",
+      "price": 399,
+      "description": "DIGI DECOR's 9H Finish Camera Protector has been specially made with scratch resistant material and rounded edges for a more precise fit. Due to the Glossy Finish and surface hardness of the Film, Camera Protector provides premium protection and no lose in touch Pics sensitivity. Surface hardness Three times stronger than regular PET film. Even sharp objects such as knives and keys will not scratch the Glass Camera Protector. Oleo phobic Coating: DSLR Camera Screen Protector has an oleo phobic coating that prevents fingerprints and other contaminants and makes the film easy to clean. Anti-Shatter Film: If broken, DSLR Camera Screen Protector cracks into small pieces that are held within the film. They are not sharp, making it safer than other glass products. CAUTION *When removing for re-use, the adhesive properties might wear off to an extent where the Camera protector will not adhere to the device. It is not recommended to reuse DSLR Camera Screen Protector once it's been applied. *Using excessive force when installing or removing the Camera protector may damage the product",
+      "photos": [
+        {
+          "id": "products/z2vwgve5icrjvdegfovw",
+          "secure_url": "https://res.cloudinary.com/abdulsamad/image/upload/v1678089778/products/z2vwgve5icrjvdegfovw.jpg",
+          "_id": "64059e3278f35a3b44a48c28"
+        }
+      ],
+      "category": "electronics",
+      "stock": 48,
+      "brand": "Nikon",
+      "ratings": 0,
+      "numberOfReviews": 0,
+      "user": "6331b54195fdd97ca09621a4",
+      "reviews": [],
+      "createdAt": "2023-03-06T08:02:58.833Z",
+      "updatedAt": "2023-03-15T16:48:45.109Z",
+      "__v": 0
+    },
+    {
+      "_id": "6408385f19a3438e401cc353",
+      "name": "Mens Cotton Jacket",
+      "price": 55.99,
+      "description": "great outerwear jackets for Spring/Autumn/Winter, suitable for many occasions, such as working, hiking, camping, mountain/rock climbing, cycling, traveling, or other outdoors. Good gift choice for you or your family member. A warm-hearted love to Father, husband, or son in this thanksgiving or Christmas Day.",
+      "photos": [
+        {
+          "id": "products/nrwdwox98jfuowrr4ol3",
+          "secure_url": "https://res.cloudinary.com/abdulsamad/image/upload/v1678260318/products/nrwdwox98jfuowrr4ol3.jpg",
+          "_id": "6408385f19a3438e401cc354"
+        }
+      ],
+      "category": "hoodie",
+      "stock": 7,
+      "brand": "Nike",
+      "ratings": 3,
+      "numberOfReviews": 2,
+      "user": "6331b54195fdd97ca09621a4",
+      "reviews": [
+        {
+          "user": "640867f6da1d67a24bd350dc",
+          "name": "Jane Doe",
+          "rating": 5,
+          "comment": "Awesome jacket. I got it for my friend and he loved it!",
+          "_id": "6409ecd620cabe9866e50263"
+        },
+        {
+          "user": "640867f6da1d67a24bd350dc",
+          "name": "Jane Doe",
+          "rating": 1,
+          "comment": "Worst Jacket ever!",
+          "_id": "6409ee5420cabe9866e5026c"
+        }
+      ],
+      "createdAt": "2023-03-08T07:25:19.228Z",
+      "updatedAt": "2023-03-15T18:35:19.062Z",
+      "__v": 2
+    },
+    {
+      "_id": "640f7a229e30bc28cff23efd",
+      "name": "iPhone",
+      "price": 999,
+      "description": "The iPhone X (Roman numeral \"X\" pronounced \"ten\", also known as iPhone 10)[11][12] is a smartphone designed, developed and marketed by Apple Inc. It is part of the eleventh generation of the iPhone. Available for pre-order from October 27, 2017, it was released on November 3, 2017. The naming of the iPhone X (skipping the iPhone 9) is to mark the 10th anniversary of the iPhone.\r\n\r\nThe iPhone X used a glass and stainless-steel form factor and \"bezel-less\" design, shrinking the bezels while not having a \"chin\", unlike many Android phones. It was the first iPhone to use an OLED screen. The home button's fingerprint sensor was replaced with a new type of authentication called Face ID, which used sensors to scan the user's face to unlock the device. This face-recognition capability also enabled emojis to be animated following the user's expression (Animoji). With a bezel-less design, iPhone user interaction changed significantly, using gestures to navigate the operating system rather than the home button used in all previous iPhones. At the time of its November 2017 launch, its price tag of US$999 also made it the most expensive iPhone ever, with even higher prices internationally due to additional local sales and import taxes.",
+      "photos": [
+        {
+          "id": "products/s0gqvdaeaxfkidzzwjua",
+          "secure_url": "https://res.cloudinary.com/abdulsamad/image/upload/v1678735906/products/s0gqvdaeaxfkidzzwjua.jpg",
+          "_id": "640f7a229e30bc28cff23efe"
+        }
+      ],
+      "category": "electronics",
+      "stock": 98,
+      "brand": "Apple",
+      "ratings": 0,
+      "numberOfReviews": 0,
+      "user": "6331b54195fdd97ca09621a4",
+      "reviews": [],
+      "createdAt": "2023-03-13T19:31:46.962Z",
+      "updatedAt": "2023-03-15T16:48:45.107Z",
+      "__v": 0
+    }
+  ],
+  "totalProducts": 4
+}
