@@ -120,7 +120,7 @@ const Index = ({ productId, reviews }: IProps) => {
       </form>
       <div className="my-2 space-y-2">
         {reviews.map(({ _id, name, comment, rating }) => (
-          <div key={_id} className="rounded-xl p-4">
+          <div key={_id} className="rounded-xl py-4">
             <div className="text-lg font-semibold">
               {name}{' '}
               <span className="text-primary-600 ml-2 border-l-2 border-slate-500 pl-2 text-sm font-medium">
