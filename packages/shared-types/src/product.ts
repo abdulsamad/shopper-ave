@@ -8,6 +8,7 @@ export interface Review {
   name: string;
   rating: number;
   comment: string;
+  _id: string;
 }
 
 export interface Product<TUser = string> {
