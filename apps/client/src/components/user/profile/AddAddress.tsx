@@ -1,13 +1,10 @@
 import React, { useCallback, useState } from 'react';
-import { TrashIcon } from '@heroicons/react/24/outline';
 import { z } from 'zod';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { isAxiosError } from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
 import { XMarkIcon } from '@heroicons/react/24/solid';
-
-import { User } from 'shared-types';
 
 import useAuthStore from '@store/auth';
 import Input from '@utils/Input';

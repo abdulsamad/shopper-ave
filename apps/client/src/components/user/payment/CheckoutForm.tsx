@@ -97,7 +97,7 @@ const CheckoutForm = ({ clientSecret, items, amount, user }: ICheckoutForm) => {
 
       setIsLoading(false);
     },
-    [actions, amount, clientSecret, elements, items, stripe, user]
+    [actions, amount, clientSecret, elements, items, params, stripe, user]
   );
 
   return (
