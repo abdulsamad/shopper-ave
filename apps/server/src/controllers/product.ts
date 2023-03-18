@@ -2,6 +2,8 @@ import { Request, Response } from 'express';
 import { v2 as cloudinary } from 'cloudinary';
 import { UploadedFile } from 'express-fileupload';
 
+import { Review } from 'shared-types';
+
 import Product from '@models/product';
 import WhereClause from '@utils/whereClause';
 import savePhotosToCloudinary from '@utils/savePhotosToCloudinary';
@@ -97,7 +99,7 @@ export const addReview = async (req: Request, res: Response) => {
         }
       });
     } else {
-      product.reviews.push(review);
+      product.reviews.push(review as Review);
       product.numberOfReviews = product.reviews.length;
     }
 

@@ -97,7 +97,10 @@ export const getUserOrders = async (req: Request, res: Response) => {
 
 export const adminGetAllOrders = async (req: Request, res: Response) => {
   try {
-    const orders = await Order.find();
+    const orders = await Order.find().populate('user', 'name email').populate({
+      path: 'orderItems.product',
+      select: 'name image',
+    });
 
     return res.status(200).json({
       success: true,
