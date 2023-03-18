@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { MinusCircleIcon, PlusCircleIcon } from '@heroicons/react/24/outline';
-import { ShoppingBagIcon } from '@heroicons/react/24/solid';
 import Image from 'next/image';
 
 import { IProduct, ICartStore } from '@store/cart';
@@ -101,11 +100,6 @@ const Cart = ({ items, actions, isCartEmpty, amount }: ICart) => {
         <span>Total Price:&nbsp;</span>
         <span>{formatCurrency(amount)}</span>
       </div>
-      <LinkButton
-        href="/checkout"
-        className="from-primary-600 to-primary-400 flex w-full whitespace-nowrap bg-gradient-to-r py-2 px-0 text-white">
-        <ShoppingBagIcon className="mr-2 h-6 w-6" /> Proceed to Checkout
-      </LinkButton>
     </div>
   );
 };

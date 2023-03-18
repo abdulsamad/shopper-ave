@@ -4,7 +4,11 @@ import type { LinkProps } from 'next/link';
 
 import { ButtonLoader } from './Loader';
 
-interface ButtonProps {
+interface ButtonProps
+  extends React.DetailedHTMLProps<
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
+    HTMLButtonElement
+  > {
   children: React.ReactNode;
   isLoading?: boolean;
   onClick?: MouseEventHandler;

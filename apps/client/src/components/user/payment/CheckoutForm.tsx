@@ -1,75 +1,104 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, FormEvent, useCallback } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { LockClosedIcon } from '@heroicons/react/24/solid';
+
+import { User } from 'shared-types';
 
 import Button from '@utils/Button';
 import Alert from '@utils/Alert';
 import { useCart } from '@store/index';
+import { IProduct } from '@store/cart';
 import { createOrder } from '@api/user';
 
 interface ICheckoutForm {
   clientSecret: string;
+  items: IProduct[];
+  amount: number;
+  user: User;
 }
 
-const CheckoutForm = ({ clientSecret }: ICheckoutForm) => {
+const CheckoutForm = ({ clientSecret, items, amount, user }: ICheckoutForm) => {
   const stripe = useStripe();
   const elements = useElements();
-  const { items, amount, actions } = useCart();
+  const params = useSearchParams();
+  const { actions } = useCart();
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const handleSubmit = async (ev: FormEvent) => {
-    ev.preventDefault();
+  const handleSubmit = useCallback(
+    async (ev: FormEvent) => {
+      ev.preventDefault();
 
-    if (!stripe || !elements || !items || !amount) {
-      return;
-    }
+      const addressId = params.get('id');
+      const phoneNo = params.get('phone');
 
-    setIsLoading(true);
+      if (
+        !stripe ||
+        !elements ||
+        !items ||
+        !amount ||
+        !user ||
+        !user.addresses ||
+        !phoneNo ||
+        !addressId
+      ) {
+        return null;
+      }
 
-    // Create Order
-    const {
-      order: { _id, shippingInfo },
-    } = await createOrder(items, {
-      shippingInfo: {
-        address: '124 Bombay',
-        city: 'Peddar Road',
-        country: 'India',
-        phoneNo: '222333444',
-        postalCode: '400001',
-        state: 'Maharashtra',
-      },
-      paymentInfo: {
-        id: clientSecret,
-      },
-      shippingAmount: 0,
-      totalAmount: amount,
-      taxAmount: 0,
-    });
+      setIsLoading(true);
 
-    // Empty cart
-    actions.reset();
+      const selectedAddress = user.addresses.find((item) => item._id === addressId);
 
-    // Confirm payment
-    const { error } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        return_url:
-          process.env.NEXT_PUBLIC_DOMAIN +
-          `/success?orderId=${_id}&address=${shippingInfo.address}&city=${shippingInfo.city}&postalCode=${shippingInfo.postalCode}&state=${shippingInfo.state}&country=${shippingInfo.country}&amount=${amount}`,
-      },
-    });
+      if (!selectedAddress) return null;
 
-    if (error.type === 'card_error' || error.type === 'validation_error') {
-      if (error instanceof Error) setError(error.message);
-    } else {
-      // Unexpedted errror occurred.
-      setError('An unexpected error occurred!');
-    }
+      const { address, city, country, postalCode, state } = selectedAddress;
 
-    setIsLoading(false);
-  };
+      // Create Order
+      const {
+        order: { _id, shippingInfo },
+      } = await createOrder(items, {
+        shippingInfo: {
+          address,
+          city,
+          country,
+          phoneNo,
+          postalCode,
+          state,
+        },
+        paymentInfo: {
+          id: clientSecret,
+        },
+        shippingAmount: 0,
+        totalAmount: amount,
+        taxAmount: 0,
+      });
+
+      // Empty cart
+      actions.reset();
+
+      // Confirm payment
+      const { error } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url:
+            process.env.NEXT_PUBLIC_DOMAIN +
+            `/success?orderId=${_id}&address=${shippingInfo.address}&city=${shippingInfo.city}&postalCode=${shippingInfo.postalCode}&state=${shippingInfo.state}&country=${shippingInfo.country}&amount=${amount}`,
+        },
+      });
+
+      if (error.type === 'card_error' || error.type === 'validation_error') {
+        if (error instanceof Error) setError(error.message);
+      } else {
+        // Unexpedted errror occurred.
+        setError('An unexpected error occurred!');
+      }
+
+      setIsLoading(false);
+    },
+    [actions, amount, clientSecret, elements, items, stripe, user]
+  );
 
   return (
     <div className="text-center">

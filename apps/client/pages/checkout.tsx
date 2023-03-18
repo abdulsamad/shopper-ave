@@ -4,7 +4,7 @@ import Head from 'next/head';
 import { loadStripe, StripeElementsOptions } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 
-import { useCart } from '@store/index';
+import { useCart, useUser } from '@store/index';
 import CheckoutForm from '@components/user/payment/CheckoutForm';
 import { capturePayment } from '@api/user';
 import Alert from '@utils/Alert';
@@ -12,7 +12,8 @@ import Alert from '@utils/Alert';
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
 const Checkout: NextPage = () => {
-  const { amount } = useCart();
+  const { amount, items } = useCart();
+  const user = useUser();
   const [clientSecret, setClientSecret] = useState('');
   const [error, setError] = useState('');
 
@@ -46,9 +47,9 @@ const Checkout: NextPage = () => {
       <div className="flex flex-col p-2 md:flex-row lg:p-5">
         <section className="mx-auto max-w-[400px] px-8 lg:max-w-[700px]">
           {error && <Alert message={error} type="error" />}
-          {clientSecret && (
+          {clientSecret && user && (
             <Elements options={options} stripe={stripePromise}>
-              <CheckoutForm clientSecret={clientSecret} />
+              <CheckoutForm clientSecret={clientSecret} amount={amount} items={items} user={user} />
             </Elements>
           )}
         </section>
