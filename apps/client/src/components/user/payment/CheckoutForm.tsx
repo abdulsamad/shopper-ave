@@ -6,7 +6,6 @@ import { LockClosedIcon } from '@heroicons/react/24/solid';
 import { User } from 'shared-types';
 
 import Button from '@utils/Button';
-import Alert from '@utils/Alert';
 import { useCart } from '@store/index';
 import { IProduct } from '@store/cart';
 import { createOrder } from '@api/user';
@@ -106,7 +105,6 @@ const CheckoutForm = ({ clientSecret, items, amount, user }: ICheckoutForm) => {
         Pay with <span className="text-primary">Credit Card</span>
       </h1>
       <form onSubmit={handleSubmit}>
-        {error && <Alert message={error} type="error" />}
         <PaymentElement options={{ layout: 'tabs' }} />
         <Button
           type="submit"
