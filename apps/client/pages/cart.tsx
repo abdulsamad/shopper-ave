@@ -27,7 +27,7 @@ const Checkout: NextPage = () => {
           <Cart items={items} actions={actions} isCartEmpty={isCartEmpty} amount={amount} />
         </section>
         <section className="px-5 py-3">
-          {user.addresses && (
+          {user.addresses && !isCartEmpty && (
             <Details addresses={user.addresses} defaultValue={user.addresses[0]} />
           )}
         </section>
