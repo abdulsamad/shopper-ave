@@ -15,11 +15,11 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="flex min-h-screen flex-col">
-        <Navbar />
         <Hydrate state={pageProps.dehydratedState}>
+          <Navbar />
           <Component {...pageProps} />
+          <Footer />
         </Hydrate>
-        <Footer />
       </div>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

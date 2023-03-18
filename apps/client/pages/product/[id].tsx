@@ -2,28 +2,35 @@ import React from 'react';
 import { NextPage, GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { ShoppingCartIcon, ShoppingBagIcon } from '@heroicons/react/24/solid';
-
-import { Product as IProduct, Review as IReview } from 'shared-types';
+import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query';
 
 import { useCart } from '@store/index';
-import { getProduct, getReviews } from '@api/user';
+import { getProduct } from '@api/user';
 import Button from '@utils/Button';
 import { formatCurrency } from '@utils/index';
 import Photos from '@components/user/product/Photos';
 import Review from '@components/user/review';
 import Stars from '@utils/Stars';
 
-interface IProps {
-  product: IProduct;
-  reviews: IReview[];
-}
-
-const Index: NextPage<IProps> = ({ product, reviews }: IProps) => {
+const Index: NextPage = () => {
   const router = useRouter();
   const { actions, items: cartItems } = useCart();
+  const productId = typeof router.query?.id === 'string' ? router.query.id : '';
+  const { data, isLoading } = useQuery(['product', productId], () => getProduct(productId), {
+    enabled: true,
+    staleTime: Infinity,
+  });
 
-  const { name, brand, photos, price, category, description, ratings } = product;
-  const isAddedToCart = cartItems.some((item) => item._id === product._id);
+  if (isLoading) {
+    return null;
+  }
+
+  if (!data) {
+    return null;
+  }
+
+  const { name, brand, photos, price, category, description, ratings } = data.product;
+  const isAddedToCart = cartItems.some((item) => item._id === productId);
 
   return (
     <div className="flex-1">
@@ -46,7 +53,7 @@ const Index: NextPage<IProps> = ({ product, reviews }: IProps) => {
               className="bg-primary text-white"
               onClick={async () => {
                 actions.reset();
-                await actions.add(product);
+                await actions.add(data.product);
                 router.push('/checkout');
               }}>
               <ShoppingBagIcon className="mr-3 h-5 w-5" /> Buy Now
@@ -55,7 +62,7 @@ const Index: NextPage<IProps> = ({ product, reviews }: IProps) => {
               type="button"
               className="border-primary text-primary hover:bg-primary border border-solid py-2 transition duration-300 ease-out hover:text-white"
               onClick={() => {
-                actions.add(product);
+                actions.add(data.product);
               }}>
               <ShoppingCartIcon className="mr-3 h-5 w-5" />{' '}
               {isAddedToCart ? 'Add More to Cart' : 'Add to Cart'}
@@ -63,7 +70,7 @@ const Index: NextPage<IProps> = ({ product, reviews }: IProps) => {
           </div>
         </section>
         <section className="col-span-2 mt-20 w-full">
-          <Review productId={product._id} reviews={reviews} />
+          <Review productId={data.product._id} reviews={data.product.reviews} />
         </section>
       </div>
     </div>
@@ -72,14 +79,13 @@ const Index: NextPage<IProps> = ({ product, reviews }: IProps) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context.params?.id as string;
+  const queryClient = new QueryClient();
 
-  const product = (await getProduct(id)).product;
-  const reviews = (await getReviews(id)).reviews;
+  await queryClient.prefetchQuery(['product', id], () => getProduct(id));
 
   return {
     props: {
-      product,
-      reviews,
+      dehydratedState: dehydrate(queryClient),
     },
   };
 };

@@ -41,7 +41,7 @@ const Index = ({ productId, reviews }: IProps) => {
     setError,
     setValue,
     watch,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isSubmitSuccessful },
   } = useForm<reviewSchemaType>({
     defaultValues: {
       comment: '',
@@ -84,7 +84,12 @@ const Index = ({ productId, reviews }: IProps) => {
 
   return (
     <div className="mx-auto max-w-[700px] px-2">
-      <h2 className="text-xl font-semibold">Ratings and Reviews</h2>
+      {reviews.length > 1 && <h2 className="text-xl font-semibold">Ratings and Reviews</h2>}
+      {isSubmitSuccessful && (
+        <div className="my-3">
+          <Alert type="success" message="Thanks. Your review is added to the product." />
+        </div>
+      )}
       {Boolean(userCanReview) && (
         <form onSubmit={handleSubmit(onSubmit)}>
           {errors.root?.message && <Alert type="error" message={errors.root.message} />}
