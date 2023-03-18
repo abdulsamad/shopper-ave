@@ -7,7 +7,6 @@ import { Elements } from '@stripe/react-stripe-js';
 import { useCart, useUser } from '@store/index';
 import CheckoutForm from '@components/user/payment/CheckoutForm';
 import { capturePayment } from '@api/user';
-import Alert from '@utils/Alert';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
@@ -15,7 +14,7 @@ const Checkout: NextPage = () => {
   const { amount, items } = useCart();
   const user = useUser();
   const [clientSecret, setClientSecret] = useState('');
-  const [error, setError] = useState('');
+  const [, setError] = useState('');
 
   useEffect(() => {
     const createPaymentIntent = async () => {
@@ -46,7 +45,6 @@ const Checkout: NextPage = () => {
       </Head>
       <div className="flex flex-col p-2 md:flex-row lg:p-5">
         <section className="mx-auto max-w-[400px] px-8 lg:max-w-[700px]">
-          {error && <Alert message={error} type="error" />}
           {clientSecret && user && (
             <Elements options={options} stripe={stripePromise}>
               <CheckoutForm clientSecret={clientSecret} amount={amount} items={items} user={user} />
