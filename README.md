@@ -16,6 +16,6 @@ ShopperAve is a full-stack ecommerce web application built using MongoDB, Expres
 	React, Next.js, TanStack Query, Zustand, Tailwind, Zod, React Hook Form, Cypress, Husky, Jest, Framer Motion, Stripe, Node, Express and MongoDB with TurboRepo
 </details>
 
-### When will this be completed?
+<!-- ### When will this be completed?
 
-![I Don't know](https://media.giphy.com/media/cwTtbmUwzPqx2/giphy.gif "I don't know")
+![I Don't know](https://media.giphy.com/media/cwTtbmUwzPqx2/giphy.gif "I don't know") -->
