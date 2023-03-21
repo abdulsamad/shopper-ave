@@ -2,6 +2,8 @@ import { Request, Response } from 'express';
 import { v2 as cloudinary } from 'cloudinary';
 import { UploadedFile } from 'express-fileupload';
 
+import { Review } from 'shared-types';
+
 import Product from '@models/product';
 import WhereClause from '@utils/whereClause';
 import savePhotosToCloudinary from '@utils/savePhotosToCloudinary';
@@ -13,13 +15,13 @@ export const getAllProduct = async (req: Request, res: Response) => {
     const resultPerPage = 12;
     const totalProducts = await Product.countDocuments();
 
-    // ! Add explicit types for Whereclause class
-    let products: any = new WhereClause(Product.find(), query).search().filter();
+    let products = new WhereClause(Product.find(), query).search().filter();
 
     const filteredProductNumber = products.length;
 
     products.pager(resultPerPage);
-    products = await products.base;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    products = (await products.base) as any;
 
     return res.status(200).json({
       success: true,
@@ -29,7 +31,7 @@ export const getAllProduct = async (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ err: 'Something went wrong' });
+    return res.status(500).json({ success: false, err: 'Something went wrong' });
   }
 };
 
@@ -37,14 +39,14 @@ export const getProduct = async (req: Request, res: Response) => {
   const productId = req.params.id;
 
   if (!productId) {
-    return res.status(400).json({ err: 'Product ID is required to get a product' });
+    return res.status(400).json({ success: false, err: 'Product ID is required to get a product' });
   }
 
   try {
     const product = await Product.findById(productId);
 
     if (!product) {
-      return res.status(500).json({ err: 'Product not available' });
+      return res.status(500).json({ success: false, err: 'Product not available' });
     }
 
     return res.status(200).json({
@@ -53,7 +55,7 @@ export const getProduct = async (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ err: 'Something went wrong' });
+    return res.status(500).json({ success: false, err: 'Something went wrong' });
   }
 };
 
@@ -63,11 +65,11 @@ export const addReview = async (req: Request, res: Response) => {
   if (!rating || !comment || !productId) {
     return res
       .status(400)
-      .json({ err: 'Rating, comment and product ID are required to add a review' });
+      .json({ success: false, err: 'Rating, comment and product ID are required to add a review' });
   }
 
   if (!req.user) {
-    return res.status(401).json({ err: 'User is not logged in' });
+    return res.status(401).json({ success: false, err: 'User is not logged in' });
   }
 
   // Extract user details
@@ -84,7 +86,7 @@ export const addReview = async (req: Request, res: Response) => {
     const product = await Product.findById(productId);
 
     if (!product) {
-      return res.status(500).json({ err: 'Product not available' });
+      return res.status(500).json({ success: false, err: 'Product not available' });
     }
 
     const alreadyReviewed = product.reviews.find((review) => review.user.toString() === userId);
@@ -97,7 +99,7 @@ export const addReview = async (req: Request, res: Response) => {
         }
       });
     } else {
-      product.reviews.push(review);
+      product.reviews.push(review as Review);
       product.numberOfReviews = product.reviews.length;
     }
 
@@ -114,7 +116,7 @@ export const addReview = async (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ err: 'Something went wrong' });
+    return res.status(500).json({ success: false, err: 'Something went wrong' });
   }
 };
 
@@ -125,7 +127,7 @@ export const deleteReview = async (req: Request, res: Response) => {
     const product = await Product.findById(productId);
 
     if (!product) {
-      return res.status(400).json({ err: 'Product not available' });
+      return res.status(400).json({ success: false, err: 'Product not available' });
     }
 
     const reviews = product.reviews.filter((review) => review.user === req.user?._id);
@@ -156,7 +158,7 @@ export const deleteReview = async (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error();
-    return res.status(500).json({ err: 'Something went wrong' });
+    return res.status(500).json({ success: false, err: 'Something went wrong' });
   }
 };
 
@@ -164,14 +166,14 @@ export const getProductReview = async (req: Request, res: Response) => {
   const productId = req.query.productId;
 
   if (!productId) {
-    return res.status(400).json({ err: 'Product ID is required to get reviews' });
+    return res.status(400).json({ success: false, err: 'Product ID is required to get reviews' });
   }
 
   try {
     const product = await Product.findById(productId);
 
     if (!product) {
-      return res.status(500).json({ err: 'Product not available' });
+      return res.status(500).json({ success: false, err: 'Product not available' });
     }
 
     return res.status(200).json({
@@ -180,7 +182,7 @@ export const getProductReview = async (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ err: 'Something went wrong' });
+    return res.status(500).json({ success: false, err: 'Something went wrong' });
   }
 };
 
@@ -192,24 +194,25 @@ export const addProduct = async (req: Request, res: Response) => {
   const { name, price, description, category, brand, stock } = req.body;
 
   if (!name || !price || !description || !category || !brand || !stock) {
-    return res
-      .status(400)
-      .json({
-        err: 'name, price, description, category, brand, and stock are required to create a new product',
-      });
+    return res.status(400).json({
+      success: false,
+      err: 'name, price, description, category, brand, and stock are required to create a new product',
+    });
   }
 
   // Images
   const files = req.files;
 
   if (!files) {
-    return res.status(400).json({ err: 'Image is required for a product' });
+    return res.status(400).json({ success: false, err: 'Image is required for a product' });
   }
 
   const photos = files.photos as UploadedFile[];
 
   if (!photos) {
-    return res.status(400).json({ err: 'Atleast one image is required for a product' });
+    return res
+      .status(400)
+      .json({ success: false, err: 'Atleast one image is required for a product' });
   }
 
   try {
@@ -235,7 +238,7 @@ export const addProduct = async (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ err: 'Something went wrong' });
+    return res.status(500).json({ success: false, err: 'Something went wrong' });
   }
 };
 
@@ -244,14 +247,16 @@ export const adminUpdateProduct = async (req: Request, res: Response) => {
   const { name, price, description, category, brand, stock } = req.body;
 
   if (!productId) {
-    return res.status(400).json({ err: 'Product ID is required to update a product' });
+    return res
+      .status(400)
+      .json({ success: false, err: 'Product ID is required to update a product' });
   }
 
   try {
     const product = await Product.findById(productId);
 
     if (!product) {
-      return res.status(400).json({ err: `No product found with ${productId} ID` });
+      return res.status(400).json({ success: false, err: `No product found with ${productId} ID` });
     }
 
     // Images
@@ -261,7 +266,9 @@ export const adminUpdateProduct = async (req: Request, res: Response) => {
       const photos = files.photos as UploadedFile[];
 
       if (!photos) {
-        return res.status(400).json({ err: 'Atleast one image is required for a product' });
+        return res
+          .status(400)
+          .json({ success: false, err: 'Atleast one image is required for a product' });
       }
 
       // Destroy the exisiting images
@@ -297,7 +304,7 @@ export const adminUpdateProduct = async (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ err: 'Something went wrong' });
+    return res.status(500).json({ success: false, err: 'Something went wrong' });
   }
 };
 
@@ -305,14 +312,16 @@ export const adminDeleteProduct = async (req: Request, res: Response) => {
   const productId = req.params.id;
 
   if (!productId) {
-    return res.status(400).json({ err: 'Product ID is required to delete a product' });
+    return res
+      .status(400)
+      .json({ success: false, err: 'Product ID is required to delete a product' });
   }
 
   try {
     const product = await Product.findById(productId);
 
     if (!product) {
-      return res.status(400).json({ err: `No product found with ${productId} ID` });
+      return res.status(400).json({ success: false, err: `No product found with ${productId} ID` });
     }
 
     // Destroy the exisiting images
@@ -329,7 +338,7 @@ export const adminDeleteProduct = async (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ err: 'Something went wrong' });
+    return res.status(500).json({ success: false, err: 'Something went wrong' });
   }
 };
 
@@ -343,6 +352,6 @@ export const adminGetAllProduct = async (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ err: 'Something went wrong' });
+    return res.status(500).json({ success: false, err: 'Something went wrong' });
   }
 };

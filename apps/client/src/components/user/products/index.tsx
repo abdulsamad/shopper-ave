@@ -9,10 +9,12 @@ interface IProduct {
 
 const Products = ({ products }: IProduct) => {
   return (
-    <div className="grid grid-cols-2 place-items-center gap-5 p-5 lg:grid-cols-4">
-      {products.map(({ ...product }) => (
-        <Item key={product._id} {...product} />
-      ))}
+    <div className="container mx-auto">
+      <section className="grid grid-cols-2 place-items-center gap-5 p-5 lg:grid-cols-4">
+        {products.map(({ ...product }) => (
+          <Item key={product._id} {...product} />
+        ))}
+      </section>
     </div>
   );
 };

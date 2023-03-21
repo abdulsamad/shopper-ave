@@ -13,11 +13,15 @@
     "dev": "turbo run dev --parallel",
     "test": "turbo run test",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "kill-ports": "kill-port 4000 3000",
+    "run:client": "yarn workspace client dev",
+    "run:server": "yarn workspace server dev"
   },
   "devDependencies": {
     "eslint-config-custom": "*",
     "husky": "^8.0.3",
+    "kill-port": "^2.0.1",
     "lint-staged": "^13.1.2",
     "prettier": "2.8.4",
     "turbo": "^1.8.3"

@@ -9,7 +9,7 @@ interface Layout {
 
 const Layout = ({ title, children }: Layout) => {
   return (
-    <div className="grid max-h-[calc(100vh-120px)] flex-1 grid-cols-12 overflow-hidden">
+    <div className="grid max-h-[calc(100vh-124px)] flex-1 grid-cols-12 overflow-y-hidden">
       <Sidebar />
       <div className="col-span-10 overflow-auto">
         <div className="container">

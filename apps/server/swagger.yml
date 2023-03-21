@@ -5,7 +5,7 @@ info:
   version: 1.0.0
 
 servers:
-  - url: "{protocol}://localhost:4000/api/{version}"
+  - url: '{protocol}://localhost:4000/api/{version}'
     description: Local Development version
     variables:
       version:
@@ -31,7 +31,7 @@ components:
       type: http
       scheme: bearer
   schemas:
-  # User schema
+    # User schema
     User:
       properties:
         _id:
@@ -65,17 +65,41 @@ components:
             secure_url:
               type: string
               default: Photo URL
-        forgotPasswordToken: 
+        addresses:
+          type: array
+          items:
+            type: object
+            properties:
+              address:
+                type: string
+                default: 123 Main Street
+              city:
+                type: string
+                default: Toronto
+              postalCode:
+                type: string
+                default: M1R 0E9
+              state:
+                type: string
+                default: Ontario
+              country:
+                type: string
+                default: Canada
+              _id:
+                type: string # MongoDB internal
+                default: <MongoDB ObjectId>
+
+        forgotPasswordToken:
           type: string
-        forgotPasswordExpiry: 
+        forgotPasswordExpiry:
           type: string
         createdAt:
           type: string
-          default:  2022-09-26T05:53:07.739Z
+          default: 2022-09-26T05:53:07.739Z
         updatedAt:
           type: string
           default: 2022-09-26T05:53:07.739Z
-  # Product schema
+    # Product schema
     Product:
       properties:
         _id:
@@ -98,15 +122,15 @@ components:
           items:
             type: object
             properties:
-                id:
-                  type: string
-                  default: <Image UID>
-                secure_url:
-                  type: string
-                  default: Photo URL
-                _id:
-                  type: string # MongoDB internal
-                  default: <MongoDB ObjectId>
+              id:
+                type: string
+                default: <Image UID>
+              secure_url:
+                type: string
+                default: Photo URL
+              _id:
+                type: string # MongoDB internal
+                default: <MongoDB ObjectId>
         category:
           type: string
           default: hoodie
@@ -131,7 +155,7 @@ components:
             $ref: '#/components/schemas/Review'
         createdAt:
           type: string
-          default:  2022-09-26T05:53:07.739Z
+          default: 2022-09-26T05:53:07.739Z
         updatedAt:
           type: string
           default: 2022-09-26T05:53:07.739Z
@@ -140,7 +164,7 @@ components:
       type: object
       properties:
         user:
-          type: string 
+          type: string
           default: <MongoDB ObjectId> (Could also be populated with user data) # MongoDB internal
         name:
           type: string
@@ -152,7 +176,7 @@ components:
           type: string
           default: Amazing Product!
         _id:
-          type: string 
+          type: string
           default: <MongoDB ObjectId> # MongoDB internal
     # Order schema
     Order:
@@ -181,7 +205,7 @@ components:
               default: Canada
         user:
           type: string # MongoDB Internal
-          default: <MongoDB ObjectId> (Could also be populated with user data) 
+          default: <MongoDB ObjectId> (Could also be populated with user data)
         orderItems:
           type: array
           items:
@@ -201,7 +225,7 @@ components:
                 default: 999
               product:
                 type: string # MongoDB Internal
-                default: <MongoDB ObjectId> (Could also be populated with product data) 
+                default: <MongoDB ObjectId> (Could also be populated with product data)
         paymentInfo:
           type: object
           properties:
@@ -242,18 +266,24 @@ components:
           schema:
             type: object
             properties:
+              success:
+                type: boolean
+                default: false
               err:
                 type: string
     Unauthorized:
       description: Unauthorized
       content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                err:
-                  type: string
-                  default: You're unauthorized to access this page
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                default: false
+              err:
+                type: string
+                default: You're unauthorized to access this page
     InternalServerError:
       description: Internal server error
       content:
@@ -261,6 +291,9 @@ components:
           schema:
             type: object
             properties:
+              success:
+                type: boolean
+                default: false
               err:
                 type: string
                 default: Something went wrong
@@ -300,7 +333,7 @@ paths:
                     type: string
                     default: Welcome to the Shopper Ave API
         '500':
-           $ref: '#/components/schemas/InternalServerError'
+          $ref: '#/components/schemas/InternalServerError'
   /signup:
     post:
       tags:
@@ -330,7 +363,7 @@ paths:
                 - email
                 - password
       responses:
-        '201': 
+        '201':
           description: Created
           content:
             application/json:
@@ -349,7 +382,7 @@ paths:
           $ref: '#/components/schemas/BadRequest'
           default: Name, email and password are required # Ignored
         '500':
-           $ref: '#/components/schemas/InternalServerError'
+          $ref: '#/components/schemas/InternalServerError'
   /login:
     post:
       tags:
@@ -372,7 +405,7 @@ paths:
                 - email
                 - password
       responses:
-        '200': 
+        '200':
           description: OK
           content:
             application/json:
@@ -386,19 +419,19 @@ paths:
                     type: string
                     default: <token>
                   user:
-                    $ref: "#/components/schemas/User"
+                    $ref: '#/components/schemas/User'
         '400':
           $ref: '#/components/schemas/BadRequest'
           default: Email and password are required # Ignored
         '500':
-           $ref: '#/components/schemas/InternalServerError'
+          $ref: '#/components/schemas/InternalServerError'
   /logout:
     get:
       tags:
         - Auth
       summary: Logout user and returns success message
       responses:
-        '200': 
+        '200':
           description: OK
           content:
             application/json:
@@ -412,7 +445,7 @@ paths:
                     type: string
                     default: Logout success
         '500':
-           $ref: '#/components/schemas/InternalServerError'
+          $ref: '#/components/schemas/InternalServerError'
   /forgotpassword:
     post:
       tags:
@@ -432,7 +465,7 @@ paths:
               required:
                 - email
       responses:
-        '200': 
+        '200':
           description: OK
           content:
             application/json:
@@ -444,12 +477,12 @@ paths:
                     default: true
                   message:
                     type: string
-                    default: Email sent successfully   
+                    default: Email sent successfully
         '400':
           $ref: '#/components/schemas/BadRequest'
           default: User not found # Ignored
         '500':
-           $ref: '#/components/schemas/InternalServerError'
+          $ref: '#/components/schemas/InternalServerError'
   /password/reset/{token}:
     post:
       tags:
@@ -480,7 +513,7 @@ paths:
                 - password
                 - confirmPassword
       responses:
-        '201': 
+        '201':
           description: Created
           content:
             application/json:
@@ -499,7 +532,7 @@ paths:
           $ref: '#/components/schemas/BadRequest'
           default: Token is either invalid or expired # Ignored
         '500':
-           $ref: '#/components/schemas/InternalServerError'
+          $ref: '#/components/schemas/InternalServerError'
   /dashboard:
     get:
       tags:
@@ -526,7 +559,7 @@ paths:
         '500':
           $ref: '#/components/schemas/InternalServerError'
   /password/update:
-    post:
+    put:
       tags:
         - User
       summary: Change user password
@@ -574,7 +607,7 @@ paths:
         '500':
           $ref: '#/components/schemas/InternalServerError'
   /dashboard/update:
-    post:
+    put:
       tags:
         - User
       summary: Update user profile details
@@ -614,6 +647,91 @@ paths:
         '400':
           $ref: '#/components/schemas/BadRequest'
           default: No data provided to update # Ignored
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+  /address/add:
+    post:
+      tags:
+        - User
+      summary: Add an address for the user
+      parameters:
+        - in: header
+          name: auth
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              minProperties: 1
+              properties:
+                address:
+                  type: string
+                  default: 123 Main Street
+                city:
+                  type: string
+                  default: Toronto
+                postalCode:
+                  type: string
+                  default: M1R 0E9
+                state:
+                  type: string
+                  default: Ontario
+                country:
+                  type: string
+                  default: Canada
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  user:
+                    $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: Address, city, postal code, state, and country all are required # Ignored
+        '401':
+          $ref: '#/components/schemas/Unauthorized'
+        '500':
+          $ref: '#/components/schemas/InternalServerError'
+  /address/remove/{addressId}:
+    delete:
+      tags:
+        - User
+      summary: Delete an address from user
+      parameters:
+        - in: header
+          name: auth
+        - in: path
+          name: addressId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  user:
+                    $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/schemas/BadRequest'
+          default: Address Id is required to remove address # Ignored
+          default2: Address not found # Ignored
         '401':
           $ref: '#/components/schemas/Unauthorized'
         '500':
@@ -796,7 +914,7 @@ paths:
   /products:
     get:
       tags:
-       - User
+        - User
       summary: Get all products
       responses:
         '200':
@@ -956,7 +1074,7 @@ paths:
   /admin/products:
     get:
       tags:
-       - Admin
+        - Admin
       summary: Get all products
       responses:
         '200':
@@ -1049,7 +1167,7 @@ paths:
   /admin/product/{productId}:
     get:
       tags:
-       - Admin
+        - Admin
       summary: Get all products for admin
       parameters:
         - in: path
@@ -1082,7 +1200,7 @@ paths:
     put:
       tags:
         - Admin
-      summary: Update product 
+      summary: Update product
       parameters:
         - in: path
           name: productId
@@ -1189,6 +1307,9 @@ paths:
               schema:
                 type: object
                 properties:
+                  success:
+                    type: boolean
+                    deafult: true
                   stripeKey:
                     type: string
                     default: pk_dummy_b2038663-8d5c-5d89-b6d6-71cd5784100f
@@ -1209,7 +1330,7 @@ paths:
               properties:
                 amount:
                   type: number
-                  default: 999999
+                  default: 9900 # 99
               required:
                 - amount
       responses:
@@ -1460,7 +1581,7 @@ paths:
                     type: boolean
                     default: true
                   order:
-                      $ref: '#/components/schemas/Order'
+                    $ref: '#/components/schemas/Order'
         '400':
           $ref: '#/components/schemas/BadRequest'
           default: Order ID and status is required to update order # Ignored
@@ -1494,7 +1615,7 @@ paths:
                     type: boolean
                     default: true
                   order:
-                      $ref: '#/components/schemas/Order'
+                    $ref: '#/components/schemas/Order'
         '400':
           $ref: '#/components/schemas/BadRequest'
           default: No order found with this order ID # Ignored

@@ -4,11 +4,11 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 
-import { User } from '@types';
+import { User } from 'shared-types';
 
-export interface IUser extends User {
+export interface IUser extends User, Document {
   isValidPassword: (receivedPassword: string) => Promise<boolean>;
-  getJwtToken: () => void;
+  getJwtToken: () => string;
   getForgotPasswordToken: () => string;
 }
 
@@ -50,6 +50,35 @@ const UserSchema = new mongoose.Schema<IUser>(
         type: String,
       },
     },
+    addresses: [
+      {
+        address: {
+          type: String,
+          maxlength: [250, 'Please provide a shorter address'],
+          required: true,
+        },
+        city: {
+          type: String,
+          maxlength: [85, 'Please provide a valid city name'],
+          required: true,
+        },
+        postalCode: {
+          type: String,
+          validator: [validator.isPostalCode, 'Please provide a valid postal code'],
+          required: true,
+        },
+        state: {
+          type: String,
+          maxlength: [85, 'Please provide a valid state name'],
+          required: true,
+        },
+        country: {
+          type: String,
+          maxlength: [56, 'Please provide a valid country name'],
+          required: true,
+        },
+      },
+    ],
     forgotPasswordToken: String,
     forgotPasswordExpiry: Date,
   },

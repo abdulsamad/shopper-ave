@@ -14,7 +14,9 @@ cloudinary.config({
   secure: true,
 });
 
-app.listen(process.env.PORT || 8000, () => {
+const port = process.env.PORT || 8000;
+
+app.listen(port, () => {
   // eslint-disable-next-line security-node/detect-crlf
-  console.log(`Server is running on port ${process.env.PORT}`);
+  console.log(`Server is running on port ${port}`);
 });

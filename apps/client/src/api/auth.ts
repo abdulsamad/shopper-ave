@@ -1,3 +1,5 @@
+import { User } from 'shared-types';
+
 import { axiosInstance } from './axiosInstance';
 
 export interface loginReqData {
@@ -8,7 +10,7 @@ export interface loginReqData {
 export interface loginResData {
   success: boolean;
   token: string;
-  user: object;
+  user: User;
 }
 
 /**
@@ -22,24 +24,18 @@ export const login = async ({ email, password }: loginReqData): Promise<loginRes
   return data;
 };
 
-export interface registerReqData {
-  email: string;
-  password: string;
-  name: string;
-}
-
 export interface registerResData {
   success: boolean;
   token: string;
-  user: object;
+  user: User;
 }
 
-export const register = async ({
-  name,
-  email,
-  password,
-}: registerReqData): Promise<registerResData> => {
-  const res = await axiosInstance.post('/signup', { name, email, password });
+export const register = async (userInfo: FormData): Promise<registerResData> => {
+  const res = await axiosInstance.post('/signup', userInfo, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
   const data = await res.data;
   return data;
 };
@@ -51,6 +47,22 @@ export interface logoutResData {
 
 export const logout = async (): Promise<logoutResData> => {
   const res = await axiosInstance.get('/logout');
+  const data = await res.data;
+  return data;
+};
+
+export interface updateUserResData {
+  success: boolean;
+  user: User;
+}
+
+export const updateUser = async (userInfo: FormData): Promise<updateUserResData> => {
+  const res = await axiosInstance.put('/dashboard/update', userInfo, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+  });
   const data = await res.data;
   return data;
 };

@@ -1,41 +1,63 @@
 import React, { MouseEventHandler } from 'react';
 import Link from 'next/link';
+import type { LinkProps } from 'next/link';
 
 import { ButtonLoader } from './Loader';
 
-interface ButtonProps {
+interface ButtonProps
+  extends React.DetailedHTMLProps<
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
+    HTMLButtonElement
+  > {
   children: React.ReactNode;
   isLoading?: boolean;
   onClick?: MouseEventHandler;
   type?: 'button' | 'submit' | 'reset';
   className?: string;
+  disabled?: boolean;
+  paddingClasses?: string;
 }
 
-export const Button = ({ children, isLoading = false, onClick, type, className }: ButtonProps) => (
+export const Button = ({
+  children,
+  isLoading = false,
+  disabled,
+  onClick,
+  type,
+  paddingClasses = 'py-1.5 px-3.5',
+  className,
+  ...props
+}: ButtonProps) => (
   <button
     type={type}
     onClick={onClick}
-    disabled={isLoading}
-    className={`h-10 items-center justify-center rounded-lg py-2.5 px-3.5 text-sm font-semibold active:scale-105 lg:inline-flex ${
+    disabled={isLoading || disabled}
+    className={`items-center justify-center whitespace-nowrap rounded-lg active:scale-105 lg:inline-flex ${paddingClasses} ${
       isLoading && 'hover:cursor-wait'
-    } ${className}`}>
+    } ${className}`}
+    {...props}>
     {isLoading ? <ButtonLoader /> : children}
   </button>
 );
 
-interface LinkButtonProps {
-  href: string;
+interface LinkButtonProps extends LinkProps {
   children: React.ReactNode;
-  onClick?: MouseEventHandler;
   type?: 'button' | 'submit' | 'reset';
   className?: string;
+  paddingClasses?: string;
 }
 
-export const LinkButton = ({ href, children, onClick, className }: LinkButtonProps) => (
+export const LinkButton = ({
+  children,
+  type,
+  className,
+  paddingClasses = 'py-1.5 px-3.5',
+  ...props
+}: LinkButtonProps) => (
   <Link
-    href={href}
-    onClick={onClick}
-    className={`items-center justify-center rounded-lg py-1.5 px-3.5 text-sm font-semibold lg:inline-flex ${className}`}>
+    type={type}
+    className={`items-center justify-center whitespace-nowrap rounded-lg lg:inline-flex ${paddingClasses} ${className}`}
+    {...props}>
     {children}
   </Link>
 );

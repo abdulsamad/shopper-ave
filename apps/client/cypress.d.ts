@@ -7,5 +7,9 @@ declare namespace Cypress {
      * @example cy.getByTestID('greeting')
      */
     getByTestID(value: string): Chainable<JQuery<HTMLElement>>;
+    /**
+     * Custom command for logging user in
+     */
+    login(email: string, password: string): void;
   }
 }

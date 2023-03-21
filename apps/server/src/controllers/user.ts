@@ -24,7 +24,7 @@ export const signup = async (req: Request, res: Response) => {
 
   try {
     if (!email || !name || !password) {
-      return res.status(400).json({ err: 'Name, email and password are required' });
+      return res.status(400).json({ success: false, err: 'Name, email and password are required' });
     }
 
     const user = await User.create({
@@ -33,14 +33,14 @@ export const signup = async (req: Request, res: Response) => {
       password,
       photo: {
         id: result?.public_id,
-        secure_url: result?.url,
+        secure_url: result?.secure_url,
       },
     });
 
     return respondWithCookieToken(user, res, 201);
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ err: 'Something went wrong' });
+    return res.status(500).json({ success: false, err: 'Something went wrong' });
   }
 };
 
@@ -48,7 +48,7 @@ export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return res.status(400).json({ err: 'Email and password are required' });
+    return res.status(400).json({ success: false, err: 'Email and password are required' });
   }
 
   try {
@@ -56,20 +56,20 @@ export const login = async (req: Request, res: Response) => {
     const user = await User.findOne({ email }).select('+password');
 
     if (!user) {
-      return res.status(400).json({ err: 'Please enter valid credentials ' });
+      return res.status(400).json({ success: false, err: 'Please enter valid credentials ' });
     }
 
     // Validate password with models custom method
     const isPasswordCorrect = await user.isValidPassword(password);
 
     if (!isPasswordCorrect) {
-      return res.status(400).json({ err: 'Please enter valid credentials ' });
+      return res.status(400).json({ success: false, err: 'Please enter valid credentials ' });
     }
 
     return respondWithCookieToken(user, res);
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ err: 'Something went wrong' });
+    return res.status(500).json({ success: false, err: 'Something went wrong' });
   }
 };
 
@@ -87,7 +87,7 @@ export const logout = async (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ err: 'Something went wrong' });
+    return res.status(500).json({ success: false, err: 'Something went wrong' });
   }
 };
 
@@ -99,7 +99,7 @@ export const forgotPassword = async (req: Request, res: Response) => {
     user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(400).json({ err: 'User not found' });
+      return res.status(400).json({ success: false, err: 'User not found' });
     }
 
     const forgotToken = user.getForgotPasswordToken();
@@ -119,7 +119,7 @@ export const forgotPassword = async (req: Request, res: Response) => {
       message: 'Email sent successfully',
     });
   } catch (err) {
-    // Reset forgot token and expiry in database
+    // Reset forgot token and expiry in database (If sending email fails the forgot passsword token is still added to DB by user.getForgotPasswordToken method)
     if (user) {
       user.forgotPasswordToken = undefined;
       user.forgotPasswordExpiry = undefined;
@@ -128,7 +128,7 @@ export const forgotPassword = async (req: Request, res: Response) => {
     }
 
     console.error(err);
-    return res.status(500).json({ err: 'Something went wrong' });
+    return res.status(500).json({ success: false, err: 'Something went wrong' });
   }
 };
 
@@ -138,14 +138,19 @@ export const passwordReset = async (req: Request, res: Response) => {
 
   try {
     const encryToken = crypto.createHash('sha256').update(token).digest('hex');
-    const user = await User.findOne({ forgotPasswordToken: encryToken, forgotPasswordExpiry: { $gt: Date.now() } });
+    const user = await User.findOne({
+      forgotPasswordToken: encryToken,
+      forgotPasswordExpiry: { $gt: Date.now() },
+    });
 
     if (!user) {
-      return res.status(400).json({ err: 'Token is either invalid or expired' });
+      return res.status(400).json({ success: false, err: 'Token is either invalid or expired' });
     }
 
     if (password && password !== confirmPassword) {
-      return res.status(400).json({ err: 'Password and confirm password does not match' });
+      return res
+        .status(400)
+        .json({ success: false, err: 'Password and confirm password does not match' });
     }
 
     user.password = password;
@@ -157,7 +162,7 @@ export const passwordReset = async (req: Request, res: Response) => {
     return respondWithCookieToken(user, res, 201);
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ err: 'Something went wrong' });
+    return res.status(500).json({ success: false, err: 'Something went wrong' });
   }
 };
 
@@ -171,7 +176,7 @@ export const getLoggedInUserDetails = async (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ err: 'Something went wrong' });
+    return res.status(500).json({ success: false, err: 'Something went wrong' });
   }
 };
 
@@ -180,7 +185,9 @@ export const changePassword = async (req: Request, res: Response) => {
   const userId = req.user?._id;
 
   if (!oldPassword || !newPassword) {
-    return res.status(400).json({ err: 'Both old and new password is required to update password' });
+    return res
+      .status(400)
+      .json({ success: false, err: 'Both old and new password is required to update password' });
   }
 
   try {
@@ -193,7 +200,7 @@ export const changePassword = async (req: Request, res: Response) => {
     const isCorrectOldPassword = await user.isValidPassword(oldPassword);
 
     if (!isCorrectOldPassword) {
-      return res.status(400).json({ err: 'Old password is incorrect' });
+      return res.status(400).json({ success: false, err: 'Old password is incorrect' });
     }
 
     user.password = newPassword;
@@ -203,7 +210,7 @@ export const changePassword = async (req: Request, res: Response) => {
     respondWithCookieToken(user, res, 201);
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ err: 'Something went wrong' });
+    return res.status(500).json({ success: false, err: 'Something went wrong' });
   }
 };
 
@@ -212,7 +219,7 @@ export const updateUser = async (req: Request, res: Response) => {
   const file = req.files?.photo as UploadedFile;
 
   if (!name && !email && !file) {
-    return res.status(400).json({ err: 'No data provided to update' });
+    return res.status(400).json({ success: false, err: 'No data provided to update' });
   }
 
   // Updated data
@@ -258,7 +265,64 @@ export const updateUser = async (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ err: 'Something went wrong' });
+    return res.status(500).json({ success: false, err: 'Something went wrong' });
+  }
+};
+
+export const addAddress = async (req: Request, res: Response) => {
+  const { address, city, postalCode, state, country } = req.body;
+  const userId = req.user?._id;
+
+  if (!address || !city || !postalCode || !state || !country) {
+    return res.status(400).json({
+      success: false,
+      err: 'Address, city, postal code, state, and country all are required',
+    });
+  }
+
+  try {
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { $push: { addresses: { address, city, postalCode, state, country } } },
+      { new: true }
+    );
+
+    if (!user) {
+      throw new Error('User not available');
+    }
+
+    return res.status(201).json({ success: true, user });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ success: false, err: 'Something went wrong' });
+  }
+};
+
+export const removeAddress = async (req: Request, res: Response) => {
+  const { addressId } = req.params;
+  const userId = req.user.id;
+
+  if (!addressId) {
+    return res
+      .status(400)
+      .json({ success: false, err: 'Address Id is required to remove address' });
+  }
+
+  try {
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { $pull: { addresses: { _id: addressId } } },
+      { new: true }
+    );
+
+    if (!user) {
+      throw new Error('User not available');
+    }
+
+    return res.status(200).json({ success: true, user });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ success: false, err: 'Something went wrong' });
   }
 };
 
@@ -276,7 +340,7 @@ export const adminAllUsers = async (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ err: 'Something went wrong' });
+    return res.status(500).json({ success: false, err: 'Something went wrong' });
   }
 };
 
@@ -284,14 +348,14 @@ export const adminUser = async (req: Request, res: Response) => {
   const { id } = req.params;
 
   if (!id) {
-    return res.status(400).json({ err: 'User ID is required to get the user' });
+    return res.status(400).json({ success: false, err: 'User ID is required to get the user' });
   }
 
   try {
     const user = await User.findById(id);
 
     if (!user) {
-      return res.status(400).json({ err: 'User not found' });
+      return res.status(400).json({ success: false, err: 'User not found' });
     }
 
     return res.status(200).json({
@@ -300,7 +364,7 @@ export const adminUser = async (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ err: 'Something went wrong' });
+    return res.status(500).json({ success: false, err: 'Something went wrong' });
   }
 };
 
@@ -316,13 +380,14 @@ export const adminUpdateUser = async (req: Request, res: Response) => {
   };
 
   if (!userId) {
-    return res.status(400).json({ err: 'User ID is required to update user' });
+    return res.status(400).json({ success: false, err: 'User ID is required to update user' });
   }
 
   if (!name && !email && !role) {
-    return res
-      .status(400)
-      .json({ err: 'Atleast one property (name, email, photo or role) is required to update data' });
+    return res.status(400).json({
+      success: false,
+      err: 'Atleast one property (name, email, photo or role) is required to update data',
+    });
   }
 
   try {
@@ -357,7 +422,7 @@ export const adminUpdateUser = async (req: Request, res: Response) => {
     });
 
     if (!user) {
-      return res.status(400).json({ err: 'No user found with this ID' });
+      return res.status(400).json({ success: false, err: 'No user found with this ID' });
     }
 
     return res.status(201).json({
@@ -366,7 +431,7 @@ export const adminUpdateUser = async (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ err: 'Something went wrong' });
+    return res.status(500).json({ success: false, err: 'Something went wrong' });
   }
 };
 
@@ -374,14 +439,14 @@ export const adminDeleteUser = async (req: Request, res: Response) => {
   const userId = req.params.id;
 
   if (!userId) {
-    return res.status(400).json({ err: 'User ID is requried to delete a user' });
+    return res.status(400).json({ success: false, err: 'User ID is requried to delete a user' });
   }
 
   try {
     const user = await User.findById(userId);
 
     if (!user) {
-      return res.status(400).json({ err: 'No such user found' });
+      return res.status(400).json({ success: false, err: 'No such user found' });
     }
 
     // Delete image from cloudinary
@@ -398,7 +463,7 @@ export const adminDeleteUser = async (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ err: 'Something went wrong' });
+    return res.status(500).json({ success: false, err: 'Something went wrong' });
   }
 };
 
@@ -412,6 +477,6 @@ export const managerAllUsers = async (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ err: 'Something went wrong' });
+    return res.status(500).json({ success: false, err: 'Something went wrong' });
   }
 };

@@ -1,13 +1,17 @@
-export const formatCurrency = (price: number) => {
-  return new Intl.NumberFormat('en-US', {
+import { createAvatar } from '@dicebear/core';
+import { lorelei } from '@dicebear/collection';
+
+export const formatCurrency = (price: number, options?: Intl.NumberFormatOptions) => {
+  return new Intl.NumberFormat('en-IN', {
     style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 0,
+    currency: 'INR',
+    minimumFractionDigits: 2,
+    ...options,
   }).format(price);
 };
 
-export const formatNumber = (price: number) => {
-  return new Intl.NumberFormat('en-US').format(price);
+export const formatNumber = (num: number, options?: Intl.NumberFormatOptions) => {
+  return new Intl.NumberFormat('en-US', { ...options }).format(num);
 };
 
 export const createFormData = (data: object) => {
@@ -34,3 +38,10 @@ export const createFormData = (data: object) => {
 
   return formData;
 };
+
+export const generateAvatar = (seed: string, size: number) => {
+  return createAvatar(lorelei, { seed, size }).toDataUriSync();
+};
+
+// Sleep for dev experiments
+export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));

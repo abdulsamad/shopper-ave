@@ -1,6 +1,6 @@
-import { axiosInstance } from './axiosInstance';
+import { Order, Product } from 'shared-types';
 
-import { Product } from 'shared-types';
+import { axiosInstance } from './axiosInstance';
 
 export interface createProductRes {
   success: boolean;
@@ -15,6 +15,41 @@ export const createProduct = async (details: FormData): Promise<createProductRes
     },
   });
 
+  const data = await res.data;
+  return data;
+};
+
+export interface ICreateCategoryRes {
+  success: boolean;
+}
+
+export const createCategory = async ({ name }: { name: string }): Promise<ICreateCategoryRes> => {
+  const res = await axiosInstance.post(
+    '/admin/category/add',
+    { name },
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    }
+  );
+  const data = await res.data;
+  return data;
+};
+
+export interface IGetOrders {
+  success: boolean;
+  orders: Order[];
+}
+
+export const getOrders = async (): Promise<IGetOrders> => {
+  const res = await axiosInstance.get('/admin/orders', {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+  });
   const data = await res.data;
   return data;
 };

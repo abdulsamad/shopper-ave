@@ -9,14 +9,15 @@ const stripe = new Stripe(process.env.STRIPE_SECRET, {
 
 export const sendStripeKey = (req: Request, res: Response) => {
   try {
-    const stripeKey = process.env.STRIPE_API_KEY;
+    const key = process.env.STRIPE_API_KEY;
 
     return res.status(200).json({
-      stripeKey,
+      success: true,
+      key,
     });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ err: 'Something went wrong' });
+    return res.status(500).json({ success: false, err: 'Something went wrong' });
   }
 };
 
@@ -24,12 +25,12 @@ export const capturePayment = async (req: Request, res: Response) => {
   const { amount } = req.body;
 
   if (!amount) {
-    return res.status(400).json({ err: 'Amount is required for payment' });
+    return res.status(400).json({ success: false, err: 'Amount is required for payment' });
   }
 
   try {
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: req.body.amount,
+      amount: parseInt(amount.toFixed(2)) * 100,
       currency: 'INR',
 
       // Optional metadata for payment on stripe
@@ -45,6 +46,6 @@ export const capturePayment = async (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ err: 'Something went wrong' });
+    return res.status(500).json({ success: false, err: 'Something went wrong' });
   }
 };

@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .debug-border {
+    border-color: theme('borderColor.danger') !important;
+    border-width: theme('borderWidth.2') !important;
+    border-style: solid !important;
+  }
+}

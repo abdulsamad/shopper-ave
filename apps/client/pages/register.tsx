@@ -9,6 +9,9 @@ import { useAuthActions, useIsAuthenticated } from '@store/index';
 
 import Button from '@utils/Button';
 import Input from '@utils/Input';
+import FileInput from '@utils/FileInput';
+import { createFormData } from '@utils/index';
+import Alert from '@utils/Alert';
 
 const RegisterSchema = z
   .object({
@@ -17,6 +20,7 @@ const RegisterSchema = z
       .min(1, 'Name is required for creating an account')
       .max(80, 'Name should be under 80 characters'),
     email: z.string().min(1, 'Email is required for creating an account').email(),
+    photo: z.custom<FileList | null>((val) => val),
     password: z.string().min(8, 'Password should be atleast 8 characters long'),
     confirmPassword: z.string().min(8, 'Confirm Password should also be atleast 8 characters long'),
   })
@@ -28,18 +32,23 @@ const RegisterSchema = z
 type registerSchemaType = z.infer<typeof RegisterSchema>;
 
 const Register: NextPage = () => {
-  const { register } = useAuthActions();
+  const { register: authRegister } = useAuthActions();
   const isAuthenticated = useIsAuthenticated();
 
   const router = useRouter();
   const {
     handleSubmit,
+    register,
     control,
-    formState: { errors },
+    formState: { errors, isSubmitting },
+    clearErrors,
+    setError,
+    reset,
   } = useForm<registerSchemaType>({
     defaultValues: {
       name: '',
       email: '',
+      photo: null,
       password: '',
       confirmPassword: '',
     },
@@ -54,19 +63,30 @@ const Register: NextPage = () => {
 
   const onSubmit: SubmitHandler<registerSchemaType> = useCallback(
     async (data) => {
-      await register(data);
+      try {
+        // Clear errors
+        clearErrors();
+
+        const formData = createFormData(data);
+        await authRegister(formData);
+
+        reset();
+      } catch (err) {
+        if (err instanceof Error) setError('root', { type: 'custom', message: err.message });
+      }
     },
-    [register]
+    [reset, clearErrors, setError, authRegister]
   );
 
   return (
-    <section className="my-5">
+    <section className="my-5 flex-1">
       <div className="mx-auto max-w-full px-5 md:w-[500px]">
-        <form className="" onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          {errors.root?.message && <Alert type="error" message={errors.root.message} />}
           <Input
             type="text"
             label="Name"
-            placeholder="Gavin Belson"
+            placeholder="John Doe"
             id="name"
             control={control}
             error={errors.name}
@@ -78,6 +98,13 @@ const Register: NextPage = () => {
             id="email"
             control={control}
             error={errors.email}
+          />
+          <FileInput
+            id="photo"
+            label="Photo"
+            register={register('photo')}
+            error={errors.photo}
+            required={false}
           />
           <Input
             type="password"
@@ -97,7 +124,8 @@ const Register: NextPage = () => {
           />
           <Button
             type="submit"
-            className="bg-primary hover:bg-primary-500 mt-2 px-4 py-2 text-white">
+            isLoading={isSubmitting}
+            className="hover:bg-primary-500 from-primary-600 to-primary-400 mt-2 w-full bg-gradient-to-r py-2 text-lg text-white">
             Create Account
           </Button>
         </form>

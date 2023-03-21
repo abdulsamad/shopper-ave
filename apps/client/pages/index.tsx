@@ -1,20 +1,19 @@
 import React from 'react';
 import type { NextPage, GetStaticProps } from 'next';
 import Head from 'next/head';
-
-import { Product } from 'shared-types';
+import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query';
 
 import { getProducts } from '@api/user';
 import Banner from '@components/user/banner';
-import Sidebar from '@components/user/sidebar';
 import Products from '@components/user/products';
 import Ad from '@components/user/ad';
 
-interface Products {
-  products: Product[];
-}
+const Home: NextPage = () => {
+  const { data, isLoading } = useQuery(['products'], getProducts, {
+    enabled: true,
+    staleTime: Infinity,
+  });
 
-const Home: NextPage<Products> = ({ products }: Products) => {
   return (
     <div>
       <Head>
@@ -29,23 +28,31 @@ const Home: NextPage<Products> = ({ products }: Products) => {
         <section className="col-span-4 flex h-[60px]">
           <Ad />
         </section>
-        <aside className="fixed top-0 left-0 hidden h-full w-[250px] lg:relative lg:flex">
-          <Sidebar />
-        </aside>
-        <section className="col-span-4 lg:col-span-3">
-          <Products products={products} />
-        </section>
+        {isLoading ? (
+          <div>
+            <h1>loading...</h1>
+          </div>
+        ) : (
+          <section className="col-span-4 lg:col-span-4">
+            {data?.products && <Products products={data.products} />}
+          </section>
+        )}
       </main>
     </div>
   );
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const products = (await getProducts()).products;
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: ['products'],
+    queryFn: getProducts,
+  });
 
   return {
     props: {
-      products,
+      dehydratedState: dehydrate(queryClient),
     },
   };
 };
