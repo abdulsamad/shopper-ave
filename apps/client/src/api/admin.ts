@@ -38,6 +38,22 @@ export const createCategory = async ({ name }: { name: string }): Promise<ICreat
   return data;
 };
 
+export interface IGetProducts {
+  success: boolean;
+  products: Product[];
+}
+
+export const getProducts = async (): Promise<IGetProducts> => {
+  const res = await axiosInstance.get('/admin/products', {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+  });
+  const data = await res.data;
+  return data;
+};
+
 export interface IGetOrders {
   success: boolean;
   orders: Order[];
