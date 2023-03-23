@@ -19,6 +19,22 @@ export const createProduct = async (details: FormData): Promise<createProductRes
   return data;
 };
 
+export interface IDeleteProduct {
+  success: boolean;
+  product: Product;
+}
+
+export const deleteProduct = async (productId: string): Promise<IDeleteProduct> => {
+  const res = await axiosInstance.delete(`/admin/product/${productId}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+  });
+  const data = await res.data;
+  return data;
+};
+
 export interface ICreateCategoryRes {
   success: boolean;
 }
