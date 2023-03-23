@@ -1,4 +1,4 @@
-import { Order, Product } from 'shared-types';
+import { Order, Product, User } from 'shared-types';
 
 import { axiosInstance } from './axiosInstance';
 
@@ -61,6 +61,22 @@ export interface IGetOrders {
 
 export const getOrders = async (): Promise<IGetOrders> => {
   const res = await axiosInstance.get('/admin/orders', {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+  });
+  const data = await res.data;
+  return data;
+};
+
+export interface IGetUsers {
+  success: boolean;
+  users: User[];
+}
+
+export const getUsers = async (): Promise<IGetUsers> => {
+  const res = await axiosInstance.get('/admin/users', {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${localStorage.getItem('token')}`,
