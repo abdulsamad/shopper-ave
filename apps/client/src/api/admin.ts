@@ -86,6 +86,29 @@ export const getOrders = async (): Promise<IGetOrders> => {
   return data;
 };
 
+export interface IUpdateOrder {
+  success: boolean;
+  product: Order;
+}
+
+export const updateOrder = async (
+  orderId: string,
+  orderStatus: Order['orderStatus']
+): Promise<IUpdateOrder> => {
+  const res = await axiosInstance.put(
+    `/admin/product/${orderId}`,
+    { orderStatus },
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    }
+  );
+  const data = await res.data;
+  return data;
+};
+
 export interface IGetUsers {
   success: boolean;
   users: User[];
