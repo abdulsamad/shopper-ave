@@ -1,5 +1,8 @@
 import { Request, Response } from 'express';
 import Stripe from 'stripe';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 // Load stripe
 const stripe = new Stripe(process.env.STRIPE_SECRET, {
