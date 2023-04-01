@@ -9,7 +9,7 @@
       "outputs": []
     },
     "dev": {
-      "cache": false
+      "cache": true
     },
     "test": {
       "dependsOn": ["^build"],
