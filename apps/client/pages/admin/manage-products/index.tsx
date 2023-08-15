@@ -11,22 +11,17 @@ const Index: NextPage = () => {
 
   return (
     <AdminLayout
+      isLoading={isLoading}
       title={
         <>
           Manage <span className="text-primary">Products</span>
         </>
       }>
-      {isLoading ? (
-        <div>
-          <h1>loading...</h1>
-        </div>
-      ) : (
-        <section className="space-y-5 py-4 text-center">
-          {data?.products.map((product) => (
-            <Product key={product._id} {...product} />
-          ))}
-        </section>
-      )}
+      <section className="space-y-5 py-4 text-center">
+        {data?.products.map((product) => (
+          <Product key={product._id} {...product} />
+        ))}
+      </section>
     </AdminLayout>
   );
 };
