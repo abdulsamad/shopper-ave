@@ -8,7 +8,7 @@ import { useCart } from '@store/index';
 import { getProduct } from '@api/user';
 import Button from '@utils/Button';
 import { formatCurrency } from '@utils/index';
-import Photos from '@components/user/product/Photos';
+import Photos from '@utils/Photos';
 import Review from '@components/user/review';
 import Stars from '@utils/Stars';
 
