@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import dayjs from 'dayjs';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
-import { ChevronDownIcon } from '@heroicons/react/24/solid';
+import { ChevronDownIcon, TrashIcon, PencilSquareIcon } from '@heroicons/react/24/solid';
 
 import { Product } from 'shared-types';
 
@@ -44,7 +44,11 @@ const Index = ({
   const [reviewsOpen, setReviewsOpen] = useState(false);
 
   return (
-    <section className="mx-auto max-w-[700px] rounded-xl border border-solid border-slate-200 p-5 shadow">
+    <section className="relative mx-auto max-w-[700px] rounded-xl border border-solid border-slate-200 p-5 shadow">
+      <div className="absolute right-0 top-0 flex space-x-3 p-4">
+        <TrashIcon className="h-6 w-6" />
+        <PencilSquareIcon className="h-6 w-6" />
+      </div>
       <div className="mb-2">
         <h3 className="text-xl">
           <time dateTime={dayjs(createdAt).format('YYYY-MM-DD hh:mm:ss')}>
@@ -81,9 +85,23 @@ const Index = ({
             </span>
           </div>
         </div>
-        <div className="flex h-full space-x-2 text-sm">
-          <h4 className="mb-2 font-semibold">Price</h4>
-          <div className="italic">{formatCurrency(price)}</div>
+        <div className="flex h-full flex-col text-sm">
+          <div className="mb-2 flex space-x-2">
+            <h4 className="font-semibold">Price</h4>
+            <div className="italic">{formatCurrency(price)}</div>
+          </div>
+          <div className="mb-2 flex items-center space-x-2">
+            <h4 className="font-semibold">Ratings</h4>
+            <span>{ratings}</span>
+          </div>
+        </div>
+      </div>
+      <div className="flex flex-col justify-between space-y-4 lg:mb-0 lg:flex-row lg:space-y-0">
+        <div className="flex h-full flex-col text-sm">
+          <div className="mb-2 flex space-x-2">
+            <h4 className="font-semibold">User ID</h4>
+            <div className="select-all italic">{user}</div>
+          </div>
         </div>
       </div>
       <button
