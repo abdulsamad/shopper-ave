@@ -28,24 +28,25 @@
 *.drawio text eol=lf
 
 # git config
-.gitattributes text
-.gitignore text
-.gitconfig text
+.gitattributes text eol=lf
+.gitignore text eol=lf
+.gitconfig text eol=lf
 
 # code analysis config
-.eslintrc text
-.prettierrc text
-.env text
-.env.example text
+.eslintrc text eol=lf
+.prettierrc text eol=lf
+.env text eol=lf
+.env.example text eol=lf
+yarn.lock text eol=lf
 
 # misc config
-*.yaml text
-*.yml text
-.editorconfig text
+*.yaml text eol=lf
+*.yml text eol=lf
+.editorconfig text eol=lf
 
 # build config
-*.npmignore text
-*.bowerrc text
+*.npmignore text eol=lf
+*.bowerrc text eol=lf
 
 # Heroku
 Procfile text
