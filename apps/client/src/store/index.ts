@@ -6,8 +6,7 @@ import { useCartStore } from './cart';
 /**
  * Custom hook for persisted store to prevent hydration error
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const useStore = <T, F>(
+export const useStore = <T, F>(
   store: (callback: (state: T) => unknown) => unknown,
   callback: (state: T) => F
 ) => {
