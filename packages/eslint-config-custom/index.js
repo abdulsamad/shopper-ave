@@ -5,7 +5,7 @@ const config = {
   },
   parser: '@typescript-eslint/parser',
   extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'prettier'],
-  plugins: ['import', '@typescript-eslint'],
+  plugins: ['@typescript-eslint'],
   settings: {},
   rules: {
     //
