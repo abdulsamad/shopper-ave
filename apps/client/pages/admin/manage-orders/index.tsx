@@ -22,18 +22,8 @@ const Index: NextPage = () => {
             {data?.orders.map(
               ({
                 _id,
-                orderItems,
-                __v,
-                createdAt,
-                deliveredAt,
                 orderStatus,
-                paymentInfo,
-                shippingAmount,
-                shippingInfo,
-                taxAmount,
                 totalAmount,
-                updatedAt,
-                user,
               }) => (
                 <tr key={_id}>
                   <td>{totalAmount}</td>

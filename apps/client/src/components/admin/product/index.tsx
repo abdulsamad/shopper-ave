@@ -38,7 +38,6 @@ const Index = ({
   user,
   description,
   createdAt,
-  updatedAt,
 }: Product) => {
   const [descriptionOpen, setDescriptionOpen] = useState(false);
   const [reviewsOpen, setReviewsOpen] = useState(false);
