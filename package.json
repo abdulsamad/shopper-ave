@@ -28,7 +28,7 @@
   },
   "engines": {
     "npm": ">=8.0.0",
-    "node": ">=16.0.0"
+    "node": ">=18.17.1 <19"
   },
   "packageManager": "yarn@3.4.1",
   "lint-staged": {
