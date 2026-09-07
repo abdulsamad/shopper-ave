@@ -9,7 +9,7 @@
     "dev": "nodemon",
     "build": "npx tsc",
     "postbuild": "cp swagger.yml dist/",
-    "seed": "ts-node -r tsconfig-paths/register --files src/seeds/seed.ts",
+    "seed": "ts-node --transpile-only -r tsconfig-paths/register src/seeds/seed.ts",
     "test": "DOTENV_CONFIG_PATH=.env.test jest --runInBand",
     "test:watch": "DOTENV_CONFIG_PATH=.env.test jest --watch",
     "api-docs": "open 'http://localhost:4000/api-docs'"
