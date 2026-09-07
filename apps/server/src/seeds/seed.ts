@@ -49,6 +49,10 @@ const productData = [
 ] as const;
 
 const seed = async () => {
+  if (!process.env.MONGODB_URI) {
+    throw new Error('MONGODB_URI is not configured in apps/server/.env');
+  }
+
   await connectDB();
   const passwordHash = await bcrypt.hash('ShopperAve123!', 10);
 
