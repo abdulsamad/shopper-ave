@@ -373,17 +373,13 @@ export const adminUpdateUser = async (req: Request, res: Response) => {
   const { name, email, role } = req.body;
   const file = req.files?.photo as UploadedFile;
 
-  const updatedData: { [key: string]: string | object } = {
-    name,
-    email,
-    role,
-  };
+  const updatedData: { [key: string]: string | object } = {};
 
   if (!userId) {
     return res.status(400).json({ success: false, err: 'User ID is required to update user' });
   }
 
-  if (!name && !email && !role) {
+  if (!name && !email && !role && !file) {
     return res.status(400).json({
       success: false,
       err: 'Atleast one property (name, email, photo or role) is required to update data',
@@ -391,6 +387,9 @@ export const adminUpdateUser = async (req: Request, res: Response) => {
   }
 
   try {
+    if (name) updatedData.name = name;
+    if (email) updatedData.email = email;
+    if (role) updatedData.role = role;
     // Check is file is updated
     if (file) {
       const user = await User.findById(userId);

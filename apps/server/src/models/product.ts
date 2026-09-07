@@ -38,10 +38,7 @@ const ProductSchema = new mongoose.Schema<IProduct>(
       type: String,
       required: [true, 'Please provide a category'],
       maxlength: [40, 'Category length should be less than 40 characters'],
-      enum: {
-        values: ['t-shirt', 'electronics', 'hoodie'],
-        message: 'Please pass a valid category',
-      },
+      trim: true,
     },
     stock: {
       type: Number,

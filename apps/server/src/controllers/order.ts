@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 
 import Order from '@models/order';
+import Product from '@models/product';
+import User from '@models/user';
 import updateProductstock from '@utils/updateProductStock';
 
 export const createOrder = async (req: Request, res: Response) => {
@@ -112,6 +114,32 @@ export const adminGetAllOrders = async (req: Request, res: Response) => {
   }
 };
 
+export const adminStats = async (_req: Request, res: Response) => {
+  try {
+    const [orders, products, users] = await Promise.all([
+      Order.find({}, 'totalAmount orderStatus orderItems'),
+      Product.countDocuments(),
+      User.countDocuments(),
+    ]);
+    const revenue = orders
+      .filter((order) => order.orderStatus !== 'canceled')
+      .reduce((total, order) => total + order.totalAmount, 0);
+    const itemsOrdered = orders.reduce(
+      (total, order) =>
+        total +
+        (order.orderStatus === 'canceled'
+          ? 0
+          : order.orderItems.reduce((items, item) => items + item.quantity, 0)),
+      0
+    );
+
+    return res.status(200).json({ success: true, revenue, itemsOrdered, products, users });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ success: false, err: 'Something went wrong' });
+  }
+};
+
 export const adminUpdateOrder = async (req: Request, res: Response) => {
   const orderId = req.params.id;
   const orderStatus = req.body.orderStatus;
@@ -133,7 +161,7 @@ export const adminUpdateOrder = async (req: Request, res: Response) => {
       return res.status(400).json({ success: false, err: 'Order is already delivered' });
     }
 
-    if (orderStatus === 'canceled') {
+    if (orderStatus === 'canceled' && order.orderStatus !== 'canceled') {
       await Promise.all(
         order.orderItems.map(async ({ product, quantity }) => {
           await updateProductstock(product, quantity, true);
@@ -165,7 +193,15 @@ export const adminDeleteOrder = async (req: Request, res: Response) => {
       return res.status(400).json({ success: false, err: 'No order found with this order ID' });
     }
 
-    const removedOrder = await order.remove();
+    if (order.orderStatus !== 'canceled' && order.orderStatus !== 'delivered') {
+      await Promise.all(
+        order.orderItems.map(async ({ product, quantity }) => {
+          await updateProductstock(product, quantity, true);
+        })
+      );
+    }
+
+    const removedOrder = await order.deleteOne();
 
     // TODO: Increase stock quantity again
     // order.orderItems.map(async ({ product, quantity }) => {

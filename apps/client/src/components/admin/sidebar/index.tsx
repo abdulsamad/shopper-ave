@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import {
   HomeIcon,
   ShoppingCartIcon,
+  UserGroupIcon,
   WrenchScrewdriverIcon,
   PlusCircleIcon,
 } from '@heroicons/react/24/outline';
@@ -38,6 +39,11 @@ const sidebarItems = [
     title: 'Manage Orders',
     Icon: ShoppingCartIcon,
     route: 'manage-orders',
+  },
+  {
+    title: 'Manage Users',
+    Icon: UserGroupIcon,
+    route: 'manage-users',
   },
 ];
 

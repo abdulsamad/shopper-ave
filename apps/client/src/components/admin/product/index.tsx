@@ -24,6 +24,10 @@ const productVariants: Variants = {
   },
 };
 
+interface AdminProductProps extends Product {
+  onDelete?: (productId: string) => void;
+}
+
 const Index = ({
   _id,
   name,
@@ -38,14 +42,17 @@ const Index = ({
   user,
   description,
   createdAt,
-}: Product) => {
+  onDelete,
+}: AdminProductProps) => {
   const [descriptionOpen, setDescriptionOpen] = useState(false);
   const [reviewsOpen, setReviewsOpen] = useState(false);
 
   return (
     <section className="relative mx-auto max-w-[700px] rounded-xl border border-solid border-slate-200 p-5 shadow">
       <div className="absolute right-0 top-0 flex space-x-3 p-4">
-        <TrashIcon className="h-6 w-6" />
+        <button type="button" aria-label="Delete product" onClick={() => onDelete?.(_id)}>
+          <TrashIcon className="h-6 w-6" />
+        </button>
         <PencilSquareIcon className="h-6 w-6" />
       </div>
       <div className="mb-2">

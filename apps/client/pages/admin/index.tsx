@@ -6,9 +6,12 @@ import { UserCircleIcon, UserIcon } from '@heroicons/react/24/outline';
 import { useUser } from '@store/index';
 import AdminLayout from '@components/admin/layout';
 import { formatCurrency, formatNumber } from '@utils/index';
+import { getAdminStats } from '@api/admin';
+import { useQuery } from '@tanstack/react-query';
 
 const Admin: NextPage = () => {
   const user = useUser();
+  const { data: stats } = useQuery(['admin-stats'], getAdminStats);
 
   if (!user) return null;
 
@@ -23,12 +26,12 @@ const Admin: NextPage = () => {
         {/* Revenue */}
         <div className="border-primary-500 flex flex-col rounded border-l-[5px] border-solid bg-white p-3 text-center shadow-xl">
           <div className="text-xl">Total Revenue</div>
-          <h2 className="mt-3 text-5xl text-gray-400">{formatCurrency(20000)}</h2>
+          <h2 className="mt-3 text-5xl text-gray-400">{formatCurrency(stats?.revenue ?? 0)}</h2>
         </div>
         {/* Orders */}
         <div className="border-primary flex flex-col rounded border-l-[5px] border-solid bg-white p-3 text-center shadow-xl">
           <div className="text-lg">Total Items Ordered</div>
-          <h2 className="mt-3 text-5xl text-gray-400">{formatNumber(10000)}</h2>
+          <h2 className="mt-3 text-5xl text-gray-400">{formatNumber(stats?.itemsOrdered ?? 0)}</h2>
         </div>
         {/* Products */}
         <div></div>

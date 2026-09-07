@@ -4,6 +4,7 @@ import {
   adminDeleteOrder,
   adminGetAllOrders,
   adminUpdateOrder,
+  adminStats,
   createOrder,
   getOrder,
   getUserOrders,
@@ -25,6 +26,7 @@ router.route('/order/:id').get(isLoggedIn, getOrder);
  */
 
 router.route('/admin/orders').get(isLoggedIn, checkRole('admin'), adminGetAllOrders);
+router.route('/admin/stats').get(isLoggedIn, checkRole('admin'), adminStats);
 router
   .route('/admin/order/:id')
   .put(isLoggedIn, checkRole('admin'), adminUpdateOrder)

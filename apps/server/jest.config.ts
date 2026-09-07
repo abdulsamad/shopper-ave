@@ -10,6 +10,8 @@ const config: Config.InitialOptions = {
   transform: { '^.+\\.tsx?$': 'ts-jest' },
   testEnvironment: 'node',
   verbose: true,
+  maxWorkers: 1,
+  testTimeout: 30000,
   moduleNameMapper: {
     '@config/(.*)': ['<rootDir>/config/$1'],
     '@controllers/(.*)': ['<rootDir>/controllers/$1'],

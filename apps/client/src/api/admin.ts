@@ -54,6 +54,25 @@ export const createCategory = async ({ name }: { name: string }): Promise<ICreat
   return data;
 };
 
+export interface ICategory {
+  _id: string;
+  name: string;
+}
+
+export const getCategories = async (): Promise<{ success: boolean; categories: ICategory[] }> => {
+  const res = await axiosInstance.get('/admin/categories', {
+    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+  });
+  return res.data;
+};
+
+export const deleteCategory = async (categoryId: string) => {
+  const res = await axiosInstance.delete(`/admin/category/${categoryId}`, {
+    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+  });
+  return res.data;
+};
+
 export interface IGetProducts {
   success: boolean;
   products: Product[];
@@ -86,6 +105,13 @@ export const getOrders = async (): Promise<IGetOrders> => {
   return data;
 };
 
+export const getAdminStats = async () => {
+  const res = await axiosInstance.get('/admin/stats', {
+    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+  });
+  return res.data as { success: boolean; revenue: number; itemsOrdered: number; products: number; users: number };
+};
+
 export interface IUpdateOrder {
   success: boolean;
   product: Order;
@@ -96,7 +122,7 @@ export const updateOrder = async (
   orderStatus: Order['orderStatus']
 ): Promise<IUpdateOrder> => {
   const res = await axiosInstance.put(
-    `/admin/product/${orderId}`,
+    `/admin/order/${orderId}`,
     { orderStatus },
     {
       headers: {
@@ -107,6 +133,13 @@ export const updateOrder = async (
   );
   const data = await res.data;
   return data;
+};
+
+export const deleteOrder = async (orderId: string) => {
+  const res = await axiosInstance.delete(`/admin/order/${orderId}`, {
+    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+  });
+  return res.data;
 };
 
 export interface IGetUsers {
@@ -123,4 +156,18 @@ export const getUsers = async (): Promise<IGetUsers> => {
   });
   const data = await res.data;
   return data;
+};
+
+export const updateUserRole = async (userId: string, role: User['role']) => {
+  const res = await axiosInstance.put(`/admin/user/${userId}`, { role }, {
+    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+  });
+  return res.data;
+};
+
+export const deleteUser = async (userId: string) => {
+  const res = await axiosInstance.delete(`/admin/user/${userId}`, {
+    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+  });
+  return res.data;
 };
