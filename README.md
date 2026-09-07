@@ -46,6 +46,14 @@ cp apps/server/.env.example apps/server/.env
 
 The server requires a MongoDB connection and credentials for Cloudinary, Stripe, and SMTP email. Fill those values in `apps/server/.env`; set the client API and Stripe values in `apps/client/.env`.
 
+Seed a local database with realistic demo data:
+
+```bash
+yarn workspace server seed
+```
+
+The seed is repeatable for its demo records. It creates an admin account (`admin@shopperave.test`), three customers, six categories, eight products, reviews, and a delivered order. Demo passwords are `ShopperAve123!`.
+
 Run the client and server together with:
 
 ```bash
@@ -57,4 +65,3 @@ The client runs on `http://localhost:3000` and the API runs on `http://localhost
 ### Screenshots
 
 ## [![shopper ave screenshot](readme/shopper-ave-home.png 'Home')](#)
-
