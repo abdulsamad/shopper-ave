@@ -14,6 +14,7 @@ jobs:
       - name: Ping MongoDB directly
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          MONGOSH_DISABLE_TELEMETRY: "1"
         run: |
           test -n "$MONGODB_URI" || { echo "Missing MONGODB_URI secret"; exit 1; }
           npx --yes mongosh "$MONGODB_URI" \

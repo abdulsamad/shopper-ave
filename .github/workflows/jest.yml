@@ -2,26 +2,28 @@ name: Jest Tests
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   test:
     name: Turborepo Test
     timeout-minutes: 15
-    runs-on: ubuntu-latest
-
+    # MongoDB 7 uses OpenSSL 3, which is available on the GitHub Ubuntu 22.04 runner.
+    runs-on: ubuntu-22.04
+    env:
+      MONGOMS_VERSION: 7.0.14
     steps:
       - name: Check out code
         uses: actions/checkout@v3
-    
+
       - name: Setup Node environment
         uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
           cache: 'yarn'
-      
+
       - name: Install dependencies
         run: yarn
 
