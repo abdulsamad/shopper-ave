@@ -52,7 +52,7 @@ Seed a local database with realistic demo data:
 yarn workspace server seed
 ```
 
-The seed is repeatable for its demo records. It creates an admin account (`admin@shopperave.test`), three customers, six categories, eight products, reviews, and a delivered order. Demo passwords are `ShopperAve123!`.
+The seed is repeatable for its demo records. It creates an admin account (`admin@shopperave.test`), four customers, six categories, twelve products with catalog artwork uploaded to Cloudinary, reviews, and four orders. Demo passwords are `ShopperAve123!`.
 
 Run the client and server together with:
 
