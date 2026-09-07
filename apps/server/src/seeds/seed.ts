@@ -9,6 +9,7 @@ import Product from '@models/product';
 import User from '@models/user';
 
 dotenv.config({ path: process.env.DOTENV_CONFIG_PATH || path.resolve(__dirname, '../../.env') });
+mongoose.set('strictQuery', false);
 
 const startedAt = Date.now();
 const log = (message: string) => console.log(`[seed +${Date.now() - startedAt}ms] ${message}`);
@@ -38,6 +39,10 @@ const imageUrl = (id: string) => `https://images.unsplash.com/${id}?auto=format&
 const connect = async () => {
   const uri = process.env.MONGODB_URI?.trim();
   if (!uri) fail('MONGODB_URI is empty. Set it in apps/server/.env before running the seed.');
+  const authority = uri.split('://')[1]?.split('/')[0] || '';
+  if ((authority.match(/@/g) || []).length > 1) {
+    fail('MONGODB_URI contains an unescaped @ in the username or password. Encode it as %40, then retry.');
+  }
 
   log('connecting to MongoDB');
   await mongoose.connect(uri, {
