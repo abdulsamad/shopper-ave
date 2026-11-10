@@ -9,11 +9,6 @@
   to = "/.netlify/functions/:splat"
   status = 200
 
-[[redirects]]
-  from = "/api-docs"
-  to = "http://178.62.32.180:4000/api-docs/"
-  status = 301
-
 [[headers]]
 	for = "/*"
 
